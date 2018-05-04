@@ -49,9 +49,9 @@ hr {
 }
 
 .footer-links {
-    color: white;
+    color: #FFF;
 }
-
+/*
 .grow {
     color: white;
     transition: all .2s ease-in-out !important;
@@ -60,12 +60,18 @@ hr {
 .grow:hover{
     transform: scale(1.3) !important;
 }
-
+*/
 #footer li{
     list-style: none;
-
 }
 
+#footer ul {
+    padding: 0;
+}
+
+#footer h3 {
+    color: #FFF;
+}
 .upper_section {
     margin-top: 1rem;
     padding-top: 1rem;

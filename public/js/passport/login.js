@@ -6,7 +6,7 @@ module.exports = function(passport) {
 	passport.use('login', new LocalStrategy({passReqToCallback: true},
         function(req, username, password, done) {
             //Queries DB For User
-            mysql.connection.query("SELECT * FROM users WHERE username = ?;", [username], function(err, rows) {
+            mysql.connection.query("SELECT * FROM Users WHERE username = ?;", [username], function(err, rows) {
                 //In The Event Of An Error, Throw It
                 if (err) {
                     console.log(err);

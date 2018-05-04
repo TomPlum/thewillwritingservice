@@ -10,7 +10,7 @@ module.exports = function(passport){
 
     //De-Serialise User
     passport.deserializeUser(function(id, done) {
-        mysql.connection.query("SELECT * FROM users WHERE user_id = " + id, function(err, rows) {
+        mysql.connection.query("SELECT * FROM Users WHERE user_id = " + id, function(err, rows) {
             done(err, rows[0]);
         });
     });

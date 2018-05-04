@@ -12,19 +12,19 @@ html
 
         block stylesheets
             link(rel='stylesheet', href='css/bootstrap.css')
-            link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous")
+            link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous")
             link(rel='stylesheet', href='css/theme.css')
+            link(rel='stylesheet', href='css/login.css')
             //link(rel='stylesheet', href='css/header.css')
     body
         block navigation
             .login-container
-                a.login-button(href="{{ 'account'|page}}")
+                a.btn.login-button#loginButton(href='#', role='button', data-toggle='modal', data-target='#register-modal')
                     span.fa.fa-fw.fa-user-plus
-                    |      Register
-                a.login-button(href="{{ 'account'|page}}")
+                    |  Register
+                a.btn.login-button#registerButton(href='#', role='button', data-toggle='modal', data-target='#login-modal')
                     span.fa.fa-fw.fa-sign-in-alt
-                    |      Login
-
+                    |  Login
             .header
                 header#main-header
                     nav.navbar.navbar-default.navbar-fixed-top
@@ -76,7 +76,7 @@ html
                                             span.fas.fa-angle-down
                                         ul.dropdown-menu
                                             li
-                                                a(href="/forms/last-will-and-testament-executors") Wills
+                                                a(href="/last-will-and-testament") Wills
                                             li
                                                 a(href="{{ 'trusts'|page }}") Trusts
                                             li
@@ -89,12 +89,76 @@ html
                                             i.far.fa-newspaper.fa-fw
                                             |  News
         block body-content
+        block login
+            #login-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+                .modal-dialog
+                    .modal-content
+                        .modal-header(align='center')
+                            img.img_logo.img-circle(src='img/willpic1.jpeg')
+                            button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                span.fas.fa-fw.fa-times(aria-hidden='true')
+                        #div-forms
+                            form#login-form(action='/authenticate', method='POST')
+                                .modal-body
+                                    #div-login-msg
+                                        #icon-login-msg.fas.fa-fw.fa-angle-right
+                                        span#text-login-msg  Welcome.
+                                    input#login-username.username.form-control(type='text', name='username', placeholder='Username' required)
+                                    input.password.form-control(type='password', name='password', placeholder='Password' required)
+                                .modal-footer
+                                    div
+                                        button.btn.btn-primary.btn-lg.btn-block.login(type='submit') Login
+                                    div
+                                        button#login_lost_btn.btn.btn-link(type="button") Lost Password?
+                            form#lost-form(style='display:none;')
+                                .modal-body
+                                    #div-lost-msg
+                                        #icon-lost-msg.fas.fa-fw.fa-angle-right
+                                        span#text-lost-msg Whoops! Please change your password.
+                                    input.form-control#lostPasswordUsername(type="text" name="username" placeholder="Username" required)
+                                    input.form-control#lostPasswordOld(type="password" name="old" placeholder="Current Password" required)
+                                    input.form-control#lostPasswordNew(type="password" name="new" placeholder="New Password" required)
+                                    input.form-control#lostPasswordConfirm(type="password" name="confirm" placeholder="Confirm Password" required)
+                                    button#submit_handle(type="submit" style="display: none")
+                                    p#lostPasswordError
+                                    p#lostPasswordSuccess
+                                .modal-footer
+                                    div
+                                        button#lostPassword.btn.btn-primary.btn-lg.btn-block(type='button') Submit
+                                        button#lostPasswordResponseMessage.btn.btn-lg.btn-block(type="button")
+                                    div
+                                        button#lost_login_btn.btn.btn-link(type='button') Log In
+                                        br
+            #register-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='display: none;')
+                .modal-dialog
+                    .modal-content
+                        .modal-header(align='center')
+                            img.img_logo.img-circle(src='img/tent.png')
+                            button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                span.fas.fa-times.fa-fw(aria-hidden='true')
+                        #div-register-form
+                            form(action='/register', method='POST')
+                                .modal-body
+                                    #div-register-msg
+                                        #icon-register-msg.fas.fa-fw.fa-angle-right
+                                        span#text-register-msg Register
+                                    input.username.form-control(type='text', name='username', placeholder='Username' required)
+                                    input.email.form-control(type='text', name='email', placeholder='Email' required)
+                                    input.password.form-control(type='password', name='password', placeholder='Password' required)
+                                    input.confirm.form-control(type='password', name='confirm', placeholder='Confirm Password' required)
+                                .modal-footer
+                                    div
+                                        button.btn.btn-primary.btn-lg.btn-block.register-user(type='submit')
+                                            i.fas.fa-fw.fa-user-shield
+                                            |  Register
         block footer
             footer#footer
                 .container
                     .row.upper_section
                         .col-md-4
-                            h3 Contact Us...
+                            h3
+                                i.fas.fa-envelope
+                                |  Contact Us
                             ul.unstyled.footer-links
                                 li The Willwriting Partnership
                                 li Imperial House
@@ -102,9 +166,11 @@ html
                                 li Bury
                                 li BL9 5BN
                                 li 0161 705 4382
-                                li info@twp.co.uk
+                                li #[a(href="mailto:info@twp.co.uk?Subject=Enquiry" target="_blank") info@twp.co.uk]
                         .col-md-4
-                            h3 Services
+                            h3
+                                i.fas.fa-pencil-alt
+                                |  Services
                             ul.unstyled
                                 li
                                     a.footer-links(href="{{ 'wills'|page }}") Wills
@@ -119,26 +185,34 @@ html
                                 li
                                     a.footer-links(href="{{ 'trusts'|page }}") Trusts
                         .col-md-4
-                            h3 About Us
+                            h3
+                                i.fas.fa-info-circle
+                                |  About Us
                             ul.unstyled
                                 li
                                     a.footer-links(href="{{ 'history'|page }}") Company History
                                 li
-                                    a.footer-links(href="{{ 'glossary'|page }}") Glossary Of Terms
+                                    a.footer-links(href="{{ 'glossary'|page }}") Glossary of Terms
                                 li
                                     a.footer-links(href="{{ 'trivia'|page }}") Trivia
                                 li
                                     a.footer-links(href="{{ 'careers'|page }}") Careers
                                 li
-                                    a.footer-links(href="{{ 'faq'|page }}") Frequently asked questions
+                                    a.footer-links(href="{{ 'faq'|page }}") Frequently Asked Questions
     block scripts
         script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+        //script(src='//code.jquery.com/jquery-1.11.1.min.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh', crossorigin='anonymous')
-        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js', integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ', crossorigin='anonymous')
+        //script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js', integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ', crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js')
         script(src='//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js')
         script(src="js/custom.js")
+        script(src="js/login.js")
         script(src="js/app.js")
+        script(type="text/javascript").
+            let loggedIn = "!{loggedIn}";
 
-
-
-
+            if(loggedIn === "true") {
+                $("#registerButton").css("display", "none");
+                $("#loginButton").html("!{username}").prop("href", "/profile").removeProp("data-toggle").removeProp("data-target");
+            }

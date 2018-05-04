@@ -139,7 +139,7 @@ function addProfessionalExecutor() {
             "                            <div class='col-sm-6'>" +
             "                                <!-- Firm Name -->" +
             "                                <label>Firm Name</label>" +
-            "                                <input type='text' name='firm_name" + numberOfProfessionalExecutors + "' class='form-control' placeholder='Firm Name'/>" +
+            "                                <input type='text' name='firm_name_" + numberOfProfessionalExecutors + "' class='form-control' placeholder='Firm Name'/>" +
             "                            </div>" +
             "                            <div class='col-sm-6'>" +
             "                                <!-- Telephone Name -->" +
@@ -149,9 +149,9 @@ function addProfessionalExecutor() {
             "                        </div>" +
             "                        <!-- Address -->" +
             "                        <label>Address Line 1</label>" +
-            "                        <input type='text' class='form-control' name='prof_address_line_1" + numberOfProfessionalExecutors + "' placeholder='Address Line 1'/>" +
+            "                        <input type='text' class='form-control' name='prof_address_line_1_" + numberOfProfessionalExecutors + "' placeholder='Address Line 1'/>" +
             "                        <label>Address Line 2</label>" +
-            "                        <input type='text' class='form-control' name='prof_address_line_2" + numberOfProfessionalExecutors + "' placeholder='Address Line 2'/>" +
+            "                        <input type='text' class='form-control' name='prof_address_line_2_" + numberOfProfessionalExecutors + "' placeholder='Address Line 2'/>" +
             "                        <div class='row'>" +
             "                            <div class='col-sm-6'>" +
             "                                <label>Town</label>" +
@@ -224,6 +224,29 @@ function addTestData() {
     $("input[name='prof_town_1']").val("Greater Manchester");
     $("input[name='prof_postcode_1']").val("M8 7RH");
     $("input[name='prof_sole_joint_alternative_1']").prop("checked", true);
+
+    if (numberOfExecutors === 2) {
+        $("input[name='relationship_testator_one_2']").val("Sister");
+        $("input[name='relationship_testator_two_2']").val("Brother");
+        $("input[name='first_name_2']").val("Louis");
+        $("input[name='last_name_2']").val("Smith");
+        $("input[name='tel_mobile_2']").val("07569562358");
+        $("input[name='tel_home_2']").val("01706 654987");
+        $("input[name='address_line_1_2']").val("18 Porrit Close");
+        $("input[name='address_line_2_2']").val("Norden");
+        $("input[name='town_2']").val("Rochdale");
+        $("input[name='postcode_2']").val("OL14 8ID");
+    }
+
+    if (numberOfProfessionalExecutors === 2) {
+        $("input[name='firm_name_2']").val("SportSpecific Ltd");
+        $("input[name='business_number_2']").val("030032312312");
+        $("input[name='prof_address_line_1_2']").val("15 Manchester Street");
+        $("input[name='prof_address_line_2_2']").val("Hartford");
+        $("input[name='prof_town_2']").val("Nortwich");
+        $("input[name='prof_postcode_2']").val("M9 7KJ");
+        $("input[name='prof_sole_joint_alternative_2']").prop("checked", false);
+    }
 }
 
 function getOrdinalSuffix(number) {
@@ -276,14 +299,17 @@ $(document).ready(() => {
 
     //Bind Submit (Next)
     $("#next").on("click", () => {
+        //Start Animation
+        $("#next").html("<i class='fas fa-circle-notch fa-spin fa-fw'></i> Saving...");
+
         let executors = [];
         let professionalExecutors = [];
 
-        for (let i = 0; i < numberOfExecutors; i++) {
+        for (let i = 1; i <= numberOfExecutors; i++) {
             executors.push({
                 testator_one_relationship: $("input[name='relationship_testator_one_" + i + "']").val(),
                 testator_two_relationship: $("input[name='relationship_testator_two_" + i + "']").val(),
-                title: $("input[name='title_" + i + "']").val(),
+                title: $("option[name='title_" + i + "']:selected").val(),
                 first_name: $("input[name='first_name_" + i + "']").val(),
                 last_name: $("input[name='last_name_" + i + "']").val(),
                 tel_mobile: $("input[name='tel_mobile_" + i + "']").val(),
@@ -292,18 +318,18 @@ $(document).ready(() => {
                 address_line_one: $("input[name='address_line_1_" + i + "']").val(),
                 address_line_two: $("input[name='address_line_2_" + i + "']").val(),
                 town: $("input[name='town_" + i + "']").val(),
-                postcode: $("input[name='postcode_ + " + i + "']").val()
+                postcode: $("input[name='postcode_" + i + "']").val()
             });
         }
 
-        for (let i = 0; i < numberOfProfessionalExecutors; i++) {
+        for (let i = 1; i <= numberOfProfessionalExecutors; i++) {
             professionalExecutors.push({
                 firm_name: $("input[name='firm_name_" + i + "']").val(),
                 phone: $("input[name='business_number_" + i + "']").val(),
                 address_line_one: $("input[name='prof_address_line_1_" + i + "']").val(),
                 address_line_two: $("input[name='prof_address_line_2_" + i + "']").val(),
                 town: $("input[name='prof_town_" + i + "']").val(),
-                postcode: $("input[name='prof_postcode_ + " + i + "']").val(),
+                postcode: $("input[name='prof_postcode_" + i + "']").val(),
                 type: $("input[name='prof_sole_joint_alternative_" + i + "']:checked").val(),
             });
         }
@@ -315,15 +341,20 @@ $(document).ready(() => {
                 spouse_to_the_executor: $("input[name='spouse_to_executor']:checked").val(),
                 sole_or_joint: $("input[name='sole_or_joint']:checked").val(),
                 twp_to_act: $("input[name='twp_to_act']:checked").val(),
+                mirror_executor: $("input[name='mirror_executor']:checked").val(),
                 executors: executors,
                 professionalExecutors: professionalExecutors
             },
             success: function(res) {
-
+                if (res.success) {
+                    window.location.replace("/forms/last-will-and-testament-legacies");
+                } else {
+                    alert("Error Saving Form.");
+                }
             },
             error: function(err) {
-                console.log(err);
-            }
-        });
+                    console.log(err);
+                }
+            });
     })
 });

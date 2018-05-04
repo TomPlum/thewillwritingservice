@@ -13,17 +13,17 @@ block append body-content
             hr
             // Spouse to Executor?
             .row
-                .col-md-6
+                .col-md-4
                     label Spouse to the Executor?
                     .radio
                         label
-                            input.ste(checked='', type='radio', name='spouse_to_executor', value='yes')
+                            input.ste(checked='', type='radio', name='spouse_to_executor', value='true')
                             |  Yes
                     .radio
                         label
-                            input.ste(type='radio', name='spouse_to_executor', value='no')
+                            input.ste(type='radio', name='spouse_to_executor', value='false')
                             |  No
-                #sole_or_joint.col-md-6.collapse.in
+                #sole_or_joint.col-md-4.collapse.in
                     label Sole or Joint?
                     .radio
                         label
@@ -33,12 +33,24 @@ block append body-content
                         label
                             input(type='radio', name='sole_or_joint', value='joint')
                             |  Joint
+                .col-md-4
+                    label Mirror Executors?
+                    .radio
+                        label
+                            input(checked='', type='radio', name='mirror_executor', value='true')
+                            |  Yes
+                    .radio
+                        label
+                            input(type='radio', name='mirror_executor', value='false')
+                            |  No
             hr
             // Executor Details - These can be dynamically added via jQuery
             #executor_details_1
                 .row
                     .col-md-12
-                        h2 Executor Details 1
+                        h2 Details of 1
+                            sup st
+                            |  Executor
                 .row.executor-details
                     .col-md-6
                         // Relationship to 1st & 2nd Testators
@@ -136,19 +148,21 @@ block append body-content
                         .col-sm-3
                             .radio
                                 label
-                                    input(checked='', type='radio', name='twp_to_act', value='yes')
+                                    input(checked='', type='radio', name='twp_to_act', value='true')
                                     | Yes
                         .col-sm-3
                             .radio
                                 label
-                                    input(type='radio', name='twp_to_act', value='no')
+                                    input(type='radio', name='twp_to_act', value='false')
                                     | No
                 // This div wraps the prof exec details & buttons so we can hide them if necessary
                 #show_professional_executors.collapse.in
                 // Professional Executor Details - Dynamically Added via jQuery
                 .professional_executor_details_1
                     .col-md-6
-                        h2 Professional Executor 1
+                        h2 1
+                            sup st
+                            |  Professional Executor
                         .row
                             .col-sm-6
                                 // Firm Name
@@ -211,5 +225,6 @@ block append body-content
                     button#next.btn.btn-lg.btn-success(type='button')
                         | Next
                         i.fas.fa-fw.fa-angle-right
+                    button(type="submit" style="display: none")
 block append scripts
     script(src="js/aoe.js")

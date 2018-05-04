@@ -1,0 +1,14 @@
+extends structure
+
+block append body-content
+    .container-fluid
+        .row
+            .col-xs-12
+                h2 Last Will & Testament
+                button.btn.btn-info.btn-lg(type="button")
+                    i.fas.fa-fw.fa-pencil-alt
+                    |  Create Will
+block append scripts
+    script(type="text/javascript").
+        //Bind Will Button Function Here
+        let test;
