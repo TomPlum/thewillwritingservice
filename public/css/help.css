@@ -1,0 +1,30 @@
+.hotkeys p {
+    color: #000;
+    transition: all ease 0.5s;
+}
+.hotkeys span {
+    font-weight: bold;
+}
+
+.hotkeys svg {
+    margin-right: 5px;
+}
+
+.glyphicon {
+    margin-right: 9px;
+}
+
+.active-hotkey {
+    color: #2f8fd5;
+}
+
+.icon-key {
+    list-style-type: none;
+    font-size: 1.4em;
+    padding: 0;
+}
+
+.icon-key li i{
+    width: 1.25em;
+    text-align: center;
+}

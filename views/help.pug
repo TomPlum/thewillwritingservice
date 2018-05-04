@@ -1,0 +1,72 @@
+extends structure
+
+block append stylesheets
+    link(rel="stylesheet" href="css/help.css")
+
+block append top-content
+    p.page-title
+        span.glyphicon.glyphicon-info-sign.g-fw
+        | Helpful Information
+block append body-content
+    h2
+        i.fas.fa-fw.fa-keyboard
+        |  Keyboard Shortcut Combinations
+
+    .hotkeys
+        p.ctrl-b
+            i.fa.fa-fw.fa-book
+            span  Ctrl + Alt + B -
+            |  Access Booking Page
+        p.ctrl-c
+            i.fa.fa-fw.fa-user
+            span Ctrl + Alt + C -
+            |  Access Customer Management
+        p.ctrl-d
+            i.fa.fa-fw.fa-home
+            span Ctrl + Alt + D -
+            |  Access The Dashboard
+        p.ctrl-e
+            i.fa.fa-fw.fa-history
+            span Ctrl + Alt + E -
+            |  Manage Booking History
+        p.ctrl-g
+            i.fa.fa-fw.fa-envelope
+            span Ctrl + Alt + G -
+            |  Access Email Management
+        p.ctrl-h
+            i.fa.fa-fw.fa-info-circle
+            span Ctrl + Alt + H -
+            |  Access Help
+        p.ctrl-o
+            i.fa.fa-fw.fa-list
+            span Ctrl + Alt + O -
+            |  Manage Booking Overview
+        p.ctrl-p
+            i.glyphicon.glyphicon-tent
+            span Ctrl + Alt + P -
+            |  Manage Pitches
+        p.ctrl-u
+            i.fa.fa-fw.fa-user
+            span Ctrl + Alt + U -
+            |  Access User Profile
+    h2
+        i.fab.fa-fw.fa-font-awesome
+        |  Icon Key
+
+    ul.icon-key
+        li
+            i.glyphicon.glyphicon-tent
+            |  Pitch Type: Tents Only
+        li
+            i.fa.fa-fw.fa-car
+            |  Pitch Type: Caravan Only
+        li
+            i.fa.fa-fa.fa-truck
+            |  Pitch Type: Motorhome Only
+        li
+            i.fa.fa-fw.fa-cloud
+            |  Pitch Attribute: Suitable for all weather
+        li
+            i.fa.fa-fw.fa-bolt
+            |  Pitch Attribute: Electrical Outlet Available
+

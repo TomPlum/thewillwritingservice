@@ -1,0 +1,146 @@
+doctype html
+html
+    head
+        block head-meta
+            meta(charset='utf-8')
+            meta(name='viewport', content='width=device-width, initial-scale=1.0')
+            meta(http-equiv='X-UA-Compatible', content='IE=edge')
+
+            title !{title}
+        block fonts
+            script(defer='', src='https://use.fontawesome.com/releases/v5.0.6/js/all.js')
+
+        block stylesheets
+            link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+            link(rel='stylesheet', href='css/ui.css')
+
+    body
+        block navigation
+            .wrapper
+                // Sidebar Holder
+                nav#sidebar
+                    .sidebar-header
+                        a(href='/')
+                            h3 High Farm Camping System
+                            strong HF
+                    ul.list-unstyled.components
+                        li
+                            a(href="#user-menu", data-toggle='collapse', aria-expanded='false')
+                                i.glyphicon.glyphicon-tree-conifer
+                                | Welcome, !{username}.
+                            ul#user-menu.collapse.list-unstyled
+                                li
+                                    a(href="/profile")
+                                        i.glyphicon.glyphicon-user
+                                        |  Profile
+                                li
+                                    a(href="/change-password")
+                                        i.glyphicon.glyphicon-lock
+                                        |  Change Password
+                                li
+                                    a(href="/logout")
+                                        i.glyphicon.glyphicon-log-out
+                                        | Logout
+                    ul.list-unstyled.components
+                        li#dashboard
+                            a(href='/dashboard')
+                                // <i class="fas fa-fw fa-tachometer-alt"></i>
+                                i.glyphicon.glyphicon-home
+                                | Dashboard
+                        li#bookPitch
+                            a(href='/book')
+                                // <i class="far fa-fw fa-calendar-alt"></i>
+                                i.glyphicon.glyphicon-book
+                                | Book Pitch
+                        li#bookingManagement
+                            a(href='#manage-booking', data-toggle='collapse', aria-expanded='false')
+                                // <i class="far fa-fw fa-clipboard"></i>
+                                i.glyphicon.glyphicon-th-list
+                                | Booking Management
+                            ul#manage-booking.collapse.list-unstyled
+                                li#bookingsOverview
+                                    a(href='/manage-booking/overview')
+                                        i.glyphicon.glyphicon-align-justify
+                                        | Bookings Overview
+                                li#bookingHistory
+                                    a(href="/manage-booking/booking-history")
+                                        i.glyphicon.glyphicon-time
+                                        | Booking History
+                        li#customerManagement
+                            a(href='/customer-overview', aria-expanded='false')
+                                // <i class="fa fa-fw fa-address-book"></i>
+                                i.glyphicon.glyphicon-user
+                                | Customer Management
+                        li#pitchManagement
+                            a(href='/manage-pitches/pitch-management')
+                                i.glyphicon.glyphicon-tent
+                                | Pitch Management
+                        //li#emailManagement
+                            a(href='/email-management')
+                                i.glyphicon.glyphicon-envelope
+                                | Email Management
+                        li#gasCylinderOverview
+                            a(href='/gas-cylinder-overview')
+                                i.glyphicon.glyphicon-fire
+                                | Gas Cylinder Overview
+                        //li
+                            a(href='#manage-pitch', data-toggle='collapse', aria-expanded='false')
+                                // <i class="fa fa-fw fa-map-signs"></i>
+                                i.glyphicon.glyphicon-tent
+                                | Pitch Management
+                            ul#manage-pitch.collapse.list-unstyled
+                                li
+                                    a(href='/manage-pitches/add')
+                                        i.glyphicon.glyphicon-plus
+                                        | Add Pitch
+                                li
+                                    a(href='/manage-pitches/edit')
+                                        i.glyphicon.glyphicon-pencil
+                                        | Edit Pitch
+                                li
+                                    a(href='/manage-pitches/delete')
+                                        i.glyphicon.glyphicon-minus
+                                        | Delete Pitch
+                        li#helpAndInformation
+                            a(href="/help")
+                                i.glyphicon.glyphicon-info-sign
+                                | Help &amp; Information
+                // Page Content Holder
+                #content
+                    nav.navbar.navbar-default
+                        .container-fluid
+                            .col-md-7.no-gutters-left
+                                button#sidebarCollapse.btn.btn-info.navbar-btn(type='button')
+                                    i#chevron.fa.fa-fw.fa-chevron-left
+                                    span Menu
+                                block top-content
+                            .col-md-4
+                                p#today
+                            .col-md-1
+                                p#current-time
+                                    span.fa.fa-fw.fa-spinner.fa-pulse
+                    block body-content
+    block scripts
+        // jQuery CDN
+        script(src='https://code.jquery.com/jquery-1.12.0.min.js')
+        script(src="js/ui.js")
+        script(src="js/hotkeys.js")
+        script(src="js/general-functions.js")
+        // Bootstrap JS CDN
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        script(type='text/javascript').
+            $(document).ready(function () {
+                const sidebarCollapse = $('#sidebarCollapse');
+
+                //Collapses & Opens the sidebar menu upon clicking 'Menu'
+                sidebarCollapse.on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+
+                //Menu Chevron Change on Click (The little arrow in the 'Menu' Button)
+                sidebarCollapse.on("click", function () {
+                    $("#chevron").toggleClass("fa-chevron-left").toggleClass("fa-chevron-right");
+                });
+            });
+
+
