@@ -8,14 +8,23 @@ html
 
             title !{title}
         block fonts
-            script(defer='', src='https://use.fontawesome.com/releases/v5.0.6/js/all.js')
+            //script(defer='', src='https://use.fontawesome.com/releases/v5.0.6/js/all.js')
 
         block stylesheets
-            link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-            link(rel='stylesheet', href='css/ui.css')
-
+            link(rel='stylesheet', href='css/bootstrap.css')
+            link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous")
+            link(rel='stylesheet', href='css/theme.css')
+            //link(rel='stylesheet', href='css/header.css')
     body
         block navigation
+            .login-container
+                a.login-button(href="{{ 'account'|page}}")
+                    span.fa.fa-fw.fa-user-plus
+                    |      Register
+                a.login-button(href="{{ 'account'|page}}")
+                    span.fa.fa-fw.fa-sign-in-alt
+                    |      Login
+
             .header
                 header#main-header
                     nav.navbar.navbar-default.navbar-fixed-top
@@ -25,8 +34,8 @@ html
                                     span.icon-bar
                                     span.icon-bar
                                     span.icon-bar
-                                a(href="{{ 'index'|page }}")
-                                    img.menu-logo(src="{{ 'assets/images/twp-logo.png'|theme }}")
+                                a(href="/")
+                                    img.menu-logo(src="/img/twp-logo.png")
                             #myNavbar.collapse.navbar-collapse
                                 ul.nav.navbar-nav.navbar-right
                                     // Life Planning Drop-Down
@@ -67,7 +76,7 @@ html
                                             span.fas.fa-angle-down
                                         ul.dropdown-menu
                                             li
-                                                a(href="{{ 'wills'|page }}") Wills
+                                                a(href="/forms/last-will-and-testament-executors") Wills
                                             li
                                                 a(href="{{ 'trusts'|page }}") Trusts
                                             li
@@ -123,9 +132,13 @@ html
                                 li
                                     a.footer-links(href="{{ 'faq'|page }}") Frequently asked questions
     block scripts
-        // jQuery CDN
-        script(src='https://code.jquery.com/jquery-1.12.0.min.js')
-        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh', crossorigin='anonymous')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js', integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ', crossorigin='anonymous')
+        script(src='//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js')
+        script(src="js/custom.js")
+        script(src="js/app.js")
+
 
 
 

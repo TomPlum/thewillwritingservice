@@ -1,0 +1,215 @@
+extends ../../structure
+
+block append stylesheets
+    link(rel="stylesheet", href="css/lwat.css")
+
+block append body-content
+    form
+        #executors.container
+            // Appointment of Executors Title
+            .row
+                .col-sm-12
+                    h1 Appointment of Executors
+            hr
+            // Spouse to Executor?
+            .row
+                .col-md-6
+                    label Spouse to the Executor?
+                    .radio
+                        label
+                            input.ste(checked='', type='radio', name='spouse_to_executor', value='yes')
+                            |  Yes
+                    .radio
+                        label
+                            input.ste(type='radio', name='spouse_to_executor', value='no')
+                            |  No
+                #sole_or_joint.col-md-6.collapse.in
+                    label Sole or Joint?
+                    .radio
+                        label
+                            input(checked='', type='radio', name='sole_or_joint', value='sole')
+                            |  Sole
+                    .radio
+                        label
+                            input(type='radio', name='sole_or_joint', value='joint')
+                            |  Joint
+            hr
+            // Executor Details - These can be dynamically added via jQuery
+            #executor_details_1
+                .row
+                    .col-md-12
+                        h2 Executor Details 1
+                .row.executor-details
+                    .col-md-6
+                        // Relationship to 1st & 2nd Testators
+                        .row
+                            .col-sm-6
+                                label
+                                    | Relationship to 1
+                                    sup st
+                                    |  Testator
+                                input.form-control(name='relationship_testator_one_1', type='text', placeholder='Relationship')
+                            .col-sm-6
+                                label
+                                    | Relationship to 2
+                                    sup nd
+                                    |  Testator
+                                input.form-control(name='relationship_testator_two_1', type='text', placeholder='Relationship')
+                        // Title, Forename, Surname
+                        .row
+                            .col-sm-2
+                                label(for='title') Title
+                                select#title.form-control
+                                    option(name='title_1', value='mr') Mr
+                                    option(name='title_1', value='mrs') Mrs
+                                    option(name='title_1', value='miss') Miss
+                                    option(name='title_1', value='ms') Ms
+                            .col-sm-4
+                                label Forename
+                                input.form-control(type='text', name='first_name_1', placeholder='Forename', required='')
+                            .col-sm-6
+                                label Surname
+                                input.form-control(type='text', name='last_name_1', placeholder='Surname', required='')
+                        // Phone Numbers (Mobile & Home)
+                        .row
+                            .col-sm-6
+                                label Tel (Mobile)
+                                input.form-control(type='text', name='tel_mobile_1', placeholder='Mobile Telephone')
+                            .col-sm-6
+                                label Tel (Home)
+                                input.form-control(type='text', name='tel_home_1', placeholder='Home Telephone')
+                        // Sole, Joint or Alternative?
+                        .row
+                            .col-md-12
+                                label Sole, Joint or Alternative?
+                        .row
+                            .col-sm-3
+                                .radio
+                                    label
+                                        input(checked='', type='radio', name='sole_joint_alternative_1', value='sole')
+                                        |  Sole
+                            .col-sm-3
+                                .radio
+                                    label
+                                        input(type='radio', name='sole_joint_alternative_1', value='joint')
+                                        |  Joint
+                            .col-sm-3
+                                .radio
+                                    label
+                                        input(type='radio', name='sole_joint_alternative_1', value='alternative')
+                                        |  Alternative
+                    // Address
+                    .col-md-6
+                        label Address Line 1
+                        input.form-control(type='text', name='address_line_1_1', placeholder='Address Line 1', required='')
+                        label Address Line 2
+                        input.form-control(type='text', name='address_line_2_1', placeholder='Address Line 2', required='')
+                        .row
+                            .col-sm-6
+                                label Town
+                                input.form-control(type='text', name='town_1', placeholder='Town', required='')
+                            .col-sm-6
+                                label Postcode
+                                input.form-control(type='text', name='postcode_1', placeholder='Postcode', required='')
+                hr
+        // Add & Remove Buttons For Executor Details
+        .container
+            .row
+                .col-md-12
+                    button#addExecutor.btn.btn-lg.btn-primary(type='button')
+                        i.fas.fa-fw.fa-plus
+                        |  Add Executor
+                    button#deleteExecutor.btn.btn-lg.btn-danger(type='button')
+                        i.fas.fa-fw.fa-minus
+                        |  Delete Executor
+        // Professional Executor Details
+        .container
+            #professional_executors.row
+                // Professional Executors Title
+                .col-sm-12
+                    h2 Professional Executors
+                // TWP to Act?
+                .col-md-12
+                    label TWP to Act?
+                .col-md-12
+                    .row
+                        .col-sm-3
+                            .radio
+                                label
+                                    input(checked='', type='radio', name='twp_to_act', value='yes')
+                                    | Yes
+                        .col-sm-3
+                            .radio
+                                label
+                                    input(type='radio', name='twp_to_act', value='no')
+                                    | No
+                // This div wraps the prof exec details & buttons so we can hide them if necessary
+                #show_professional_executors.collapse.in
+                // Professional Executor Details - Dynamically Added via jQuery
+                .professional_executor_details_1
+                    .col-md-6
+                        h2 Professional Executor 1
+                        .row
+                            .col-sm-6
+                                // Firm Name
+                                label Firm Name
+                                input.form-control(type='text', name='firm_name_1', placeholder='Firm Name')
+                            .col-sm-6
+                                // Telephone Name
+                                label Business Number
+                                input.form-control(type='text', name='business_number_1', placeholder='Phone Number')
+                        // Address
+                        label Address Line 1
+                        input.form-control(type='text', name='prof_address_line_1_1', placeholder='Address Line 1')
+                        label Address Line 2
+                        input.form-control(type='text', name='prof_address_line_2_1', placeholder='Address Line 2')
+                        .row
+                            .col-sm-6
+                                label Town
+                                input.form-control(type='text', name='prof_town_1', placeholder='Town')
+                            .col-sm-6
+                                label Postcode
+                                input.form-control(type='text', name='prof_postcode_1', placeholder='Postcode')
+                        // Sole, Joint or Alternative?
+                        .row
+                            .col-md-12
+                                label Sole, Joint or Alternative?
+                        .row
+                            .col-sm-3
+                                .radio
+                                    label
+                                        input(checked='', type='radio', name='prof_sole_joint_alternative_1', value='sole')
+                                        |  Sole
+                            .col-sm-3
+                                .radio
+                                    label
+                                        input(type='radio', name='prof_sole_joint_alternative_1', value='joint')
+                                        |  Joint
+                            .col-sm-3
+                                .radio
+                                    label
+                                        input(type='radio', name='prof_sole_joint_alternative_1', value='alternative')
+                                        |  Alternative
+        // Add & Remove Buttons For Professional Executor Details
+        #prof_exec_controls.container
+            .row
+                .col-md-12
+                    button#addProfessionalExecutor.btn.btn-lg.btn-primary(type='button')
+                        i.fas.fa-fw.fa-plus
+                        |  Add Professional Executor
+                    button#deleteProfessionalExecutor.btn.btn-lg.btn-danger(type='button')
+                        i.fas.fa-fw.fa-minus
+                        |  Delete Professional Executor
+        br
+        // Next Page Button - Submits This Pages' Data
+        .container
+            .row
+                .col-sm-12
+                    button#addTestData.btn.btn-lg.btn-info(type='button')
+                        i.fas.fa-fw.fa-database
+                        |  Add Test Data
+                    button#next.btn.btn-lg.btn-success(type='button')
+                        | Next
+                        i.fas.fa-fw.fa-angle-right
+block append scripts
+    script(src="js/aoe.js")

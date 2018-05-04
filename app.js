@@ -18,11 +18,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-//const rootRoutes = ["/manage-booking", "/manage-pitches", "/manage-emails"];
+const rootRoutes = ["/forms"];
+const childRoutes = ["/forms/last-will-and-testament-executors"];
 
 //Express Static Routing
 app.use(express.static(path.join(__dirname, 'public'))); // For /
-//app.use(rootRoutes, express.static(path.join(__dirname, 'public'))); //For /x
+app.use(rootRoutes, express.static(path.join(__dirname, 'public'))); //For /x
+app.use(childRoutes, express.static(path.join(__dirname, 'punlic'))); //For /x/y/n
 
 //Configuring Passport
 let passport = require('passport');
@@ -50,9 +52,10 @@ initPassport(passport);
 
 //Page Routing
 const index = require('./routes/index')(passport);
-
+const forms = require('./routes/forms')(passport);
 
 app.use('/', index);
+app.use('/forms', forms);
 
 //Handle 404
 app.use(function(req, res) {

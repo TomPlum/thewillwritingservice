@@ -39,7 +39,7 @@ function addExecutor() {
             "                                <option name='title_" + numberOfExecutors + "' value='miss'>Miss</option>" +
             "                                <option name='title_" + numberOfExecutors + "' value='ms'>Ms</option>" +
             "                                <option name='title_" + numberOfExecutors + "' value='dr'>Dr</option>" +
-            "                                <option name='title_" + numberOfExecutors + "' value='prof'>Prof</option>" + 
+            "                                <option name='title_" + numberOfExecutors + "' value='prof'>Prof</option>" +
             "                                <option name='title_" + numberOfExecutors + "' value='rev'>Rev</option>" +
             "                            </select>" +
             "                        </div>" +
@@ -237,14 +237,14 @@ function getOrdinalSuffix(number) {
         return "rd";
     } else {
         switch (number % 10) {
-        case 1:
-            return "st";
-        case 2:
-            return "nd";
-        case 3:
-            return "rd";
-        default:
-            return "th";
+            case 1:
+                return "st";
+            case 2:
+                return "nd";
+            case 3:
+                return "rd";
+            default:
+                return "th";
         }
     }
 }
@@ -273,4 +273,57 @@ $(document).ready(() => {
     $("#addProfessionalExecutor").on("click", addProfessionalExecutor);
     $("#deleteProfessionalExecutor").on("click", deleteProfessionalExecutor);
     $("#addTestData").on("click", addTestData);
+
+    //Bind Submit (Next)
+    $("#next").on("click", () => {
+        let executors = [];
+        let professionalExecutors = [];
+
+        for (let i = 0; i < numberOfExecutors; i++) {
+            executors.push({
+                testator_one_relationship: $("input[name='relationship_testator_one_" + i + "']").val(),
+                testator_two_relationship: $("input[name='relationship_testator_two_" + i + "']").val(),
+                title: $("input[name='title_" + i + "']").val(),
+                first_name: $("input[name='first_name_" + i + "']").val(),
+                last_name: $("input[name='last_name_" + i + "']").val(),
+                tel_mobile: $("input[name='tel_mobile_" + i + "']").val(),
+                tel_home: $("input[name='tel_home_" + i + "']").val(),
+                type: $("input[name='sole_joint_alternative_" + i + "']:checked").val(),
+                address_line_one: $("input[name='address_line_1_" + i + "']").val(),
+                address_line_two: $("input[name='address_line_2_" + i + "']").val(),
+                town: $("input[name='town_" + i + "']").val(),
+                postcode: $("input[name='postcode_ + " + i + "']").val()
+            });
+        }
+
+        for (let i = 0; i < numberOfProfessionalExecutors; i++) {
+            professionalExecutors.push({
+                firm_name: $("input[name='firm_name_" + i + "']").val(),
+                phone: $("input[name='business_number_" + i + "']").val(),
+                address_line_one: $("input[name='prof_address_line_1_" + i + "']").val(),
+                address_line_two: $("input[name='prof_address_line_2_" + i + "']").val(),
+                town: $("input[name='prof_town_" + i + "']").val(),
+                postcode: $("input[name='prof_postcode_ + " + i + "']").val(),
+                type: $("input[name='prof_sole_joint_alternative_" + i + "']:checked").val(),
+            });
+        }
+
+        $.ajax({
+            url: "/forms/save-last-will-and-testament-executors",
+            type: "POST",
+            data: {
+                spouse_to_the_executor: $("input[name='spouse_to_executor']:checked").val(),
+                sole_or_joint: $("input[name='sole_or_joint']:checked").val(),
+                twp_to_act: $("input[name='twp_to_act']:checked").val(),
+                executors: executors,
+                professionalExecutors: professionalExecutors
+            },
+            success: function(res) {
+
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    })
 });
