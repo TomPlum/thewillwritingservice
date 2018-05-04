@@ -16,131 +16,116 @@ html
 
     body
         block navigation
-            .wrapper
-                // Sidebar Holder
-                nav#sidebar
-                    .sidebar-header
-                        a(href='/')
-                            h3 High Farm Camping System
-                            strong HF
-                    ul.list-unstyled.components
-                        li
-                            a(href="#user-menu", data-toggle='collapse', aria-expanded='false')
-                                i.glyphicon.glyphicon-tree-conifer
-                                | Welcome, !{username}.
-                            ul#user-menu.collapse.list-unstyled
+            .header
+                header#main-header
+                    nav.navbar.navbar-default.navbar-fixed-top
+                        .container
+                            .navbar-header
+                                button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+                                    span.icon-bar
+                                    span.icon-bar
+                                    span.icon-bar
+                                a(href="{{ 'index'|page }}")
+                                    img.menu-logo(src="{{ 'assets/images/twp-logo.png'|theme }}")
+                            #myNavbar.collapse.navbar-collapse
+                                ul.nav.navbar-nav.navbar-right
+                                    // Life Planning Drop-Down
+                                    li.dropdown.life
+                                        a.dropdown-toggle.nav-link(data-toggle='dropdown', href='#')
+                                            i.fas.fa-paste.fa-fw
+                                            |  Life Planning
+                                            span.fas.fa-angle-down
+                                        ul.dropdown-menu
+                                            li
+                                                a(href="{{ 'storage'|page }}") Storage
+                                            li
+                                                a(href="{{ 'trusts'|page }}") Trusts
+                                            li
+                                                a(href="{{ 'inheritance'|page }}") Inheritance
+                                            li
+                                                a(href="{{ 'faq'|page }}") FAQs
+                                    // Personal Services Drop-Down
+                                    li.dropdown.personal
+                                        a.dropdown-toggle.nav-link(data-toggle='dropdown', href='#')
+                                            i.fa.fa-user.fa-fw
+                                            |  Personal Services
+                                            span.fas.fa-angle-down
+                                        ul.dropdown-menu
+                                            li
+                                                a(href="{{ 'probate'|page }}") Probate
+                                            li
+                                                a(href="{{ 'careers'|page }}") Careers
+                                            li
+                                                a(href="{{ 'blog'|page }}") News / Blog
+                                            li
+                                                a(href="{{ 'contact'|page }}") Contact Us
+                                    // Online Services Drop-Down
+                                    li.dropdown.online
+                                        a.dropdown-toggle.nav-link(data-toggle='dropdown', href='#')
+                                            i.fa.fa-mouse-pointer.fa-fw
+                                            |  Online Services
+                                            span.fas.fa-angle-down
+                                        ul.dropdown-menu
+                                            li
+                                                a(href="{{ 'wills'|page }}") Wills
+                                            li
+                                                a(href="{{ 'trusts'|page }}") Trusts
+                                            li
+                                                a(href="{{ 'powerofattorney'|page }}") Lasting Powers of Attorney
+                                            li
+                                                a(href="{{ 'funeral'|page }}") Funeral Plans
+                                    // News
+                                    li.news
+                                        a.nav-link(href="{{ 'blog'|page }}")
+                                            i.far.fa-newspaper.fa-fw
+                                            |  News
+        block body-content
+        block footer
+            footer#footer
+                .container
+                    .row.upper_section
+                        .col-md-4
+                            h3 Contact Us...
+                            ul.unstyled.footer-links
+                                li The Willwriting Partnership
+                                li Imperial House
+                                li Hornby Street
+                                li Bury
+                                li BL9 5BN
+                                li 0161 705 4382
+                                li info@twp.co.uk
+                        .col-md-4
+                            h3 Services
+                            ul.unstyled
                                 li
-                                    a(href="/profile")
-                                        i.glyphicon.glyphicon-user
-                                        |  Profile
+                                    a.footer-links(href="{{ 'wills'|page }}") Wills
                                 li
-                                    a(href="/change-password")
-                                        i.glyphicon.glyphicon-lock
-                                        |  Change Password
+                                    a.footer-links(href="{{ 'funeral'|page }}") Funeral Plans
                                 li
-                                    a(href="/logout")
-                                        i.glyphicon.glyphicon-log-out
-                                        | Logout
-                    ul.list-unstyled.components
-                        li#dashboard
-                            a(href='/dashboard')
-                                // <i class="fas fa-fw fa-tachometer-alt"></i>
-                                i.glyphicon.glyphicon-home
-                                | Dashboard
-                        li#bookPitch
-                            a(href='/book')
-                                // <i class="far fa-fw fa-calendar-alt"></i>
-                                i.glyphicon.glyphicon-book
-                                | Book Pitch
-                        li#bookingManagement
-                            a(href='#manage-booking', data-toggle='collapse', aria-expanded='false')
-                                // <i class="far fa-fw fa-clipboard"></i>
-                                i.glyphicon.glyphicon-th-list
-                                | Booking Management
-                            ul#manage-booking.collapse.list-unstyled
-                                li#bookingsOverview
-                                    a(href='/manage-booking/overview')
-                                        i.glyphicon.glyphicon-align-justify
-                                        | Bookings Overview
-                                li#bookingHistory
-                                    a(href="/manage-booking/booking-history")
-                                        i.glyphicon.glyphicon-time
-                                        | Booking History
-                        li#customerManagement
-                            a(href='/customer-overview', aria-expanded='false')
-                                // <i class="fa fa-fw fa-address-book"></i>
-                                i.glyphicon.glyphicon-user
-                                | Customer Management
-                        li#pitchManagement
-                            a(href='/manage-pitches/pitch-management')
-                                i.glyphicon.glyphicon-tent
-                                | Pitch Management
-                        //li#emailManagement
-                            a(href='/email-management')
-                                i.glyphicon.glyphicon-envelope
-                                | Email Management
-                        li#gasCylinderOverview
-                            a(href='/gas-cylinder-overview')
-                                i.glyphicon.glyphicon-fire
-                                | Gas Cylinder Overview
-                        //li
-                            a(href='#manage-pitch', data-toggle='collapse', aria-expanded='false')
-                                // <i class="fa fa-fw fa-map-signs"></i>
-                                i.glyphicon.glyphicon-tent
-                                | Pitch Management
-                            ul#manage-pitch.collapse.list-unstyled
+                                    a.footer-links(href="{{ 'inheritance'|page }}") Inheritance Tax
                                 li
-                                    a(href='/manage-pitches/add')
-                                        i.glyphicon.glyphicon-plus
-                                        | Add Pitch
+                                    a.footer-links(href="{{ 'probate'|page}}") Probate
                                 li
-                                    a(href='/manage-pitches/edit')
-                                        i.glyphicon.glyphicon-pencil
-                                        | Edit Pitch
+                                    a.footer-links(href="{{ 'storage'|page }}") Storage
                                 li
-                                    a(href='/manage-pitches/delete')
-                                        i.glyphicon.glyphicon-minus
-                                        | Delete Pitch
-                        li#helpAndInformation
-                            a(href="/help")
-                                i.glyphicon.glyphicon-info-sign
-                                | Help &amp; Information
-                // Page Content Holder
-                #content
-                    nav.navbar.navbar-default
-                        .container-fluid
-                            .col-md-7.no-gutters-left
-                                button#sidebarCollapse.btn.btn-info.navbar-btn(type='button')
-                                    i#chevron.fa.fa-fw.fa-chevron-left
-                                    span Menu
-                                block top-content
-                            .col-md-4
-                                p#today
-                            .col-md-1
-                                p#current-time
-                                    span.fa.fa-fw.fa-spinner.fa-pulse
-                    block body-content
+                                    a.footer-links(href="{{ 'trusts'|page }}") Trusts
+                        .col-md-4
+                            h3 About Us
+                            ul.unstyled
+                                li
+                                    a.footer-links(href="{{ 'history'|page }}") Company History
+                                li
+                                    a.footer-links(href="{{ 'glossary'|page }}") Glossary Of Terms
+                                li
+                                    a.footer-links(href="{{ 'trivia'|page }}") Trivia
+                                li
+                                    a.footer-links(href="{{ 'careers'|page }}") Careers
+                                li
+                                    a.footer-links(href="{{ 'faq'|page }}") Frequently asked questions
     block scripts
         // jQuery CDN
         script(src='https://code.jquery.com/jquery-1.12.0.min.js')
-        script(src="js/ui.js")
-        script(src="js/hotkeys.js")
-        script(src="js/general-functions.js")
-        // Bootstrap JS CDN
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-        script(type='text/javascript').
-            $(document).ready(function () {
-                const sidebarCollapse = $('#sidebarCollapse');
 
-                //Collapses & Opens the sidebar menu upon clicking 'Menu'
-                sidebarCollapse.on('click', function () {
-                    $('#sidebar').toggleClass('active');
-                });
-
-                //Menu Chevron Change on Click (The little arrow in the 'Menu' Button)
-                sidebarCollapse.on("click", function () {
-                    $("#chevron").toggleClass("fa-chevron-left").toggleClass("fa-chevron-right");
-                });
-            });
 
 

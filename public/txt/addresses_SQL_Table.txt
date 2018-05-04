@@ -1,5 +1,0 @@
-CREATE TABLE addresses (
-    address_id     INTEGER PRIMARY KEY AUTOINCREMENT,
-    address_line_1 TEXT    NOT NULL,
-    address_line_2 TEXT
-);

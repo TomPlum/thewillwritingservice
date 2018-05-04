@@ -1,0 +1,119 @@
+extends structure
+
+block append body-content
+    .text-center
+        .container-fluid.bg_image_top.rounded
+            img.img-fluid(src="{{ 'assets/images/bg1.jpeg'|theme }}")
+    .container.main_info
+        .card-group
+            .col-sm-6.col-12.info_left
+                .card
+                    .card-body
+                        img.img-fluid.info_bg(src="{{ 'assets/images/825.jpeg'|theme }}")
+            .col-sm-6.col-12.info_right
+                .card.card_info_right
+                    .card-body
+                        h2.card-title.text-center The Willwriting Partnership
+                        h4.card-title.text-center More than just a will-writing service
+                        p.card-text
+                            | The Willwriting Partnership has been established since 1999. Featured in the Rochdale Observer, on Salford City Radio, Rossendale Radio and in other media in our area, we are still here and still going strong. Laws relating to your estate can change and we will endeavour to get in touch whenever there is something you can do to take advantage of a change. We will be available if you need us in the future and are just at the end of the phone for any advice relating to your Will, your estate or the protection of your assets.
+                        .text-center
+                            a.btn.btn-primary.btn-lg(href="{{ 'history'|page }} ") Discover More
+    .container
+        h3 What we do...
+        p.lead
+            i.fa.fa-info-circle.fa-2x(aria-hidden='true')
+            |    We help honest, hard-working people to make sure their assets go to the people they want to inherit.
+        p  We make sure your cheating ex-husband doesn’t inherit your money!
+        p  We make sure you don’t leave a mess when you die.
+        p
+            | We protect your assets from the con-men, identity thieves and criminals that target the elderly.
+        p
+            | We help you as a concerned parent to appoint guardians in case you pass away whilst your children are young.
+        p
+            | We put working-class and middle-class families on a level playing field with the rich and powerful that use the legal means to keep money in the bloodline.
+        hr
+        br
+        .row
+            .col-sm-4.col-md-4.col-lg-4.col-12
+                .card.bg-light.mb-3
+                    .card-body
+                        img.card-img-top(src="{{ 'assets/images/088.png'|theme }}", alt='Card image cap', style='width:20%;')
+                        h3.card-title Wills
+                        p.card-text With supporting text below as a natural lead-in to additional content.
+                    a.btn.btn-primary.btn-lg.btn-bloc(href="{{ 'wills'|page }}") Learn More...
+            .col-sm-4.col-md-4.col-lg-4.col-12
+                .card.bg-light.mb-3
+                    .card-body
+                        img.card-img-top(src="{{ 'assets/images/092.png'|theme }}", alt='Card image cap', style='width:20%;')
+                        h3.card-title Funeral Plans
+                        p.card-text With supporting text below as a natural lead-in to additional content.
+                    a.btn.btn-primary.btn-lg.btn-bloc(href="{{ 'funeral'|page }}") Learn More...
+            .col-sm-4.col-md-4.col-lg-4.col-12
+                .card.bg-light.mb-3
+                    .card-body
+                        img.card-img-top(src="{{ 'assets/images/080.png'|theme }}", alt='Card image cap', style='width:20%;')
+                        h3.card-title Inheritance Tax
+                        p.card-text With supporting text below as a natural lead-in to additional content.
+                    a.btn.btn-primary.btn-lg.btn-bloc(href="{{ 'inheritance'|page }}") Learn More...
+        br
+        .row
+            .col-sm-4.col-md-4.col-lg-4.col-12
+                .card.bg-light.mb-3
+                    .card-body
+                        img.card-img-top(src="{{ 'assets/images/107.png'|theme }}", alt='Card image cap', style='width:20%;')
+                        h3.card-title Probate
+                        p.card-text With supporting text below as a natural lead-in to additional content.
+                    a.btn.btn-primary.btn-lg.btn-bloc(href="{{ 'probate'|page }}") Learn More...
+            .col-sm-4.col-md-4.col-lg-4.col-12
+                .card.bg-light.mb-3
+                    .card-body
+                        img.card-img-top(src="{{ 'assets/images/119.png'|theme }}", alt='Card image cap', style='width:20%;')
+                        h3.card-title Storage
+                        p.card-text With supporting text below as a natural lead-in to additional content.
+                    a.btn.btn-primary.btn-lg.btn-bloc(href="{{ 'storage'|page }}") Learn More...
+            .col-sm-4.col-md-4.col-lg-4.col-12
+                .card.bg-light.mb-3
+                    .card-body
+                        img.card-img-top(src="{{ 'assets/images/107.png'|theme }}", alt='Card image cap', style='width:20%;')
+                        h3.card-title Trusts
+                        p.card-text With supporting text below as a natural lead-in to additional content.
+                    a.btn.btn-primary.btn-lg.btn-bloc(href="{{ 'trusts'|page }}") Learn More...
+    br
+    .container
+        #carouselExampleIndicators.carousel.slide(data-ride='carousel')
+            ol.carousel-indicators
+                li.active(data-target='#carouselExampleIndicators', data-slide-to='0')
+                li(data-target='#carouselExampleIndicators', data-slide-to='1')
+                li(data-target='#carouselExampleIndicators', data-slide-to='2')
+            .carousel-inner(role='listbox')
+                .carousel-item.active
+                    img.mx-auto.d-block.img-fluid(src="{{ 'assets/images/tes339.jpg'|theme }}", alt='First slide')
+                    .carousel-caption.d-none.d-md-block
+                        h3 Colin, Littleborough
+                        p
+                            i.fa.fa-quote-left(aria-hidden='true')
+                            |  Your approach to taking care of the will writing and telling us just what was necessary was a great lesson in itself.
+                            i.fa.fa-quote-right(aria-hidden='true')
+                .carousel-item
+                    img.mx-auto.d-block.img-fluid.text-center(src="{{ 'assets/images/tes845.jpg'|theme }}", alt='Second slide')
+                    .carousel-caption.d-none.d-md-block
+                        h3 Stuart & Sadie, Whitworth
+                        p
+                            i.fa.fa-quote-left(aria-hidden='true')
+                            |  The service was thorough, polite, caring and above all most professional. We were so impressed, nothing was too much trouble. You made what can be a rather sombre time an ease to deal with.
+                            i.fa.fa-quote-right(aria-hidden='true')
+                .carousel-item
+                    img.mx-auto.d-block.img-fluid(src="{{ 'assets/images/tes658.jpg'|theme }}", alt='Third slide')
+                    .carousel-caption.d-none.d-md-block
+                        h3 Andrea, Rochdale
+                        p
+                            i.fa.fa-quote-left(aria-hidden='true')
+                            |  he service was very well structured and easy to understand. I found the service to be very professional, well organised and yet at the same time also very personal to my needs, and very relaxed.
+                            i.fa.fa-quote-right(aria-hidden='true')
+            a.carousel-control-prev(href='#carouselExampleIndicators', role='button', data-slide='prev')
+                span.carousel-control-prev-icon(aria-hidden='true')
+                span.sr-only Previous
+            a.carousel-control-next(href='#carouselExampleIndicators', role='button', data-slide='next')
+                span.carousel-control-next-icon(aria-hidden='true')
+                span.sr-only Next

@@ -24,7 +24,9 @@ const ifLoggedIn = function (req, res, next) {
 };
 
 module.exports = function (passport) {
-
+    router.get('/', (req, res) => {
+        res.render('index', {title: "TheWillwritingPartnership"});
+    });
 
     return router;
 };
