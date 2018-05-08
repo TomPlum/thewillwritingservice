@@ -20,8 +20,9 @@ const loggedIn = function (req) {
 };
 
 function getUsername(req) {
-    return username = ((req.isAuthenticated()) ? "<i class='fas fa-user'></i>&nbsp;" + req.user.username : "<a id='registerButton' href='#' role='button' data-toggle='modal' data-target='#login-modal' class='btn login-button'><span class='fas fa-fw fa-sign-in-alt'></span> Login</a>");
+    return ((req.isAuthenticated()) ? "<i class='fas fa-user'></i>&nbsp;" + req.user.username : "<a id='registerButton' href='#' role='button' data-toggle='modal' data-target='#login-modal' class='btn login-button'><span class='fas fa-fw fa-sign-in-alt'></span> Login</a>");
 }
+
 module.exports = function (passport) {
     /* GET Landing Page */
     router.get('/', (req, res) => {
@@ -30,12 +31,12 @@ module.exports = function (passport) {
 
     /* GET Last Will & Testament Page */
     router.get('/last-will-and-testament', (req, res) => {
-       res.render('last-will-and-testament', {title: "Last Will & Testament"});
+       res.render('last-will-and-testament', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* GET Login Page */
     router.get('/login', (req, res) => {
-       res.render('login', {title: "Login"});
+       res.render('login', {title: "Login", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* GET Unauthorised Page */
@@ -57,6 +58,12 @@ module.exports = function (passport) {
         session: false,
         failureFlash: true
     }));
+
+    /*Handle Logout */
+    router.get('/logout', (req, res) => {
+        req.logout();
+        res.redirect('/');
+    });
 
     return router;
 };

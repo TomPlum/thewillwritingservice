@@ -24,7 +24,7 @@ const ifLoggedIn = function (req, res, next) {
 module.exports = function (passport) {
     /* GET Last Will & Testament - Page 1 (Executors) */
     router.get('/last-will-and-testament-executors', (req, res) => {
-        res.render('forms/lwat/lwat-executors', {title: "Last Will & Testament"});
+        res.render('forms/lwat/lwat-executors', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* POST Database Last Will & Testament - Page 1 (Executors) */

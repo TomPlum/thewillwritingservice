@@ -456,13 +456,13 @@ img.menu-logo {
     min-width: 5em;
 }
 */
-.login-button {
+.login-button, .logout-button {
     -webkit-appearance: button;
     -moz-appearance: button;
     appearance: button;
     text-decoration: none;
-    padding: 8px 12px;
     float: right;
+    padding: 8px 12px;
     margin: 10px;
     border: 2px solid rgb(120, 75, 137);
     border-radius: 4px;
@@ -472,7 +472,7 @@ img.menu-logo {
     transition: all ease 0.5s;
 }
 
-.login-button:hover {
+.login-button:hover, .logout-button:hover {
     background-color: rgb(120, 75, 137);
     color: white;
     text-decoration: none;

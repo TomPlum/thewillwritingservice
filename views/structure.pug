@@ -214,5 +214,6 @@ html
 
             if(loggedIn === "true") {
                 $("#registerButton").css("display", "none");
-                $("#loginButton").html("!{username}").prop("href", "/profile").removeProp("data-toggle").removeProp("data-target");
+                $("#loginButton").html("!{username}").prop("href", "/profile").removeAttr("data-toggle").removeAttr("data-target");
+                $(".login-container").append("<a id='logoutButton' href='/logout' role='button' class='btn logout-button'><span class='fas fa-fw fa-sign-out-alt'></span> Logout</a>");
             }
