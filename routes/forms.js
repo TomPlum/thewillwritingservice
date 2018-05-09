@@ -27,16 +27,15 @@ module.exports = function (passport) {
         res.render('forms/lwat/lwat-executors', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
-    /* POST Database Last Will & Testament - Page 1 (Executors) */
+    /* POST Database Last Will & Testament - Page 1 (Executors)
+    * This function uses an asynchronous loop from the npm library 'async' to do the following;
+    * 1: Insert a AppointmentOfExecutors row into the database
+    * 2: Select the last inserted ID from the database (from the record above)
+    * 3: Uses npm 'node-async-loop' to iterate over the array of Executors and inserts a row for each one
+    * 4: Uses node-async-loop again to iterate over the array of ProfessionalExecutors and inserts a row for each
+    * 5: Finally, if all previous functions succeeded, it will send back a message to the page.
+    * */
     router.post('/save-last-will-and-testament-executors', (req, res) => {
-        console.log("There are " + req.body.executors.length + " executors.");
-        console.log("There are " + req.body.professionalExecutors.length + " professional executors.");
-        console.log(req.body.executors);
-        //console.log(req.body.professionalExecutors);
-        //console.log(req.body.twp_to_act);
-        //console.log(req.body.sole_or_joint);
-        //console.log(req.body.spouse_to_the_executor);
-
         async.waterfall([
             callback => {
                 mysql.connection.query(
