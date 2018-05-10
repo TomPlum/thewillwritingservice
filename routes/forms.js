@@ -32,6 +32,17 @@ module.exports = function (passport) {
         res.render('forms/lwat/lwat-executors', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
+    router.post('/create-last-will-and-testament', (req, res) => {
+        mysql.connection.query("INSERT INTO LastWillAndTestament (date, user_id, completed, progress) VALUES (?, ?, ?, ?)", [new Date(), req.user.user_id, 0, 1], err => {
+            if (err) {
+                console.log(err);
+                res.send({error: err, succes: null});
+            } else {
+                res.send({error: null, success: true});
+            }
+        });
+    });
+
     /* POST Database Last Will & Testament - Page 1 (Executors)
     * This function uses an asynchronous loop from the npm library 'async' to do the following;
     * 1: Insert a AppointmentOfExecutors row into the database

@@ -1,6 +1,7 @@
 #contentWrapper {
     border: 2px solid #7a43b6;
-    height: 253px;
+    height: auto;
+    padding: 0 10px 10px 10px;
 }
 
 .nav-side-menu {

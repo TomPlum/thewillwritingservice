@@ -18,7 +18,7 @@ block append body-content
                                     span.arrow
                             ul#profile.sub-menu.collapse
                                 li.active
-                                    a(href='#personalInformation', data-toggle='tab')
+                                    a#displayPersonalInformation(href='#personalInformation', data-toggle='tab')
                                         i.fa.fa-fw.fa-user
                                         |  Personal Information
                                 li
@@ -32,7 +32,7 @@ block append body-content
                                     span.arrow
                             ul#service.sub-menu.collapse
                                 li
-                                    a(href='#wills', data-toggle='tab')
+                                    a#displayWills(href='#wills', data-toggle='tab')
                                         i.fas.fa-fw.fa-pencil-alt
                                         |  Wills
                                 li
@@ -50,7 +50,7 @@ block append body-content
             .col-xs-9#contentWrapper
                 .tab-content
                     #personalInformation.tab-pane.active
-                        form#updatePersonalInformation
+                        form
                             .container-fluid
                                 .row
                                     .col-xs-12
@@ -61,10 +61,20 @@ block append body-content
                                 .row
                                     .col-xs-6
                                         label Username
-                                        input.form-control(type="text" placeholder="Username")
+                                        input#personalUsername.form-control(type="text" placeholder="Username")
 
                                         label Email
-                                        input.form-control(type="text" placeholder="Email")
+                                        input#personalEmail.form-control(type="text" placeholder="Email")
+
+                                        label First Name
+                                        input#personalFirstName.form-control(type="text" placeholder="First Name")
+
+                                        label Last Name
+                                        input#personalLastName.form-control(type="text" placeholder="Last Name")
+
+                                        button#updatePersonalInformation.btn.btn-success(type="button")
+                                            i.fas.fa-fw.fa-user
+                                            |  Update Information
 
                     #changePassword.tab-pane
                         h3 Change Password

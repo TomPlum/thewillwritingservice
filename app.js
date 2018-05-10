@@ -53,9 +53,11 @@ initPassport(passport);
 //Page Routing
 const index = require('./routes/index')(passport);
 const forms = require('./routes/forms')(passport);
+const profile = require('./routes/profile')(passport);
 
 app.use('/', index);
 app.use('/forms', forms);
+app.use('/profile', profile);
 
 //Handle 404
 app.use(function(req, res) {

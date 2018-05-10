@@ -12,5 +12,15 @@ block append scripts
     script(type="text/javascript").
         //Bind Will Button Function Here
         let createWill = $("#createWill").on("click", function() {
-            window.location = "/forms/last-will-and-testament-executors";
+            //window.location = "/forms/last-will-and-testament-executors";
+            $.ajax({
+                type: "POST",
+                url: "/forms/create-last-will-and-testament",
+                success: function(data) {
+
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
         });
