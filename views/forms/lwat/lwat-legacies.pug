@@ -1,4 +1,69 @@
 extends ../../structure
 
+block append stylesheets
+    link(rel="stylesheet", href="css/lwat.css")
+
 block append body-content
-    h3 Legacies
+    form
+        #legacies.container
+            //Legacies Title
+            .row
+                .col-sm-12
+                    h1 Legacies
+                    hr
+            .row
+                //Legacies According to Memorandum?
+                .col-sm-6
+                    label Legacies According to Memorandum?
+                        .radio
+                            label
+                                input(checked='', type='radio', name='memorandum', value='true')
+                                |  Yes
+                        .radio
+                            label
+                                input(type='radio', name='memorandum', value='false')
+                                |  No
+                //Promises of Property?
+                .col-sm-6
+                    label Have you made any promises of property to anybody, written or not?
+                        .radio
+                            label
+                                input(checked='', type='radio', name='promises', value='true')
+                                |  Yes
+                        .radio
+                            label
+                                input(type='radio', name='promises', value='false')
+                                |  No
+            hr
+            //Gifts - These can be dynamically added via jQuery
+            #gift_1
+                .row
+                    .col-md-12
+                        h2 Details of 1
+                            sup st
+                            |  Gift
+                .row.gift-details
+                    .col-xs-12
+                        label Description of Gift
+                        input.form-control(name='description_1', type='text', placeholder='Description')
+                //Owner
+                .row
+                    .col-md-12
+                        label Owner
+                .row
+                    .col-sm-3
+                        .radio
+                            label
+                                input(checked='', type='radio', name='owner_1', value='Testator One (Own Death)')
+                                |  Testator One (Own Death)
+                    .col-sm-3
+                        .radio
+                            label
+                                input(type='radio', name='owner_1', value='Testator Two (Own Death)')
+                                |  Testator Two (Own Death)
+                    .col-sm-3
+                        .radio
+                            label
+                                input(type='radio', name='owner_1', value='Jointly (2nd Death)')
+                                |  Jointly (2nd Death)
+

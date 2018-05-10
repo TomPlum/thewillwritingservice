@@ -46,7 +46,7 @@
 }
 .nav-side-menu ul :not(collapsed) .arrow:before,
 .nav-side-menu li :not(collapsed) .arrow:before {
-    font-family: FontAwesome;
+    font-family: 'Font Awesome 5 Free';
     content: "\f078";
     font-weight: 900;
     display: inline-block;
@@ -82,9 +82,10 @@
 }
 .nav-side-menu ul .sub-menu li:before,
 .nav-side-menu li .sub-menu li:before {
-    font-family: FontAwesome;
+    font-family: 'Font Awesome 5 Free';
     content: "\f105";
     display: inline-block;
+    font-weight: 900;
     padding-left: 10px;
     padding-right: 10px;
     vertical-align: middle;

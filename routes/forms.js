@@ -32,6 +32,16 @@ module.exports = function (passport) {
         res.render('forms/lwat/lwat-executors', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
+    /* GET Last Will & Testament  - Page 2 (Legacies) */
+    router.get('/last-will-and-testament-legacies', (req, res) => {
+        res.render('forms/lwat/lwat-legacies.pug', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
+    });
+
+    /* GET Last Will & Testament - Page 3 (Residual Estate) */
+    router.get('/last-will-and-testament-residual-estate', (req, res) => {
+        res.render('forms/lwat/lwat-residual-estate', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
+    });
+
     router.post('/create-last-will-and-testament', (req, res) => {
         mysql.connection.query("INSERT INTO LastWillAndTestament (date, user_id, completed, progress) VALUES (?, ?, ?, ?)", [new Date(), req.user.user_id, 0, 1], err => {
             if (err) {
@@ -168,11 +178,6 @@ module.exports = function (passport) {
                 res.status(200).send({success: false});
             }
         });
-    });
-
-    /* GET Last Will & Testament  - Page 2 (Legacies) */
-    router.get('/last-will-and-testament-legacies', (req, res) => {
-        res.render('forms/lwat/lwat-legacies.pug', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* GET Payment Form */

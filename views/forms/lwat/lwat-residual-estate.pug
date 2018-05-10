@@ -1,4 +1,162 @@
 extends ../../structure
 
+block append stylesheets
+    link(rel="stylesheet", href="css/lwat.css")
+
 block append body-content
-    h3 Residual Estate
+    form
+        #residualEstate.container
+            //Residual Estate Title
+            .row
+                .col-sm-12
+                    h1 Residual Estate
+                    hr
+            .row
+                //Any notes on special reqs?
+                .col-md-6
+                    label Any notes on special requirements that call for a trust?
+                        .radio
+                            label
+                                input(checked='', type='radio', name='notes', value='true')
+                                |  Yes
+                        .radio
+                            label
+                                input(type='radio', name='notes', value='false')
+                                |  No
+                //Pass to spouse?
+                .col-md-6
+                    label To pass to spouse on 1
+                        sup st
+                        |  death?
+                        .radio
+                            label
+                                input(checked='', type='radio', name='pass_to_spouse', value='true')
+                                |  Yes
+                        .radio
+                            label
+                                input(type='radio', name='pass_to_spouse', value='false')
+                                |  No
+                //Residue to be distributed in equal proportions?
+                .col-md-12
+                    label Residue to be distributed in equal proportions?
+                        .radio
+                            label
+                                input(checked='', type='radio', name='distribute_residue', value='true')
+                                |  Yes
+                        .radio
+                            label
+                                input(type='radio', name='distribute_residue', value='false')
+                                |  No
+            hr
+            // Beneficiary - These can be dynamically added via jQuery
+            #beneficiary_1
+                .row
+                    .col-md-12
+                        h2 Details of 1
+                            sup st
+                            |  Beneficiary
+                .row.beneficiary-details
+                    .col-md-6
+                        // Relationship to 1st & 2nd Testators
+                        .row
+                            .col-sm-6
+                                label
+                                    | Relationship to 1
+                                    sup st
+                                    |  Testator
+                                input.form-control(name='relationship_testator_one_1', type='text', placeholder='Relationship')
+                            .col-sm-6
+                                label
+                                    | Relationship to 2
+                                    sup nd
+                                    |  Testator
+                                input.form-control(name='relationship_testator_two_1', type='text', placeholder='Relationship')
+                        // Title, Forename, Surname
+                        .row
+                            .col-sm-2
+                                label(for='title') Title
+                                select#title.form-control
+                                    option(name='title_1', value='mr') Mr
+                                    option(name='title_1', value='mrs') Mrs
+                                    option(name='title_1', value='miss') Miss
+                                    option(name='title_1', value='ms') Ms
+                            .col-sm-4
+                                label Forename
+                                input.form-control(type='text', name='first_name_1', placeholder='Forename', required='')
+                            .col-sm-6
+                                label Surname
+                                input.form-control(type='text', name='last_name_1', placeholder='Surname', required='')
+                        // Phone Numbers (Mobile & Home)
+                        .row
+                            .col-sm-6
+                                label Tel (Mobile)
+                                input.form-control(type='text', name='tel_mobile_1', placeholder='Mobile Telephone')
+                            .col-sm-6
+                                label Tel (Home)
+                                input.form-control(type='text', name='tel_home_1', placeholder='Home Telephone')
+                        //Share to Beneficiary?
+                        .row
+                            .col-xs-6
+                                label Share to Beneficiary?
+                                input.form-control(type="text", name="share_to_beneficiary_1", placeholder="Percentage")
+                            .col-xs-6
+                                label At Age
+                                input.form-control(type="text", name="share_age_1", placeholder="Age")
+                            .col-xs-6
+                                label Or to Issue?
+                                .row
+                                    .col-xs-6
+                                        .radio
+                                            label
+                                                input(checked='', type='radio', name='to_issue_1', value='true')
+                                                |  Yes
+                                    .col-xs-6
+                                        .radio
+                                            label
+                                                input(type='radio', name='to_issue_1', value='false')
+                                                |  No
+                            .col-xs-6
+                                label At Age
+                                input.form-control(type="text", name="to_issue_age_1", placeholder="Age")
+                    // Address
+                    .col-md-6
+                        label Address Line 1
+                        input.form-control(type='text', name='address_line_1_1', placeholder='Address Line 1', required='')
+                        label Address Line 2
+                        input.form-control(type='text', name='address_line_2_1', placeholder='Address Line 2', required='')
+                        .row
+                            .col-sm-6
+                                label Town
+                                input.form-control(type='text', name='town_1', placeholder='Town', required='')
+                            .col-sm-6
+                                label Postcode
+                                input.form-control(type='text', name='postcode_1', placeholder='Postcode', required='')
+                hr
+        // Add & Remove Buttons For Executor Details
+        #beneficiaryControls.container
+            .row
+                .col-md-12
+                    button#addBeneficiary.btn.btn-lg.btn-primary(type='button')
+                        i.fas.fa-fw.fa-plus
+                        |  Add Beneficiary
+                    button#deleteBeneficiary.btn.btn-lg.btn-danger(type='button')
+                        i.fas.fa-fw.fa-minus
+                        |  Delete Beneficiary
+        //Reserve Beneficiaries
+        #reserveBeneficiaries.container
+            .row
+                .col-xs-12
+                    h2 Reserve Beneficiaries (Optional)
+                    hr
+        #reserveBeneficiaryControls.container
+            .row
+                .col-md-12
+                    button#addReserveBeneficiary.btn.btn-lg.btn-primary(type='button')
+                        i.fas.fa-fw.fa-plus
+                        |  Add Reserve Beneficiary
+                    button#deleteReserveBeneficiary.btn.btn-lg.btn-danger(type='button')
+                        i.fas.fa-fw.fa-minus
+                        |  Delete Reserve Beneficiary
+
+block append scripts
+    script(src="js/residual-estate.js")
