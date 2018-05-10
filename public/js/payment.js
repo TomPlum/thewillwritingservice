@@ -1,21 +1,21 @@
-let $form = $('#payment-form');
-$form.on('submit', payWithStripe);
+let form = $('#payment-form');
+form.on('submit', payWithStripe);
 
 /* If you're using Stripe for payments */
 function payWithStripe(e) {
     e.preventDefault();
 
     /* Visual feedback */
-    $form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
+    form.find('[type=submit]').html('Validating <i class="fa fa-spinner fa-pulse"></i>');
 
-    let PublishableKey = 'pk_test_b1qXXwATmiaA1VDJ1mOVVO1p'; // Replace with your API publishable key
+    let PublishableKey = 'pk_test_5YmwuKfLl2zKOjnjnwCmEZmZ'; // Replace with your API publishable key
     Stripe.setPublishableKey(PublishableKey);
 
     /* Create token */
-    let expiry = $form.find('[name=cardExpiry]').payment('cardExpiryVal');
+    let expiry = form.find('[name=cardExpiry]').payment('cardExpiryVal');
     let ccData = {
-        number: $form.find('[name=cardNumber]').val().replace(/\s/g,''),
-        cvc: $form.find('[name=cardCVC]').val(),
+        number: form.find('[name=cardNumber]').val().replace(/\s/g,''),
+        cvc: form.find('[name=cardCVC]').val(),
         exp_month: expiry.month,
         exp_year: expiry.year
     };
@@ -23,16 +23,16 @@ function payWithStripe(e) {
     Stripe.card.createToken(ccData, function stripeResponseHandler(status, response) {
         if (response.error) {
             /* Visual feedback */
-            $form.find('[type=submit]').html('Try again');
+            form.find('[type=submit]').html('Try again');
             /* Show Stripe errors on the form */
-            $form.find('.payment-errors').text(response.error.message);
-            $form.find('.payment-errors').closest('.row').show();
+            form.find('.payment-errors').text(response.error.message);
+            form.find('.payment-errors').closest('.row').show();
         } else {
             /* Visual feedback */
-            $form.find('[type=submit]').html('Processing <i class="fa fa-spinner fa-pulse"></i>');
+            form.find('[type=submit]').html('Processing <i class="fa fa-spinner fa-pulse"></i>');
             /* Hide Stripe errors on the form */
-            $form.find('.payment-errors').closest('.row').hide();
-            $form.find('.payment-errors').text("");
+            form.find('.payment-errors').closest('.row').hide();
+            form.find('.payment-errors').text("");
             // response contains id and card, which contains additional card details
             console.log(response.id);
             console.log(response.card);
@@ -43,13 +43,13 @@ function payWithStripe(e) {
             })
             // Assign handlers immediately after making the request,
                 .done(function(data, textStatus, jqXHR) {
-                    $form.find('[type=submit]').html('Payment successful <i class="fa fa-check"></i>').prop('disabled', true);
+                    form.find('[type=submit]').html('Payment successful <i class="fa fa-check"></i>').prop('disabled', true);
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
-                    $form.find('[type=submit]').html('There was a problem').removeClass('success').addClass('error');
+                    form.find('[type=submit]').html('There was a problem').removeClass('success').addClass('error');
                     /* Show Stripe errors on the form */
-                    $form.find('.payment-errors').text('Try refreshing the page and trying again.');
-                    $form.find('.payment-errors').closest('.row').show();
+                    form.find('.payment-errors').text('Try refreshing the page and trying again.');
+                    form.find('.payment-errors').closest('.row').show();
                 });
         }
     });
@@ -74,7 +74,7 @@ jQuery.validator.addMethod("cardCVC", function(value, element) {
     return this.optional(element) || Stripe.card.validateCVC(value);
 }, "Invalid CVC.");
 
-validator = $form.validate({
+validator = form.validate({
     rules: {
         cardNumber: {
             required: true,
@@ -101,15 +101,15 @@ validator = $form.validate({
 });
 
 let paymentFormReady = function() {
-    return !!($form.find('[name=cardNumber]').hasClass("success") &&
-        $form.find('[name=cardExpiry]').hasClass("success") &&
-        $form.find('[name=cardCVC]').val().length > 1);
+    return !!(form.find('[name=cardNumber]').hasClass("success") &&
+        form.find('[name=cardExpiry]').hasClass("success") &&
+        form.find('[name=cardCVC]').val().length > 1);
 };
 
-$form.find('[type=submit]').prop('disabled', true);
+form.find('[type=submit]').prop('disabled', true);
 let readyInterval = setInterval(function() {
     if (paymentFormReady()) {
-        $form.find('[type=submit]').prop('disabled', false);
+        form.find('[type=submit]').prop('disabled', false);
         clearInterval(readyInterval);
     }
 }, 250);
@@ -131,5 +131,20 @@ function addTestData() {
 }
 
 $(document).ready(() => {
-    $("#sendPayment").submit(parseCardExpiry);
+    //$("#sendPayment").submit(parseCardExpiry);
+
+    $("#sendPayment").on("click", () => {
+        parseCardExpiry();
+        console.log("Sending payment request.");
+        $.ajax({
+            type: "POST",
+            url: "php/payment.php",
+            success: function(data) {
+
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    });
 });
