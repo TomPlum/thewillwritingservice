@@ -30,8 +30,8 @@ module.exports = function (passport) {
     });
 
     /* GET Last Will & Testament Page */
-    router.get('/last-will-and-testament', (req, res) => {
-       res.render('last-will-and-testament', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
+    router.get('/wills', (req, res) => {
+       res.render('wills', {title: "Wills", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* GET Login Page */
@@ -40,8 +40,13 @@ module.exports = function (passport) {
     });
 
     /* GET Unauthorised Page */
-    router.get('/unauthorised', function (req, res) {
+    router.get('/unauthorised', (req, res) => {
         res.render('unauthorised', {title: "Unauthorised Access"});
+    });
+
+    /* GET Profile Page */
+    router.get('/profile', (req, res) => {
+       res.render('profile', {title: "Profile"});
     });
 
     /* POST Login Page */

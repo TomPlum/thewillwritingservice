@@ -1,0 +1,16 @@
+extends structure
+
+block append body-content
+    .container-fluid
+        .row
+            .col-xs-12
+                h2 Last Will & Testament
+                button.btn.btn-info.btn-lg#createWill(type="button")
+                    i.fas.fa-fw.fa-pencil-alt
+                    |  Create Will
+block append scripts
+    script(type="text/javascript").
+        //Bind Will Button Function Here
+        let createWill = $("#createWill").on("click", function() {
+            window.location = "/forms/last-will-and-testament-executors";
+        });

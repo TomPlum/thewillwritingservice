@@ -1,0 +1,88 @@
+extends structure
+
+block append stylesheets
+    link(rel="stylesheet", href="css/profile.css")
+
+block append body-content
+    .container-fluid
+        .row#profileWrapper
+            .col-xs-3#sidebarWrapper
+                .nav-side-menu
+                    i.fa.fa-bars.fa-2x.toggle-btn(data-toggle='collapse', data-target='#menu-content')
+                    .menu-list
+                        ul#menu-content.menu-content.collapse
+                            li.collapsed.active(data-toggle='collapse', data-target='#profile')
+                                a(href='#')
+                                    i.fa.fa-fw.fa-user-circle.fa-lg
+                                    |  Profile
+                                    span.arrow
+                            ul#profile.sub-menu.collapse
+                                li.active
+                                    a(href='#personalInformation', data-toggle='tab')
+                                        i.fa.fa-fw.fa-user
+                                        |  Personal Information
+                                li
+                                    a(href='#changePassword', data-toggle='tab')
+                                        i.fa.fa-fw.fa-lock
+                                        |  Change Password
+                            li.collapsed(data-toggle='collapse', data-target='#service')
+                                a(href='#')
+                                    i.fa.fa-fw.fa-lg.fa-mouse-pointer
+                                    |  Online Services
+                                    span.arrow
+                            ul#service.sub-menu.collapse
+                                li
+                                    a(href='#wills', data-toggle='tab')
+                                        i.fas.fa-fw.fa-pencil-alt
+                                        |  Wills
+                                li
+                                    a(href='#trusts', data-toggle='tab')
+                                        i.fas.fa-fw.fa-users
+                                        |  Trusts
+                                li
+                                    a(href='#lastingPowersOfAttorney', data-toggle='tab')
+                                        i.fas.fa-fw.fa-gavel
+                                        |  Lasting Powers of Attorney
+                                li
+                                    a(href='#funeralPlans', data-toggle='tab')
+                                        i.fas.fa-fw.fa-address-book
+                                        |  Funeral Plans
+            .col-xs-9#contentWrapper
+                .tab-content
+                    #personalInformation.tab-pane.active
+                        form#updatePersonalInformation
+                            .container-fluid
+                                .row
+                                    .col-xs-12
+                                        h3
+                                            i.fa.fa-fw.fa-user.fa-lg
+                                            |  Personal Information
+                                br
+                                .row
+                                    .col-xs-6
+                                        label Username
+                                        input.form-control(type="text" placeholder="Username")
+
+                                        label Email
+                                        input.form-control(type="text" placeholder="Email")
+
+                    #changePassword.tab-pane
+                        h3 Change Password
+                    #wills.tab-pane
+                        h3
+                            i.fas.fa-fw.fa-pencil-alt
+                            |  Last Will & Testament
+                        #lastWillAndTestamentTable
+                    #trusts.tab-pane
+                        h3
+                            i.fas.fa-fw.fa-users
+                            |  Trusts
+                    #lastingPowersOfAttorney.tab-pane
+                        h3
+                            i.fas.fa-fw.fa-gavel
+                            |  Lasting Powers of Attorney
+                    #funeralPlans.tab-pane
+                        h3 Funeral Plans
+
+block append scripts
+    script(src="js/profile.js")

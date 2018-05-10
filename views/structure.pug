@@ -42,7 +42,7 @@ html
                                     li.dropdown.life
                                         a.dropdown-toggle.nav-link(data-toggle='dropdown', href='#')
                                             i.fas.fa-paste.fa-fw
-                                            |  Life Planning
+                                            |  Life Planning &nbsp;
                                             span.fas.fa-angle-down
                                         ul.dropdown-menu
                                             li
@@ -57,7 +57,7 @@ html
                                     li.dropdown.personal
                                         a.dropdown-toggle.nav-link(data-toggle='dropdown', href='#')
                                             i.fa.fa-user.fa-fw
-                                            |  Personal Services
+                                            |  Personal Services &nbsp;
                                             span.fas.fa-angle-down
                                         ul.dropdown-menu
                                             li
@@ -72,11 +72,11 @@ html
                                     li.dropdown.online
                                         a.dropdown-toggle.nav-link(data-toggle='dropdown', href='#')
                                             i.fa.fa-mouse-pointer.fa-fw
-                                            |  Online Services
+                                            |  Online Services &nbsp;
                                             span.fas.fa-angle-down
                                         ul.dropdown-menu
                                             li
-                                                a(href="/last-will-and-testament") Wills
+                                                a(href="/wills") Wills
                                             li
                                                 a(href="{{ 'trusts'|page }}") Trusts
                                             li
@@ -107,7 +107,9 @@ html
                                     input.password.form-control(type='password', name='password', placeholder='Password' required)
                                 .modal-footer
                                     div
-                                        button.btn.btn-primary.btn-lg.btn-block.login(type='submit') Login
+                                        button.btn.btn-primary.btn-lg.btn-block.login(type='submit')
+                                            i.fas.fa-fw.fa-sign-in-alt
+                                            |  Log In
                                     div
                                         button#login_lost_btn.btn.btn-link(type="button") Lost Password?
                             form#lost-form(style='display:none;')
@@ -127,13 +129,15 @@ html
                                         button#lostPassword.btn.btn-primary.btn-lg.btn-block(type='button') Submit
                                         button#lostPasswordResponseMessage.btn.btn-lg.btn-block(type="button")
                                     div
-                                        button#lost_login_btn.btn.btn-link(type='button') Log In
+                                        button#lost_login_btn.btn.btn-link(type='button')
+                                            i.fas.fa-fw.fa-sign-in-alt
+                                            |  Log In
                                         br
             #register-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='display: none;')
                 .modal-dialog
                     .modal-content
                         .modal-header(align='center')
-                            img.img_logo.img-circle(src='img/tent.png')
+                            img.img_logo.img-circle(src='img/willpic1.jpeg')
                             button.close(type='button', data-dismiss='modal', aria-label='Close')
                                 span.fas.fa-times.fa-fw(aria-hidden='true')
                         #div-register-form
@@ -149,7 +153,7 @@ html
                                 .modal-footer
                                     div
                                         button.btn.btn-primary.btn-lg.btn-block.register-user(type='submit')
-                                            i.fas.fa-fw.fa-user-shield
+                                            i.fas.fa-fw.fa-user-plus
                                             |  Register
         block footer
             footer#footer
@@ -200,7 +204,8 @@ html
                                 li
                                     a.footer-links(href="{{ 'faq'|page }}") Frequently Asked Questions
     block scripts
-        script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+        //script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+        script(src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous")
         //script(src='//code.jquery.com/jquery-1.11.1.min.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh', crossorigin='anonymous')
         //script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js', integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ', crossorigin='anonymous')
