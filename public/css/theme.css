@@ -42,6 +42,13 @@ hr {
     padding: 0; 
 }
 
+.no-gutter-left {
+    padding-left: 0;
+}
+.no-gutter-right {
+    padding-right: 0;
+}
+
 #footer {
     margin-top: 5rem;
     padding: 1rem;
@@ -501,7 +508,7 @@ img.menu-logo {
 -----------------NAVIGATION BAR-----------------------
 ////////////////////////////////////////////////////*/
 .header {
-    min-height: 172px;
+    min-height: 135px;
 }
 
 .navbar-default {

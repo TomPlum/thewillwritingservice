@@ -45,8 +45,8 @@ module.exports = function (passport) {
     });
 
     /* GET Profile Page */
-    router.get('/profile', (req, res) => {
-       res.render('profile', {title: "Profile"});
+    router.get('/profile', isAuthenticated, (req, res) => {
+       res.render('profile', {title: "Profile", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* POST Login Page */

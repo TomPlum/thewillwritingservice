@@ -347,7 +347,7 @@ $(document).ready(() => {
             },
             success: function(res) {
                 if (res.success) {
-                    window.location.replace("/forms/last-will-and-testament-legacies");
+                    window.location.href="/forms/last-will-and-testament-residual-estate";
                 } else {
                     alert("Error Saving Form.");
                 }
@@ -356,5 +356,5 @@ $(document).ready(() => {
                     console.log(err);
                 }
             });
-    })
+    });
 });

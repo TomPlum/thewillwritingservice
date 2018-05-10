@@ -42,6 +42,12 @@ module.exports = function (passport) {
         res.render('forms/lwat/lwat-residual-estate', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
+    /* GET Payment Form */
+    router.get('/payment', (req, res) => {
+        res.render('forms/payment2', {title: "Payment", loggedIn: req.isAuthenticated(), username: getUsername(req)});
+    });
+
+    /* POST Create Last Will & Testament */
     router.post('/create-last-will-and-testament', (req, res) => {
         mysql.connection.query("INSERT INTO LastWillAndTestament (date, user_id, completed, progress) VALUES (?, ?, ?, ?)", [new Date(), req.user.user_id, 0, 1], err => {
             if (err) {
@@ -49,6 +55,18 @@ module.exports = function (passport) {
                 res.send({error: err, succes: null});
             } else {
                 res.send({error: null, success: true});
+            }
+        });
+    });
+
+    /* POST Delete Last Will & Testament (That is in progress) */
+    router.post('/delete-last-will-and-testament', (req, res) => {
+        mysql.connection.query("DELETE FROM LastWillAndTestament WHERE user_id = ?;", [req.user.user_id], (err) => {
+            if (err) {
+                console.log(err);
+                res.send({error: err, success: null});
+            } else {
+                res.status(200).send({error: null, success: true});
             }
         });
     });
@@ -180,9 +198,127 @@ module.exports = function (passport) {
         });
     });
 
-    /* GET Payment Form */
-    router.get('/payment', (req, res) => {
-        res.render('forms/payment2', {title: "Payment", loggedIn: req.isAuthenticated(), username: getUsername(req)});
+    /* POST Save Residual Estate Form */
+    router.post('/save-last-will-and-testament-residual-estate', (req, res) => {
+        console.log(req.body.beneficiaries);
+        console.log(req.body.reserveBeneficiaries);
+
+        async.waterfall([
+            callback => {
+                mysql.connection.query(
+                    "INSERT INTO ResidualEstate " +
+                    "(notes, pass_to_spouse, distribute_residue, excluded_from_will, add_failed_gift) " +
+                    "VALUES (?, ?, ?, ?, ?)",
+                    [
+                        req.body.notes === "true",
+                        req.body.pass_to_spouse === "true",
+                        req.body.distribute_residue === "true",
+                        req.body.excluded_from_will.toString()
+                    ],
+                    err => {
+                        if (err) {
+                            callback(null, err);
+                        } else {
+                            callback(null, null);
+                        }
+                    });
+            },
+            (residualEstateError, callback) => {
+                mysql.connection.query("SELECT LAST_INSERT_ID();", (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        callback(null, residualEstateError, null);
+                    } else {
+                        console.log("Last Inserted ID: " + rows[0]['LAST_INSERT_ID()']);
+                        callback(null, residualEstateError, rows[0]['LAST_INSERT_ID()'].toString());
+                    }
+                });
+            },
+            (residualEstateError, residualEstateId, callback) => {
+                asyncLoop(req.body.beneficiaries, (beneficiary, next) => {
+                    mysql.connection.query(
+                        "INSERT INTO Beneficiary " +
+                        "(residual_estate_id, testator_one_relationship, testator_two_relationship, title, first_name, last_name, address_line_one, address_line_two, city, postcode, tel_mobile, tel_home, share_to_beneficiary, share_age, issue, issue_age, reserve) " +
+                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                        [
+                            parseInt(residualEstateId),
+                            beneficiary.testator_one_relationship.toString(),
+                            beneficiary.testator_two_relationship.toString(),
+                            beneficiary.title.toString(),
+                            beneficiary.first_name.toString(),
+                            beneficiary.last_name.toString(),
+                            beneficiary.address_line_one.toString(),
+                            beneficiary.address_line_two.toString(),
+                            beneficiary.town.toString(),
+                            beneficiary.postcode.toString(),
+                            beneficiary.tel_mobile.toString(),
+                            beneficiary.tel_home.toString(),
+                            beneficiary.share_to_beneficiary.toString(),
+                            beneficiary.share_age.toString(),
+                            beneficiary.issue.toString(),
+                            beneficiary.issue_age.toString(),
+                            0 //NOT RESERVE
+                        ],
+                        err => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                next();
+                            }
+                        }
+                    )
+                }, err => {
+                    if (err) {
+                        callback(null, residualEstateError, residualEstateId, err);
+                    } else {
+                        callback(null, residualEstateError, residualEstateId, null);
+                    }
+                });
+            },
+            (residualEstateError, residualEstateId, beneficiaryError, callback) => {
+                asyncLoop(req.body.reserveBeneficiaries, (beneficiary, next) => {
+                    mysql.connection.query(
+                        "INSERT INTO Beneficiary " +
+                        "(residual_estate_id, testator_one_relationship, testator_two_relationship, title, first_name, last_name, address_line_one, address_line_two, city, postcode, tel_mobile, tel_home, share_to_beneficiary, share_age, issue, issue_age, reserve) " +
+                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                        [
+                            parseInt(residualEstateId),
+                            beneficiary.reserve_testator_one_relationship.toString(),
+                            beneficiary.reserve_testator_two_relationship.toString(),
+                            beneficiary.reserve_title.toString(),
+                            beneficiary.reserve_first_name.toString(),
+                            beneficiary.reserve_last_name.toString(),
+                            beneficiary.reserve_address_line_one.toString(),
+                            beneficiary.reserve_address_line_two.toString(),
+                            beneficiary.reserve_town.toString(),
+                            beneficiary.reserve_postcode.toString(),
+                            beneficiary.reserve_tel_mobile.toString(),
+                            beneficiary.reserve_tel_home.toString(),
+                            beneficiary.reserve_share_to_beneficiary.toString(),
+                            beneficiary.reserve_share_age.toString(),
+                            beneficiary.reserve_issue.toString(),
+                            beneficiary.reserve_issue_age.toString(),
+                            1 //IS A RESERVE
+                        ],
+                        err => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                next();
+                            }
+                        }
+                    )
+                }, err => {
+                    if (err) {
+                        callback(residualEstateError, residualEstateId, beneficiaryError, err);
+                    } else {
+                        callback(residualEstateError, residualEstateId, beneficiaryError, null);
+                    }
+                });
+            }
+        ], (residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError) => {
+
+        });
     });
 
     /* POST Payment Gateway Form */
@@ -201,129 +337,6 @@ module.exports = function (passport) {
             }
         });
     });
-    /*
-    router.post('/payment', (req, res) => {
-        // Signature key entered on MMS. The demo accounts is fixed,
-        // but merchant accounts can be updated from the MMS
-        const key = 'Train37There28Metal';
 
-        // Gateway URL
-        const url = 'https://gateway.universaltp.com/direct/';
-
-        // Form Detail Variables
-        let cardNumber = $_POST["cardNumber"];
-        let cardExpiryMonth = $_POST["cardExpiryMonth"];
-        let cardExpiryYear = $_POST["cardExpiryYear"];
-        let cardCVV = $_POST["cardCVC"];
-        //let paymentTotal = $_POST["paymentTotal"];
-        let paymentTotal = "100";
-
-        let testCustomerName = "Thomas Plumpton";
-        let testEmail = "Thomas.Plumpton@Hotmail.co.uk";
-        let testPhone = "07736958320";
-        let testAddress = "Unit 5 Pickwick Walk 120 Uxbridge Road Hatch End Middlesex";
-        let testPostcode = "HA6 7HJ";
-
-        console.log("Card Number: " + cardNumber + "\n");
-        console.log("Card Expiry: " + cardExpiryMonth + "/" + cardExpiryYear + "\n");
-        console.log("Card CV2: " + cardCVV + "\n");
-        console.log("Payment Total: " + paymentTotal);
-        // Request
-        let request = {
-            'merchantID': '101074',
-            'action': 'SALE',
-            'type': 1,
-            'countryCode': 826,
-            'currencyCode': 826,
-            'amount': paymentTotal,
-            'cardNumber': cardNumber,
-            'cardExpiryMonth': cardExpiryMonth,
-            'cardExpiryYear': cardExpiryYear,
-            'cardCVV': cardCVV,
-            'customerName': testCustomerName,
-            'customerEmail': testEmail,
-            'customerPhone': testPhone,
-            'customerAddress': testAddress,
-            'customerPostCode': testPostcode,
-            'orderRef': 'Test Payment',
-            'transactionUnique': $_REQUEST['transactionUnique'] ? $_REQUEST['transactionUnique'] : uniqid(),
-            'threeDSMD': $_REQUEST['MD'] ? $_REQUEST['MD'] : null,
-            'threeDSPaRes': $_REQUEST['PaRes'] ? $_REQUEST['PaRes'] : null,
-            'threeDSPaReq': $_REQUEST['PaReq'] ? $_REQUEST['PaReq'] : null
-        };
-
-        // Create the signature using the function called below.
-        request['signature'] = createSignature(request, key);
-
-        // Initiate and set curl options to post to the gateway
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($req));
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Send the request and parse the response
-        parse_str(curl_exec($ch), $res);
-
-        // Close the connection to the gateway
-        curl_close($ch);
-
-        // Check the return signature
-        if (isset($res['signature'])) {
-            $signature = $res['signature'];
-            // Remove the signature as this isn't hashed in the return
-            unset($res['signature']);
-
-            if ($signature !== createSignature($res, $key)) {
-                // You should exit gracefully
-                die('Sorry, the signature check failed');
-            }
-        }
-
-        // Check the response code
-        if ($res['responseCode'] == 65802) {
-            // Send details to 3D Secure ACS and the return here to repeat request
-            $pageUrl = (@$_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
-
-            if ($_SERVER['SERVER_PORT'] != '80') {
-                $pageUrl .= $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
-            } else {
-                $pageUrl .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-            }
-            echo "<p>Your transaction requires 3D Secure Authentication</p>" .
-            "<div class='container'>" .
-            "<div class='row'>" .
-            "<form action='" . htmlentities($res['threeDSACSURL']) . "' method='post'>" .
-            "<input type='hidden' name='MD' value='" . htmlentities($res['threeDSMD']) . "'>" .
-            "<input type='hidden' name='PaReq' value='" . htmlentities($res['threeDSPaReq']) . "'>" .
-            "<input type='hidden' name='TermUrl' value='" . htmlentities($pageUrl) . "'>" .
-            "<input type='submit' value='Continue'>" .
-            "</form>" .
-            "</div>" .
-            "</div>";
-        } else if ($res['responseCode'] === "0") {
-            echo "<p>Thank you for your payment.</p>";
-        } else {
-            echo "<p>Failed to take payment: " . htmlentities($res['responseMessage']) . "</p>";
-        }
-
-        function createSignature(array $data, $key) {
-            // Sort by field name
-            ksort($data);
-
-            // Create the URL encoded signature string
-            $ret = http_build_query($data, '', '&');
-
-            // Normalise all line endings (CRNL|NLCR|NL|CR) to just NL (%0A)
-            $ret = str_replace(array('%0D%0A', '%0A%0D', '%0D'), '%0A', $ret);
-
-            // Hash the signature string and the key together
-            $ret = hash('SHA512', $ret . $key);
-
-            return $ret;
-        } 
-    });
-    */
     return router;
 };

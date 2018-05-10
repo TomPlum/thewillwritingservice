@@ -22,7 +22,7 @@ function renderLastWillAndTestamentTable() {
                 tBody += "<td>" + data[i].lwat_id + "</td>";
                 tBody += "<td>" + formatDate(data[i].date) + "</td>";
                 tBody += "<td>" + formatProgress(data[i].progress) + "</td>";
-                tBody += "<td><i class='fas fa-fw fa-check fa-lg'></i> or <i class='fas fa-fw fa-times fa-lg'></i></td>";
+                tBody += "<td><i title='Continue your will' class='fas fa-fw fa-check fa-lg continue-will' onclick='continueWillProgression(" + data[i].lwat_id + "," + data[i].progress + ")'></i> or <i title='Delete your will in its current state' onclick='deleteWillInProgress(" + data[i].lwat_id + ")' class='fas fa-fw fa-times fa-lg delete-will'></i></td>";
                 tBody += "</tr>";
             }
             tBody += "</tbody>";
@@ -51,8 +51,8 @@ function renderPersonalInformation() {
 }
 
 function formatProgress(stage) {
-    const stages = ["Appointment of Executors", "Legacies", "Residual Estate", "Funeral Arrangements", "Awaiting Payment"];
-    return "Stage " + stage + "/5 - " + stages[stage-1];
+    const stages = ["Appointment of Executors", "Residual Estate", "Funeral Arrangements", "Awaiting Payment"];
+    return "Stage " + stage + "/4 - " + stages[stage-1];
 }
 
 function updatePersonalInformation() {
@@ -78,8 +78,37 @@ function updatePersonalInformation() {
     });
 }
 
-function deleteWillInProgress() {
+function deleteWillInProgress(id) {
+    console.log("Will ID: " + id);
+    if (confirm("Are you sure you want to delete this will? All current form data and progress will be permanently lost.")) {
+        $.ajax({
+            type: "POST",
+            url: "/forms/delete-last-will-and-testament",
+            data: {id: id},
+            success: function(data) {
+                if (data.success) {
+                    alert("Successfully Deleted Will");
+                } else {
+                    alert(data.error);
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    }
+}
 
+function continueWillProgression(id, progress) {
+    console.log("Will ID: " + id + "\nProgress: " + progress);
+    let params = "?id=" + id + "?progress=" + progress;
+    let pageUri = [
+        "/forms/last-will-and-testament-executors" + params,
+        "/forms/last-will-and-testament-residual-estate" + params,
+        "/forms/last-will-and-testament-funeral-arrangements" + params,
+        "/forms/payment" + params
+    ];
+    window.location.href = pageUri[progress];
 }
 
 function formatDate(date) {

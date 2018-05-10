@@ -6,7 +6,7 @@ block append stylesheets
 block append body-content
     .container-fluid
         .row#profileWrapper
-            .col-xs-3#sidebarWrapper
+            .col-xs-3#sidebarWrapper.no-gutter-left
                 .nav-side-menu
                     i.fa.fa-bars.fa-2x.toggle-btn(data-toggle='collapse', data-target='#menu-content')
                     .menu-list
@@ -34,19 +34,19 @@ block append body-content
                                 li
                                     a#displayWills(href='#wills', data-toggle='tab')
                                         i.fas.fa-fw.fa-pencil-alt
-                                        |  Wills
+                                        |  My Wills
                                 li
                                     a(href='#trusts', data-toggle='tab')
                                         i.fas.fa-fw.fa-users
-                                        |  Trusts
+                                        |  My Trusts
                                 li
                                     a(href='#lastingPowersOfAttorney', data-toggle='tab')
                                         i.fas.fa-fw.fa-gavel
-                                        |  Lasting Powers of Attorney
+                                        |  My Lasting Powers of Attorney
                                 li
                                     a(href='#funeralPlans', data-toggle='tab')
-                                        i.fas.fa-fw.fa-address-book
-                                        |  Funeral Plans
+                                        i.fab.fa-fw.fa-pagelines
+                                        |  My Funeral Plans
             .col-xs-9#contentWrapper
                 .tab-content
                     #personalInformation.tab-pane.active
@@ -77,7 +77,9 @@ block append body-content
                                             |  Update Information
 
                     #changePassword.tab-pane
-                        h3 Change Password
+                        h3
+                            i.fas.fa-fw.fa-lg.fa-lock
+                            |  Change Password
                     #wills.tab-pane
                         h3
                             i.fas.fa-fw.fa-pencil-alt
@@ -92,7 +94,9 @@ block append body-content
                             i.fas.fa-fw.fa-gavel
                             |  Lasting Powers of Attorney
                     #funeralPlans.tab-pane
-                        h3 Funeral Plans
+                        h3
+                            i.fab.fa-lg.fa-fw.fa-pagelines
+                            |  Funeral Plans
 
 block append scripts
     script(src="js/profile.js")

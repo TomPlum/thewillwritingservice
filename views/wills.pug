@@ -5,9 +5,18 @@ block append body-content
         .row
             .col-xs-12
                 h2 Last Will & Testament
+                hr
+                p Start your will form below. Data is saved after completing each section. There are four sections as follows;
+                ol
+                    li Appointment of Executors
+                    li Residual Estate
+                    li Funeral Arrangements
+                    li Payment
+                p Should you lose your page or need to load past progression, find your progress under 'My Wills' in your profile. You can continue your will from the last saved section.
                 button.btn.btn-info.btn-lg#createWill(type="button")
                     i.fas.fa-fw.fa-pencil-alt
                     |  Create Will
+                hr
 block append scripts
     script(type="text/javascript").
         //Bind Will Button Function Here

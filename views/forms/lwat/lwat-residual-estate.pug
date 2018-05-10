@@ -9,7 +9,7 @@ block append body-content
             //Residual Estate Title
             .row
                 .col-sm-12
-                    h1 Residual Estate
+                    h1 2. Residual Estate
                     hr
             .row
                 //Any notes on special reqs?
@@ -131,9 +131,8 @@ block append body-content
                             .col-sm-6
                                 label Postcode
                                 input.form-control(type='text', name='postcode_1', placeholder='Postcode', required='')
-                hr
         // Add & Remove Buttons For Executor Details
-        #beneficiaryControls.container
+        .container
             .row
                 .col-md-12
                     button#addBeneficiary.btn.btn-lg.btn-primary(type='button')
@@ -142,12 +141,32 @@ block append body-content
                     button#deleteBeneficiary.btn.btn-lg.btn-danger(type='button')
                         i.fas.fa-fw.fa-minus
                         |  Delete Beneficiary
+            br
+            hr
+            //If any gift shall fail, to be added proportionally?
+            .row
+                .col-xs-12
+                    label If any gift shall fail - to be added proportionally to the ones that have not?
+                .col-xs-2
+                    .radio
+                        label
+                            input(checked='', type='radio', name='gift_fail', value='true')
+                            |  Yes
+                .col-xs-2
+                    .radio
+                        label
+                            input(type='radio', name='gift_fail', value='false')
+                            |  No
+
         //Reserve Beneficiaries
         #reserveBeneficiaries.container
             .row
                 .col-xs-12
                     h2 Reserve Beneficiaries (Optional)
                     hr
+                    #reserveContainer
+
+
         #reserveBeneficiaryControls.container
             .row
                 .col-md-12
@@ -157,6 +176,39 @@ block append body-content
                     button#deleteReserveBeneficiary.btn.btn-lg.btn-danger(type='button')
                         i.fas.fa-fw.fa-minus
                         |  Delete Reserve Beneficiary
+        .container
+            .row
+                .col-xs-12
+                    br
+                    hr
+                    //Anyone excluded from will?
+                    label
+                        strong NON PROVISION CLAUSE:
+                        |  Has anyone been specifically excluded from the will? If so, who?
+            .row
+                #willExclusionContainer
+        .container
+            .row
+                .col-md-12
+                    button#addExclusion.btn.btn-lg.btn-primary(type='button')
+                        i.fas.fa-fw.fa-plus
+                        |  Add
+                    button#deleteExclusion.btn.btn-lg.btn-danger(type='button')
+                        i.fas.fa-fw.fa-minus
+                        |  Delete
+
+        br
+        // Next Page Button - Submits This Pages' Data
+        .container
+            .row
+                .col-sm-12
+                    button#addTestData.btn.btn-lg.btn-info(type='button')
+                        i.fas.fa-fw.fa-database
+                        |  Add Test Data
+                    button#next.btn.btn-lg.btn-success(type='button')
+                        | Next
+                        i.fas.fa-fw.fa-angle-right
+                    button(type="submit" style="display: none")
 
 block append scripts
     script(src="js/residual-estate.js")

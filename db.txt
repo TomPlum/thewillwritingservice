@@ -1,0 +1,152 @@
+CREATE TABLE AppointmentOfExecutors (
+  aoe_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  spouse_to_the_executor BOOLEAN NOT NULL,
+  sole_or_joint BOOLEAN NOT NULL,
+  mirror_executors BOOLEAN NOT NULL,
+  twp_to_act BOOLEAN NOT NULL
+);
+
+CREATE TABLE Executor(
+  executor_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  aoe_id INT NOT NULL,
+  testator_one_relationship VARCHAR(20) NOT NULL,
+  testator_two_relationship VARCHAR(20) NOT NULL,
+  title VARCHAR(5) NOT NULL,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  address_line_one VARCHAR(100) NOT NULL,
+  address_line_two VARCHAR(100) NOT NULL,
+  city VARCHAR(50) NOT NULL,
+  postcode VARCHAR(10) NOT NULL,
+  tel_mobile VARCHAR(11),
+  tel_home VARCHAR(12),
+  type VARCHAR(20) NOT NULL,
+  FOREIGN KEY (aoe_id) REFERENCES AppointmentOfExecutors (aoe_id)
+);
+
+CREATE TABLE ProfessionalExecutor (
+  professional_executor_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  aoe_id INT NOT NULL,
+  firm_name VARCHAR(50),
+  address_line_one VARCHAR(100),
+  address_line_two VARCHAR(100),
+  city VARCHAR(50),
+  postcode VARCHAR(10),
+  phone VARCHAR(11),
+  type VARCHAR(20),
+  FOREIGN KEY (aoe_id) REFERENCES AppointmentOfExecutors(aoe_id)
+);
+
+CREATE TABLE FuneralArrangements (
+  funeral_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  arranged_with_one VARCHAR(100),
+  arranged_with_two VARCHAR(100),
+  reference_number_one VARCHAR(100),
+  reference_number_two VARCHAR(100),
+  funding_method_one VARCHAR(100),
+  funding_method_two VARCHAR(100),
+  body_dontaion_one BOOLEAN,
+  body_donation_two BOOLEAN,
+  organ_donation_one BOOLEAN,
+  organ_donation_two BOOLEAN,
+  excluded_organs_one VARCHAR(100),
+  excluded_organs_two VARCHAR(100),
+  cremation_required_one BOOLEAN,
+  cremation_required_two BOOLEAN,
+  burial_required_one BOOLEAN,
+  burial_required_two BOOLEAN,
+  service_place_one VARCHAR(100),
+  service_place_two VARCHAR(100),
+  burial_cremation_place_one VARCHAR(100),
+  burial_cremation_place_two VARCHAR(100),
+  ashes_buried_scattered_one BOOLEAN,
+  ashes_buried_scattered_two BOOLEAN,
+  ashes_place_one VARCHAR(100),
+  ashes_place_two VARCHAR(100),
+  service_reqs_one VARCHAR(100),
+  service_reqs_two VARCHAR(100),
+  family_flowers_one BOOLEAN,
+  family_flowers_two BOOLEAN,
+  charity_donation_one VARCHAR(100),
+  charity_donation_two VARCHAR(100),
+  notes VARCHAR(512)
+);
+
+CREATE TABLE Legacies (
+  legacies_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  memorandum BOOLEAN,
+  promises BOOLEAN
+);
+
+CREATE TABLE Gift (
+  gift_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  legacies_id INTEGER NOT NULL ,
+  description VARCHAR(512),
+  owner VARCHAR(4),
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  address_line_one VARCHAR(100) NOT NULL,
+  address_line_two VARCHAR(100) NOT NULL,
+  city VARCHAR(50) NOT NULL,
+  postcode VARCHAR(10) NOT NULL,
+  tel_mobile VARCHAR(11),
+  tel_home VARCHAR(12),
+  FOREIGN KEY (legacies_id) REFERENCES Legacies(legacies_id)
+);
+
+CREATE TABLE ResidualEstate (
+  residual_estate_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  notes VARCHAR(512),
+  pass_to_spouse BOOLEAN,
+  distribute_residue BOOLEAN,
+  excluded_from_will VARCHAR(200),
+  add_failed_gift BOOLEAN
+);
+
+CREATE TABLE Beneficiary (
+  beneficiary_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  residual_estate_id INTEGER NOT NULL,
+  testator_one_relationship VARCHAR(20) NOT NULL,
+  testator_two_relationship VARCHAR(20) NOT NULL,
+  title VARCHAR(5) NOT NULL,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  address_line_one VARCHAR(100) NOT NULL,
+  address_line_two VARCHAR(100) NOT NULL,
+  city VARCHAR(50) NOT NULL,
+  postcode VARCHAR(10) NOT NULL,
+  tel_mobile VARCHAR(11),
+  tel_home VARCHAR(12),
+  share_to_beneficiary INTEGER,
+  share_age INTEGER,
+  issue BOOLEAN,
+  issue_age INTEGER,
+  reserve BOOLEAN,
+  FOREIGN KEY (residual_estate_id) REFERENCES ResidualEstate(residual_estate_id)
+);
+
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    username VARCHAR(20),
+    password VARCHAR(256) NOT NULL,
+    email VARCHAR(50),
+    first_name VARCHAR(30),
+    last_name VARCHAR(30)
+);
+
+CREATE TABLE LastWillAndTestament (
+  lwat_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  date DATETIME,
+  aoe_id INTEGER,
+  legacies_id INTEGER,
+  residual_estate_id INTEGER,
+  funeral_id INTEGER,
+  user_id INTEGER NOT NULL,
+  completed BOOLEAN,
+  progress INTEGER,
+  FOREIGN KEY (aoe_id) REFERENCES AppointmentOfExecutors(aoe_id),
+  FOREIGN KEY (legacies_id) REFERENCES Legacies(legacies_id),
+  FOREIGN KEY (residual_estate_id) REFERENCES ResidualEstate(residual_estate_id),
+  FOREIGN KEY (funeral_id) REFERENCES FuneralArrangements(funeral_id),
+  FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
