@@ -6,7 +6,7 @@ block append stylesheets
 block append body-content
     .container-fluid
         .row#profileWrapper
-            .col-xs-3#sidebarWrapper.no-gutter-left
+            .col-xs-3#sidebarWrapper
                 .nav-side-menu
                     i.fa.fa-bars.fa-2x.toggle-btn(data-toggle='collapse', data-target='#menu-content')
                     .menu-list
@@ -51,7 +51,18 @@ block append body-content
                                     a(href='#funeralPlans', data-toggle='tab')
                                         i.fab.fa-fw.fa-pagelines
                                         |  My Funeral Plans
-            .col-xs-9#contentWrapper
+                            li
+                                li
+                                    a(href='#')
+                                        i.fas.fa-fw.fa-user.fa-lg
+                                        |  Personal Services
+                                        span.arrow
+                                ul#personalServices.sub-menu
+                                    li
+                                        a#displayBlogPosts(href="#blogPosts", data-toggle="tab")
+                                            i.fas.fa-fw.fa-rss
+                                            |  My Blog Posts
+            .col-xs-8#contentWrapper
                 .tab-content
                     #personalInformation.tab-pane.active
                         form

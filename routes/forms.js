@@ -42,6 +42,11 @@ module.exports = function (passport) {
         res.render('forms/lwat/lwat-residual-estate', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
+    /* GET Last Will & Testament - Page 4 (Funeral Arrangements) */
+    router.get('/last-will-and-testament-funeral-arrangements', (req, res) => {
+        res.render('forms/lwat/lwat-funeral-arrangements', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
+    });
+
     /* GET Payment Form */
     router.get('/payment', (req, res) => {
         res.render('forms/payment2', {title: "Payment", loggedIn: req.isAuthenticated(), username: getUsername(req)});
@@ -317,7 +322,14 @@ module.exports = function (passport) {
                 });
             }
         ], (residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError) => {
-
+            if (residualEstateError) {console.log("Rediual Estate Error:"); console.log(residualEstateError);}
+            if (beneficiaryError) {console.log("Beneficiary Error:"); console.log(beneficiaryError);}
+            if (reserveBeneficiaryError) {console.log("Reserve Beneficiary Error:"); console.log(reserveBeneficiaryError);}
+            if (!residualEstateError && !beneficiaryError && !reserveBeneficiaryError) {
+                res.status(200).send({success: true, residualEstateId: residualEstateId});
+            } else {
+                res.status(200).send({success: false});
+            }
         });
     });
 

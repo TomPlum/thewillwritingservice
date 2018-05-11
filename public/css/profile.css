@@ -20,6 +20,17 @@
     top: 0;
     color: #e1ffff;
 }
+
+label {
+    font-weight: normal;
+    margin: 0 0 3px 0;
+    padding: 0;
+}
+
+input {
+    margin-bottom: 15px;
+}
+
 .nav-side-menu .brand {
     background-color: #23282e;
     line-height: 50px;
@@ -27,11 +38,12 @@
     text-align: center;
     font-size: 14px;
 }
+
 .nav-side-menu .toggle-btn {
     display: none;
 }
-.nav-side-menu ul,
-.nav-side-menu li {
+
+.nav-side-menu ul, .nav-side-menu li {
     list-style: none;
     padding: 0;
     margin: 0;

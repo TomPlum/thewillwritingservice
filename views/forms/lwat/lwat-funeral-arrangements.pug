@@ -1,0 +1,163 @@
+extends ../../structure
+
+block append stylesheets
+    link(rel="stylesheet", href="css/lwat.css")
+
+block append body-content
+    form
+        #legacies.container
+            //Funeral Arrangements Title
+            .row
+                .col-sm-12
+                    h1 3. Funeral Arrangements
+                    hr
+            .row
+                .col-sm-6
+                    h3 Testator One
+                    //Funeral Pre-Arranged With
+                    label Funeral Pre-Arranged With
+                    input.form-control(type="text" name="testator_one_pre_arrange" placeholder="Who has it been pre-arranged with?")
+
+                    //Funeral Reference Number
+                    label Funeral Reference Number
+                    input.form-control(type="text" name="testator_one_funeral_ref" placeholder="Ref No.")
+
+                    //How Will It Be Funded?
+                    label How will it be funded?
+                    input.form-control(type="text" name="testator_one_how_funded" placeholder="Funding Method")
+
+                    //Donation of Body to Research?
+                    label Donation of Body for Research?
+                    .row
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(checked='', type='radio', name='testator_one_body_donation', value='true')
+                                    |  Yes
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(type='radio', name='testator_one_body_donation', value='false')
+                                    |  No
+
+                    //Donation of Organs for Transplant?
+                    label Donation of organs for transplant?
+                    .row
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(checked='', type='radio', name='testator_one_organ_donation', value='true')
+                                    |  Yes
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(type='radio', name='testator_one_organ_donation', value='false')
+                                    |  No
+
+                    //Any organs not be used?
+                    label Any organs not to be used?
+                    input.form-control(type="text" name="testator_one_excluded_organs" placeholder="Organs to Exclude")
+
+                    //Cremation Required?
+                    label Cremation Required?
+                    .row
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(checked='', type='radio', name='testator_one_cremation_required', value='true')
+                                    |  Yes
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(type='radio', name='testator_one_cremation_required', value='false')
+                                    |  No
+
+                    //Burial Required?
+                    label Burial Required?
+                    .row
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(checked='', type='radio', name='testator_one_burial_required', value='true')
+                                    |  Yes
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(type='radio', name='testator_one_burial_required', value='false')
+                                    |  No
+
+                    //Service to take place at
+                    label Service to take place at
+                    textarea.form-control(name="testator_one_service_place" placeholder="Location/Address")
+
+                    //Burial/Cremation to take place at
+                    label Burial / Cremation to take place at
+                    textarea.form-control(name="testator_one_burial_place" placeholder="Location/Address")
+
+                    //Ashes buried or scattered?
+                    label Ashes to be buried or scattered?
+                    .row
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(checked='', type='radio', name='testator_one_buried_scattered', value='buried')
+                                    |  Buried
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(type='radio', name='testator_one_buried_scattered', value='scattered')
+                                    |  Scattered
+
+                    //Where will the ashes be scattered or buried?
+                    label Where will the ashes be buried / scattered?
+                    textarea.form-control(name="testator_one_buried_scattered_place" placeholder="Location/Address")
+
+                    //Service Requirements
+                    label Service Requirements (Songs / Religious Traditions / Clothing / Tone of Service)
+                    textarea.form-control(name="testator_one_service_requirements" placeholder="Service Requirements")
+
+                    //Family Flowers Only?
+                    label Family Flowers Only?
+                    .row
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(checked='', type='radio', name='testator_one_family_flowers', value='true')
+                                    |  Yes
+                        .col-xs-6
+                            .radio
+                                label
+                                    input(type='radio', name='testator_one_family_flowers', value='false')
+                                    |  No
+
+                    //Donation of flowers in lieu
+                    label Donation of flowers in lieu to
+                    input.form-control(type="text" name="testator_one_donation_flowers" placeholder="Full Name")
+
+                    //Service Requirements
+                    label Notes
+                    textarea.form-control(name="testator_one_notes" placeholder="Additional Information")
+                .col-sm-6#testatorTwoContainer
+                    h3 Testator Two
+                    p If you would like to add a second testator's details to the funeral arrangements, you can use the options below.
+                    button.btn.btn-lg.btn-primary#addBlankTestator(type="button")
+                        i.fas.fa-fw.fa-file
+                        |  Add Blank
+                    button.btn.btn-lg.btn-info#addMirroredTestator(type="button")
+                        i.fas.fa-fw.fa-copy
+                        |  Copy Testator One
+            br
+            hr
+            // Next Page Button - Submits This Pages' Data
+            .row
+                .col-sm-12
+                    button#addTestData.btn.btn-lg.btn-info(type='button')
+                        i.fas.fa-fw.fa-database
+                        |  Add Test Data
+                    button#next.btn.btn-lg.btn-success(type='button')
+                        | Next
+                        i.fas.fa-fw.fa-angle-right
+                    button(type="submit" style="display: none")
+
+block append scripts
+    script(type="text/javascript", src="js/funeral-arrangements.js")
