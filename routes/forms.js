@@ -28,32 +28,32 @@ function getUsername(req) {
 
 module.exports = function (passport) {
     /* GET Last Will & Testament - Page 1 (Executors) */
-    router.get('/last-will-and-testament-executors', (req, res) => {
+    router.get('/last-will-and-testament-executors', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-executors', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* GET Last Will & Testament  - Page 2 (Legacies) */
-    router.get('/last-will-and-testament-legacies', (req, res) => {
+    router.get('/last-will-and-testament-legacies', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-legacies.pug', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* GET Last Will & Testament - Page 3 (Residual Estate) */
-    router.get('/last-will-and-testament-residual-estate', (req, res) => {
+    router.get('/last-will-and-testament-residual-estate', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-residual-estate', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* GET Last Will & Testament - Page 4 (Funeral Arrangements) */
-    router.get('/last-will-and-testament-funeral-arrangements', (req, res) => {
+    router.get('/last-will-and-testament-funeral-arrangements', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-funeral-arrangements', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* GET Payment Form */
-    router.get('/payment', (req, res) => {
+    router.get('/payment', isAuthenticated, (req, res) => {
         res.render('forms/payment2', {title: "Payment", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
     /* POST Create Last Will & Testament */
-    router.post('/create-last-will-and-testament', (req, res) => {
+    router.post('/create-last-will-and-testament', isAuthenticated, (req, res) => {
         mysql.connection.query("INSERT INTO LastWillAndTestament (date, user_id, completed, progress) VALUES (?, ?, ?, ?)", [new Date(), req.user.user_id, 0, 1], err => {
             if (err) {
                 console.log(err);
@@ -65,7 +65,7 @@ module.exports = function (passport) {
     });
 
     /* POST Delete Last Will & Testament (That is in progress) */
-    router.post('/delete-last-will-and-testament', (req, res) => {
+    router.post('/delete-last-will-and-testament', isAuthenticated, (req, res) => {
         mysql.connection.query("DELETE FROM LastWillAndTestament WHERE user_id = ?;", [req.user.user_id], (err) => {
             if (err) {
                 console.log(err);
@@ -78,13 +78,13 @@ module.exports = function (passport) {
 
     /* POST Database Last Will & Testament - Page 1 (Executors)
     * This function uses an asynchronous loop from the npm library 'async' to do the following;
-    * 1: Insert a AppointmentOfExecutors row into the database
+    * 1: Insert an AppointmentOfExecutors row into the database
     * 2: Select the last inserted ID from the database (from the record above)
     * 3: Uses npm 'node-async-loop' to iterate over the array of Executors and inserts a row for each one
     * 4: Uses node-async-loop again to iterate over the array of ProfessionalExecutors and inserts a row for each
     * 5: Finally, if all previous functions succeeded, it will send back a message to the page.
     * */
-    router.post('/save-last-will-and-testament-executors', (req, res) => {
+    router.post('/save-last-will-and-testament-executors', isAuthenticated, (req, res) => {
         async.waterfall([
             callback => {
                 mysql.connection.query(
@@ -204,7 +204,7 @@ module.exports = function (passport) {
     });
 
     /* POST Save Residual Estate Form */
-    router.post('/save-last-will-and-testament-residual-estate', (req, res) => {
+    router.post('/save-last-will-and-testament-residual-estate', isAuthenticated, (req, res) => {
         console.log(req.body.beneficiaries);
         console.log(req.body.reserveBeneficiaries);
 
@@ -333,8 +333,12 @@ module.exports = function (passport) {
         });
     });
 
+    router.post('/save-last-will-and-testament-funeral-arrangements', isAuthenticated, (req, res) => {
+
+    });
+
     /* POST Payment Gateway Form */
-    router.post('/pay', (req, res) => {
+    router.post('/pay', isAuthenticated, (req, res) => {
         const token = req.body.token;
         const charge = stripe.charges.create({
             amount: 100,

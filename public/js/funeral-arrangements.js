@@ -1,5 +1,8 @@
+let numberOfTestators = 1;
+
 function addTestatorTwo() {
-    let testatorTwo = "<h3>Testator Two</h3>" +
+    let testatorTwo = "<h3><i class='fas fa-fw fa-user'></i> Testator Two</h3>" +
+        "<hr>" +
         "  <!--Funeral Pre-Arranged With-->" +
         "  <label>Funeral Pre-Arranged With</label>" +
         "  <input type='text' name='testator_two_pre_arrange' placeholder='Who has it been pre-arranged with?' class='form-control'/>" +
@@ -149,11 +152,14 @@ function addTestatorTwo() {
 
     container.append("<button id='copyTestatorTwo' type='button' class='btn btn-lg btn-info'><i class='fas fa-fw fa-copy'></i>Copy Testator One</button>");
     $("#copyTestatorTwo").on("click", copyTestatorOneData);
+
+    //Increment Counter
+    numberOfTestators++;
 }
 
 function removeTestatorTwo() {
     if (confirm("Are you sure you want to remove Testator Two? You will lose all of their details.")) {
-        let original = "<h3>Testator Two</h3>" +
+        let original = "<h3><i class='fas fa-fw fa-user'></i> Testator Two</h3><hr>" +
             "  <p>If you would like to add a second testator's details to the funeral arrangements, you can use the options below.</p>" +
             "  <button id='addBlankTestator' type='button' class='btn btn-lg btn-primary'><i class='fas fa-fw fa-file'></i> Add Blank</button>" +
             "  <button id='addMirroredTestator' type='button' class='btn btn-lg btn-info'><i class='fas fa-fw fa-copy'></i> Copy Testator One</button>";
@@ -165,6 +171,9 @@ function removeTestatorTwo() {
             addTestatorTwo();
             copyTestatorOneData();
         });
+
+        //Decrement Counter
+        numberOfTestators--;
     }
 }
 
@@ -181,16 +190,16 @@ function addTestData() {
     $("textarea[name='testator_one_burial_place']").val("Cemetery Road. Forest Gate. E7 9DG");
     $("input[name='testator_one_buried_scattered']").prop("checked", true);
     $("textarea[name='testator_one_buried_scattered_place']").val("In the ground");
-    $("textarea[name='testator_one_service_requirements']").val();
-    $("input[name='testator_one_family_flowers']").val();
-    $("input[name='testator_one_donation_flowers']").val();
-    $("textarea[name='testator_one_notes']").val();
+    $("textarea[name='testator_one_service_requirements']").val("Play some sad music pls");
+    $("input[name='testator_one_family_flowers']").prop("checked", true);
+    $("input[name='testator_one_donation_flowers']").val("Tracey Rainsford");
+    $("textarea[name='testator_one_notes']").val("Rest in peace.");
 }
 
 function copyTestatorOneData() {
     $("input[name='testator_two_pre_arrange']").val($("input[name='testator_one_pre_arrange']").val());
-    $("input[name='testator_two_funeral_ref']").val();
-    $("input[name='testator_two_how_funded']").val();
+    $("input[name='testator_two_funeral_ref']").val($("input[name='testator_one_funeral_ref']").val());
+    $("input[name='testator_two_how_funded']").val($("input[name='testator_one_how_funded']").val());
     $("input[name='testator_two_body_donation']").val();
     $("input[name='testator_two_organ_donation']").val();
     $("input[name='testator_two_excluded_organs']").val();
@@ -214,4 +223,59 @@ $(document).ready(() => {
        copyTestatorOneData();
     });
     $("#addTestData").on("click", addTestData);
+
+    $("#next").on("click", () => {
+        let testatorOne = {
+            pre_arrange: $("input[name='testator_one_pre_arrange']").val(),
+            funeral_ref: $("input[name='testator_one_funeral_ref']").val(),
+            how_funded:  $("input[name='testator_one_how_funded']").val(),
+            body_donation: $("input[name='testator_one_body_donation']:checked").val(),
+            organ_donation: $("input[name='testator_one_organ_donation']:checked").val(),
+            excluded_organs: $("input[name='testator_one_excluded_organs']").val(),
+            cremation_required: $("input[name='testator_one_cremation_required']:checked").val(),
+            burial_required: $("input[name='testator_one_burial_required']:checked").val(),
+            service_place: $("textarea[name='testator_one_service_place']").val(),
+            burial_place:  $("textarea[name='testator_one_burial_place']").val(),
+            buried_scattered: $("input[name='testator_one_buried_scattered']:checked").val(),
+            buried_scattered_place: $("textarea[name='testator_one_buried_scattered_place']").val(),
+            service_requirements: $("textarea[name='testator_one_service_requirements']").val(),
+            family_flowers: $("input[name='testator_one_family_flowers']").val(),
+            donation_flowers: $("input[name='testator_one_donation_flowers']").val(),
+            notes: $("textarea[name='testator_one_notes']").val()
+        };
+
+        let testatorTwo = null;
+        if (numberOfTestators === 2) {
+            testatorTwo = {
+                pre_arrange: $("input[name='testator_two_pre_arrange']").val(),
+                funeral_ref: $("input[name='testator_two_funeral_ref']").val(),
+                how_funded:  $("input[name='testator_two_how_funded']").val(),
+                body_donation: $("input[name='testator_two_body_donation']:checked").val(),
+                organ_donation: $("input[name='testator_two_organ_donation']:checked").val(),
+                excluded_organs: $("input[name='testator_two_excluded_organs']").val(),
+                cremation_required: $("input[name='testator_two_cremation_required']:checked").val(),
+                burial_required: $("input[name='testator_two_burial_required']:checked").val(),
+                service_place: $("textarea[name='testator_two_service_place']").val(),
+                burial_place:  $("textarea[name='testator_two_burial_place']").val(),
+                buried_scattered: $("input[name='testator_two_buried_scattered']:checked").val(),
+                buried_scattered_place: $("textarea[name='testator_two_buried_scattered_place']").val(),
+                service_requirements: $("textarea[name='testator_two_service_requirements']").val(),
+                family_flowers: $("input[name='testator_two_family_flowers']").val(),
+                donation_flowers: $("input[name='testator_two_donation_flowers']").val(),
+                notes: $("textarea[name='testator_two_notes']").val()
+            };
+        }
+        
+        $.ajax({
+            type: "POST",
+            url: "/forms/save-last-will-and-testament-funeral-arrangements",
+            data: {testatorOne: testatorOne, testatorTwo: testatorTwo},
+            success: function(data) {
+                
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    });
 });

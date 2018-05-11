@@ -11,9 +11,13 @@ block append body-content
                 .col-sm-12
                     h1 3. Funeral Arrangements
                     hr
+                    p What kind of funeral can I choose for my loved one? The choice between burial and cremation is a very personal one. Decisions may be influenced by many factors, such as family tradition, religion or the wishes of the person who has died. Please fill in the form(s) below for either one or two testators.
             .row
                 .col-sm-6
-                    h3 Testator One
+                    h3
+                        i.fas.fa-fw.fa-user
+                        |  Testator One
+                    hr
                     //Funeral Pre-Arranged With
                     label Funeral Pre-Arranged With
                     input.form-control(type="text" name="testator_one_pre_arrange" placeholder="Who has it been pre-arranged with?")
@@ -138,7 +142,10 @@ block append body-content
                     label Notes
                     textarea.form-control(name="testator_one_notes" placeholder="Additional Information")
                 .col-sm-6#testatorTwoContainer
-                    h3 Testator Two
+                    h3
+                        i.fas.fa-fw.fa-user
+                        |  Testator Two
+                    hr
                     p If you would like to add a second testator's details to the funeral arrangements, you can use the options below.
                     button.btn.btn-lg.btn-primary#addBlankTestator(type="button")
                         i.fas.fa-fw.fa-file
@@ -150,10 +157,13 @@ block append body-content
             hr
             // Next Page Button - Submits This Pages' Data
             .row
-                .col-sm-12
+                .col-sm-4
                     button#addTestData.btn.btn-lg.btn-info(type='button')
                         i.fas.fa-fw.fa-database
                         |  Add Test Data
+                .col-sm-4
+                    p.text-center.current-stage Stage 3/4
+                .col-sm-4
                     button#next.btn.btn-lg.btn-success(type='button')
                         | Next
                         i.fas.fa-fw.fa-angle-right

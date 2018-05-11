@@ -35,3 +35,11 @@ input[type=number]::-webkit-outer-spin-button {
 #next {
     float: right;
 }
+
+.current-stage {
+    line-height: 51px;
+    vertical-align: middle;
+    font-size: 1.1em;
+    margin: 0;
+    padding: 0;
+}

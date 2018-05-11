@@ -69,7 +69,8 @@ CREATE TABLE FuneralArrangements (
   family_flowers_two BOOLEAN,
   charity_donation_one VARCHAR(100),
   charity_donation_two VARCHAR(100),
-  notes VARCHAR(512)
+  notes_one VARCHAR(512),
+  notes_two VARCHAR(512)
 );
 
 CREATE TABLE Legacies (
