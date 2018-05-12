@@ -57,7 +57,7 @@ module.exports = function (passport) {
         mysql.connection.query("INSERT INTO LastWillAndTestament (date, user_id, completed, progress) VALUES (?, ?, ?, ?)", [new Date(), req.user.user_id, 0, 1], err => {
             if (err) {
                 console.log(err);
-                res.send({error: err, succes: null});
+                res.send({error: err, success: null});
             } else {
                 res.send({error: null, success: true});
             }
@@ -66,7 +66,7 @@ module.exports = function (passport) {
 
     /* POST Delete Last Will & Testament (That is in progress) */
     router.post('/delete-last-will-and-testament', isAuthenticated, (req, res) => {
-        mysql.connection.query("DELETE FROM LastWillAndTestament WHERE user_id = ?;", [req.user.user_id], (err) => {
+        mysql.connection.query("DELETE FROM LastWillAndTestament WHERE lwat_id = ?;", [req.body.id], (err) => {
             if (err) {
                 console.log(err);
                 res.send({error: err, success: null});

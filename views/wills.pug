@@ -116,7 +116,7 @@ block append body-content
 block append scripts
     script(type="text/javascript").
         //Bind Will Button Function Here
-        let createWill = $("#createWill").on("click", function() {
+        let createWill = $("#startWill").on("click", function() {
             //window.location = "/forms/last-will-and-testament-executors";
             $.ajax({
                 type: "POST",
