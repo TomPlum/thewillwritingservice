@@ -43,3 +43,16 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
     padding: 0;
 }
+
+#termsAndConditions .modal-body {
+    max-height: calc(100vh - 310px);
+    overflow-y: auto;
+}
+
+#acceptTerms {
+    margin: 0 10px;
+}
+
+#startWill {
+    float: right;
+}
