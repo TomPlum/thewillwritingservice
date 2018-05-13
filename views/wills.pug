@@ -9,6 +9,22 @@ block append body-content
             .col-xs-12
                 h2 Last Will & Testament
                 hr
+            .col-md-6
+                h4
+                    strong
+                        i.fas.fa-fw.fa-pencil-alt
+                        |  Description
+                p A last will and testament is a legally-binding document in which an individual expresses his last wishes concerning the affairs and distribution of his estate.
+                h4
+                    strong
+                        i.fas.fa-fw.fa-thumbs-down
+                        |  Consequences of No Will and Testament
+                p When a person dies without a valid will, he dies intestate, which means the state becomes the executor of the estate. In settling the estate, the state decides how to distribute the property and who receives payment first, without any consideration for a family’s circumstances. Any blood relative can stake a claim to the estate. The court can even establish guardianship arrangements based on its determination as to the best interests of the children. If a court determines a will is improperly drafted, it deems it invalid. Settlement of the estate is then subject to the state's intestate law.
+            .col-md-6
+                h4
+                    strong
+                        i.fas.fa-fw.fa-file-alt
+                        |  Creating your Will
                 p Start your will form below. Data is saved after completing each section. There are four sections as follows;
                 ol
                     li Appointment of Executors
@@ -116,13 +132,12 @@ block append body-content
 block append scripts
     script(type="text/javascript").
         //Bind Will Button Function Here
-        let createWill = $("#startWill").on("click", function() {
-            //window.location = "/forms/last-will-and-testament-executors";
+        $("#startWill").on("click", function() {
             $.ajax({
                 type: "POST",
                 url: "/forms/create-last-will-and-testament",
                 success: function(data) {
-
+                    window.location.href = "/forms/last-will-and-testament-executors?id=" + data.lastWillAndTestamentId;
                 },
                 error: function(err) {
                     console.log(err);
@@ -133,7 +148,6 @@ block append scripts
         $(document).ready(function() {
             $("#agreeTerms").prop("checked", false);
         });
-
 
         $("#acceptTerms").change(function() {
             let box = $("#acceptTerms");

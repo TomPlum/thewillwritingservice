@@ -240,7 +240,7 @@ function addTestData() {
 
     if (numberOfProfessionalExecutors === 2) {
         $("input[name='firm_name_2']").val("SportSpecific Ltd");
-        $("input[name='business_number_2']").val("030032312312");
+        $("input[name='business_number_2']").val("03003231312");
         $("input[name='prof_address_line_1_2']").val("15 Manchester Street");
         $("input[name='prof_address_line_2_2']").val("Hartford");
         $("input[name='prof_town_2']").val("Nortwich");
@@ -334,6 +334,8 @@ $(document).ready(() => {
             });
         }
 
+        const lastWillAndTestamentId = getURLParameter("id");
+
         $.ajax({
             url: "/forms/save-last-will-and-testament-executors",
             type: "POST",
@@ -343,11 +345,12 @@ $(document).ready(() => {
                 twp_to_act: $("input[name='twp_to_act']:checked").val(),
                 mirror_executor: $("input[name='mirror_executor']:checked").val(),
                 executors: executors,
-                professionalExecutors: professionalExecutors
+                professionalExecutors: professionalExecutors,
+                lastWillAndTestamentId: lastWillAndTestamentId
             },
             success: function(res) {
                 if (res.success) {
-                    window.location.href="/forms/last-will-and-testament-residual-estate";
+                    window.location.href="/forms/last-will-and-testament-residual-estate?id=" + lastWillAndTestamentId;
                 } else {
                     alert("Error Saving Form.");
                 }

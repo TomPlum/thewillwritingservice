@@ -32,22 +32,17 @@ module.exports = function (passport) {
         res.render('forms/lwat/lwat-executors', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
-    /* GET Last Will & Testament  - Page 2 (Legacies) */
-    router.get('/last-will-and-testament-legacies', isAuthenticated, (req, res) => {
-        res.render('forms/lwat/lwat-legacies.pug', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
-    });
-
-    /* GET Last Will & Testament - Page 3 (Residual Estate) */
+    /* GET Last Will & Testament - Page 2 (Residual Estate) */
     router.get('/last-will-and-testament-residual-estate', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-residual-estate', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
-    /* GET Last Will & Testament - Page 4 (Funeral Arrangements) */
+    /* GET Last Will & Testament - Page 3 (Funeral Arrangements) */
     router.get('/last-will-and-testament-funeral-arrangements', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-funeral-arrangements', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
-    /* GET Payment Form */
+    /* GET Last Will & Testament - Page 4 (Payment) */
     router.get('/payment', isAuthenticated, (req, res) => {
         res.render('forms/payment2', {title: "Payment", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
@@ -59,7 +54,14 @@ module.exports = function (passport) {
                 console.log(err);
                 res.send({error: err, success: null});
             } else {
-                res.send({error: null, success: true});
+                //Once the record above has successfully inserted, select its ID and send back to page
+                mysql.connection.query("SELECT LAST_INSERT_ID();", (err, rows) => {
+                    if (err) {
+                        res.send({error: err, success: null});
+                    } else {
+                        res.send({error: null, success: true, lastWillAndTestamentId: rows[0]['LAST_INSERT_ID()'].toString()});
+                    }
+                });
             }
         });
     });
@@ -77,12 +79,14 @@ module.exports = function (passport) {
     });
 
     /* POST Database Last Will & Testament - Page 1 (Executors)
-    * This function uses an asynchronous loop from the npm library 'async' to do the following;
-    * 1: Insert an AppointmentOfExecutors row into the database
-    * 2: Select the last inserted ID from the database (from the record above)
-    * 3: Uses npm 'node-async-loop' to iterate over the array of Executors and inserts a row for each one
-    * 4: Uses node-async-loop again to iterate over the array of ProfessionalExecutors and inserts a row for each
-    * 5: Finally, if all previous functions succeeded, it will send back a message to the page.
+    * This function uses an asynchronous waterfall from the npm library 'async' to do the following;
+    * 1: Insert an AppointmentOfExecutors row into the database.
+    * 2: Select the last inserted ID from the database (from the record above).
+    * 3: Uses npm 'node-async-loop' to iterate over the array of Executors and inserts a row for each one.
+    * 4: Uses node-async-loop again to iterate over the array of ProfessionalExecutors and inserts a row for each.
+    * 5: Updates the LastWillAndTestament record by setting it's AoE ID to that of the record we inserted above.
+    * 6: Updates the LastWillAndTestament record by setting its progress values to 2 (For the next stage, residual estate)
+    * 7: Finally, if all previous functions succeeded, it will send back an object to the AJAX call on the page.
     * */
     router.post('/save-last-will-and-testament-executors', isAuthenticated, (req, res) => {
         async.waterfall([
@@ -165,7 +169,7 @@ module.exports = function (passport) {
                         "(aoe_id, firm_name, address_line_one, address_line_two, city, postcode, phone, type) " +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?);",
                         [
-                            parseInt(aoeID).toString(),
+                            parseInt(aoeID),
                             profExec.firm_name.toString(),
                             profExec.address_line_one.toString(),
                             profExec.address_line_two.toString(),
@@ -177,6 +181,7 @@ module.exports = function (passport) {
                         err => {
                             if (err) {
                                 console.log(err);
+                                next(err);
                             } else {
                                 next();
                             }
@@ -185,18 +190,39 @@ module.exports = function (passport) {
                 }, err => {
                     if (err) {
                         console.log(err);
-                        callback(aoeError, executorError, err, aoeID);
+                        callback(null, aoeError, executorError, err, aoeID);
                     } else {
-                        callback(aoeError, executorError, null, aoeID);
+                        callback(null, aoeError, executorError, null, aoeID);
+                    }
+                });
+            },
+            (aoeError, executorError, profExecError, aoeID, callback) => {
+                mysql.connection.query("UPDATE LastWillAndTestament SET aoe_id = ? WHERE lwat_id = ?;", [aoeID, req.body.lastWillAndTestamentId], err => {
+                    if (err) {
+                        callback(null, aoeError, executorError, profExecError, err, aoeID, req.body.lastWillAndTestamentId);
+                    } else {
+                        callback(null, aoeError, executorError, profExecError, null, aoeID, req.body.lastWillAndTestamentId);
+                    }
+                });
+            },
+            (aoeError, executorError, profExecError, updateLwatError, aoeID, lastWillAndTestamentId, callback) => {
+                mysql.connection.query("UPDATE LastWillAndTestament SET progress = ? WHERE lwat_id = ?;", [2, lastWillAndTestamentId], err => {
+                    if (err) {
+                        callback(null, aoeError, executorError, profExecError, updateLwatError, err, aoeID, req.body.lastWillAndTestamentId);
+                    } else {
+                        callback(null, aoeError, executorError, profExecError, updateLwatError, null, aoeID, req.body.lastWillAndTestamentId);
                     }
                 });
             }
-        ], (aoeError, executorError, profExecError, aoeID) => {
+        ], (err, aoeError, executorError, profExecError, updateLwatError, updateProgressError, aoeID, lastWillAndTestamentId) => {
+            if (err) {console.log("NPM Async Waterfall Error:"); console.log(err);}
             if (aoeError) {console.log("Appointment of Executors Error:"); console.log(aoeError);}
             if (executorError) {console.log("Executor Error:"); console.log(executorError);}
             if (profExecError) {console.log("Professional Executor Error:"); console.log(profExecError);}
-            if (!aoeError && !executorError && !profExecError) {
-                res.status(200).send({success: true, aoeID: aoeID});
+            if (updateLwatError) {console.log("Error Updating Last Will & Testament ID:"); console.log(updateLwatError);}
+            if (updateProgressError) {console.log("Error Updating Progress:"); console.log(updateProgressError);}
+            if (!aoeError && !executorError && !profExecError && !updateLwatError && !updateProgressError) {
+                res.status(200).send({success: true, aoeID: aoeID, lastWillAndTestamentId: lastWillAndTestamentId});
             } else {
                 res.status(200).send({success: false});
             }
@@ -215,13 +241,15 @@ module.exports = function (passport) {
                     "(notes, pass_to_spouse, distribute_residue, excluded_from_will, add_failed_gift) " +
                     "VALUES (?, ?, ?, ?, ?)",
                     [
-                        req.body.notes === "true",
-                        req.body.pass_to_spouse === "true",
-                        req.body.distribute_residue === "true",
-                        req.body.excluded_from_will.toString()
+                        req.body.notes,
+                        req.body.pass_to_spouse,
+                        req.body.distribute_residue,
+                        req.body.excluded_from_will,
+                        req.body.gift_fail
                     ],
                     err => {
                         if (err) {
+                            console.log(err);
                             callback(null, err);
                         } else {
                             callback(null, null);
@@ -281,52 +309,78 @@ module.exports = function (passport) {
                 });
             },
             (residualEstateError, residualEstateId, beneficiaryError, callback) => {
-                asyncLoop(req.body.reserveBeneficiaries, (beneficiary, next) => {
-                    mysql.connection.query(
-                        "INSERT INTO Beneficiary " +
-                        "(residual_estate_id, testator_one_relationship, testator_two_relationship, title, first_name, last_name, address_line_one, address_line_two, city, postcode, tel_mobile, tel_home, share_to_beneficiary, share_age, issue, issue_age, reserve) " +
-                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-                        [
-                            parseInt(residualEstateId),
-                            beneficiary.reserve_testator_one_relationship.toString(),
-                            beneficiary.reserve_testator_two_relationship.toString(),
-                            beneficiary.reserve_title.toString(),
-                            beneficiary.reserve_first_name.toString(),
-                            beneficiary.reserve_last_name.toString(),
-                            beneficiary.reserve_address_line_one.toString(),
-                            beneficiary.reserve_address_line_two.toString(),
-                            beneficiary.reserve_town.toString(),
-                            beneficiary.reserve_postcode.toString(),
-                            beneficiary.reserve_tel_mobile.toString(),
-                            beneficiary.reserve_tel_home.toString(),
-                            beneficiary.reserve_share_to_beneficiary.toString(),
-                            beneficiary.reserve_share_age.toString(),
-                            beneficiary.reserve_issue.toString(),
-                            beneficiary.reserve_issue_age.toString(),
-                            1 //IS A RESERVE
-                        ],
-                        err => {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                next();
+                if (req.body.reserveBeneficiaries) {
+                    asyncLoop(req.body.reserveBeneficiaries, (beneficiary, next) => {
+                        mysql.connection.query(
+                            "INSERT INTO Beneficiary " +
+                            "(residual_estate_id, testator_one_relationship, testator_two_relationship, title, first_name, last_name, address_line_one, address_line_two, city, postcode, tel_mobile, tel_home, share_to_beneficiary, share_age, issue, issue_age, reserve) " +
+                            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                            [
+                                parseInt(residualEstateId),
+                                beneficiary.reserve_testator_one_relationship.toString(),
+                                beneficiary.reserve_testator_two_relationship.toString(),
+                                beneficiary.reserve_title.toString(),
+                                beneficiary.reserve_first_name.toString(),
+                                beneficiary.reserve_last_name.toString(),
+                                beneficiary.reserve_address_line_one.toString(),
+                                beneficiary.reserve_address_line_two.toString(),
+                                beneficiary.reserve_town.toString(),
+                                beneficiary.reserve_postcode.toString(),
+                                beneficiary.reserve_tel_mobile.toString(),
+                                beneficiary.reserve_tel_home.toString(),
+                                beneficiary.reserve_share_to_beneficiary.toString(),
+                                beneficiary.reserve_share_age.toString(),
+                                beneficiary.reserve_issue.toString(),
+                                beneficiary.reserve_issue_age.toString(),
+                                1 //IS A RESERVE
+                            ],
+                            err => {
+                                if (err) {
+                                    console.log(err);
+                                    next(err);
+                                } else {
+                                    next();
+                                }
                             }
+                        )
+                    }, err => {
+                        if (err) {
+                            callback(null, residualEstateError, residualEstateId, beneficiaryError, err);
+                        } else {
+                            callback(null, residualEstateError, residualEstateId, beneficiaryError, null);
                         }
-                    )
-                }, err => {
+                    });
+                } else {
+                    callback(null, residualEstateError, residualEstateId, beneficiaryError, null);
+                }
+            },
+            (residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError, callback) => {
+                mysql.connection.query("UPDATE LastWillAndTestament SET residual_estate_id = ? WHERE lwat_id = ?;", [residualEstateId, req.body.lastWillAndTestamentId], err => {
                     if (err) {
-                        callback(residualEstateError, residualEstateId, beneficiaryError, err);
+                        callback(null, residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError, err, req.body.lastWillAndTestamentId);
                     } else {
-                        callback(residualEstateError, residualEstateId, beneficiaryError, null);
+                        callback(null, residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError, null, req.body.lastWillAndTestamentId);
+                    }
+                });
+            },
+            (residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError, updateResidualEstateIdError, lastWillAndTestamentId, callback) => {
+                mysql.connection.query("UPDATE LastWillAndTestament SET progress = ? WHERE lwat_id = ?;", [3, lastWillAndTestamentId], err => {
+                    if (err) {
+                        callback(null, residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError, updateResidualEstateIdError, err, req.body.lastWillAndTestamentId);
+                    } else {
+                        callback(null, residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError, updateResidualEstateIdError, null, req.body.lastWillAndTestamentId);
                     }
                 });
             }
-        ], (residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError) => {
-            if (residualEstateError) {console.log("Rediual Estate Error:"); console.log(residualEstateError);}
+        ], (err, residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError, updateResidualEstateIdError, updateProgressError, lastWillAndTestamentId) => {
+            if (err) {console.log("NPM Async Waterfall Error:"); console.log(err);}
+            if (residualEstateError) {console.log("Resdiual Estate Error:"); console.log(residualEstateError);}
             if (beneficiaryError) {console.log("Beneficiary Error:"); console.log(beneficiaryError);}
             if (reserveBeneficiaryError) {console.log("Reserve Beneficiary Error:"); console.log(reserveBeneficiaryError);}
-            if (!residualEstateError && !beneficiaryError && !reserveBeneficiaryError) {
-                res.status(200).send({success: true, residualEstateId: residualEstateId});
+            if (updateResidualEstateIdError) {console.log("Error Updating Residual Estate ID:"); console.log(updateResidualEstateIdError);}
+            if (updateProgressError) {console.log("Error Updating Last Will & Testament Progress:"); console.log(updateProgressError);}
+            if (!residualEstateError && !beneficiaryError && !reserveBeneficiaryError && ! updateResidualEstateIdError && !updateProgressError) {
+                res.status(200).send({success: true, residualEstateId: residualEstateId, lastWillAndTestamentId: lastWillAndTestamentId});
             } else {
                 res.status(200).send({success: false});
             }

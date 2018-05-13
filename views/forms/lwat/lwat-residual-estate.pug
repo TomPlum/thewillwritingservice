@@ -17,11 +17,11 @@ block append body-content
                     label Any notes on special requirements that call for a trust?
                         .radio
                             label
-                                input(checked='', type='radio', name='notes', value='true')
+                                input(checked='', type='radio', name='notes', value='1')
                                 |  Yes
                         .radio
                             label
-                                input(type='radio', name='notes', value='false')
+                                input(type='radio', name='notes', value='0')
                                 |  No
                 //Pass to spouse?
                 .col-md-6
@@ -30,22 +30,22 @@ block append body-content
                         |  death?
                         .radio
                             label
-                                input(checked='', type='radio', name='pass_to_spouse', value='true')
+                                input(checked='', type='radio', name='pass_to_spouse', value='1')
                                 |  Yes
                         .radio
                             label
-                                input(type='radio', name='pass_to_spouse', value='false')
+                                input(type='radio', name='pass_to_spouse', value='0')
                                 |  No
                 //Residue to be distributed in equal proportions?
                 .col-md-12
                     label Residue to be distributed in equal proportions?
                         .radio
                             label
-                                input(checked='', type='radio', name='distribute_residue', value='true')
+                                input(checked='', type='radio', name='distribute_residue', value='1')
                                 |  Yes
                         .radio
                             label
-                                input(type='radio', name='distribute_residue', value='false')
+                                input(type='radio', name='distribute_residue', value='0')
                                 |  No
             hr
             // Beneficiary - These can be dynamically added via jQuery
@@ -108,12 +108,12 @@ block append body-content
                                     .col-xs-6
                                         .radio
                                             label
-                                                input(checked='', type='radio', name='to_issue_1', value='true')
+                                                input(checked='', type='radio', name='to_issue_1', value='1')
                                                 |  Yes
                                     .col-xs-6
                                         .radio
                                             label
-                                                input(type='radio', name='to_issue_1', value='false')
+                                                input(type='radio', name='to_issue_1', value='0')
                                                 |  No
                             .col-xs-6
                                 label At Age
@@ -150,12 +150,12 @@ block append body-content
                 .col-xs-2
                     .radio
                         label
-                            input(checked='', type='radio', name='gift_fail', value='true')
+                            input(checked='', type='radio', name='gift_fail', value='1')
                             |  Yes
                 .col-xs-2
                     .radio
                         label
-                            input(type='radio', name='gift_fail', value='false')
+                            input(type='radio', name='gift_fail', value='0')
                             |  No
 
         //Reserve Beneficiaries

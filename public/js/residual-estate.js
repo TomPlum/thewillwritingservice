@@ -370,6 +370,8 @@ $(document).ready(() => {
             exclusionsArray.push($("input[name='will_exclusion_" + i + "']")).val();
         }
 
+        const lastWillAndTestamentId = getURLParameter("id");
+
         $.ajax({
             url: "/forms/save-last-will-and-testament-residual-estate",
             type: "POST",
@@ -378,14 +380,14 @@ $(document).ready(() => {
                 pass_to_spouse: $("input[name='pass_to_spouse']:checked").val(),
                 distribute_residue: $("input[name='distribute_residue']:checked").val(),
                 gift_fail: $("input[name='gift_fail']:checked").val(),
-                excluded_from_will: exclusionsArray,
+                excluded_from_will: exclusionsArray ? exclusionsArray : null,
                 beneficiaries: beneficiariesArray,
-                reserveBeneficiaries: reserveBeneficiariesArray
+                reserveBeneficiaries: reserveBeneficiariesArray,
+                lastWillAndTestamentId: lastWillAndTestamentId
             },
             success: function(res) {
                 if (res.success) {
-                    //window.location.replace("/forms/last-will-and-testament-legacies");
-                    console.log("AJAX SUCCESS!");
+                    window.location.replace("/forms/last-will-and-testament-funeral-arrangements?id=" + res.lastWillAndTestamentId);
                 } else {
                     alert("Error Saving Form.");
                 }
