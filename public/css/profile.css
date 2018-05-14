@@ -10,7 +10,16 @@
 #sidebarWrapper {
     height: 100%;
 }
+#viewPdf {
+    color: #000;
+    transition: all ease 0.2s;
+    font-weight: bold;
+}
 
+#viewPdf:hover {
+    text-decoration: none;
+    color: #7a43b6;
+}
 .nav-side-menu {
     overflow: auto;
     font-size: 1em;

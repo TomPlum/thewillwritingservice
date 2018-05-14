@@ -1,0 +1,15 @@
+extends ../../structure
+
+block append stylesheets
+    link(rel="stylesheet", href="css/lwat.css")
+
+block append body-content
+    .container-fluid
+        .row
+            .col-xs-12
+                h2 Congratulations!
+                h4 View your will below
+                hr
+                button#viewPdf.btn.btn-primary.btn-lg(type="button")
+                    i.fas.fa-fw.fa-file-pdf
+                    |  View Your Will

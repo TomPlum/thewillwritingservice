@@ -22,9 +22,18 @@ function renderLastWillAndTestamentTable() {
                 tBody += "<tr>";
                 tBody += "<td>" + data[i].lwat_id + "</td>";
                 tBody += "<td>" + formatDate(data[i].date) + "</td>";
-                tBody += "<td>" + formatProgress(data[i].progress) + "</td>";
+                if (data[i].completed === 1) {
+                    tBody += "<td>Complete</td>";
+                } else {
+                    tBody += "<td>" + formatProgress(data[i].progress) + "</td>";
+                }
                 tBody += "<td>" + (data[i].completed === 1 ? "Yes" : "No") + "</td>";
-                tBody += "<td><i title='Continue your will' class='fas fa-fw fa-check fa-lg continue-will' onclick='continueWillProgression(" + data[i].lwat_id + "," + data[i].progress + ")'></i> or <i title='Delete your will in its current state' onclick='deleteWillInProgress(" + data[i].lwat_id + ")' class='fas fa-fw fa-times fa-lg delete-will'></i></td>";
+                if (data[i].completed === 1) {
+                    tBody += "<td><a id='viewPdf' href='/'><i class='fas fa-fw fa-file-pdf'></i> View PDF </a></td>";
+                } else {
+                    tBody += "<td><i title='Continue your will' class='fas fa-fw fa-check fa-lg continue-will' onclick='continueWillProgression(" + data[i].lwat_id + "," + data[i].progress + ")'></i> or <i title='Delete your will in its current state' onclick='deleteWillInProgress(" + data[i].lwat_id + ")' class='fas fa-fw fa-times fa-lg delete-will'></i></td>";
+                }
+
                 tBody += "</tr>";
             }
             tBody += "</tbody>";

@@ -234,7 +234,7 @@ $(document).ready(() => {
             excluded_organs: $("input[name='testator_one_excluded_organs']").val(),
             cremation_required: $("input[name='testator_one_cremation_required']:checked").val(),
             burial_required: $("input[name='testator_one_burial_required']:checked").val(),
-            service_place: $("textarea[name='testator_one_service_place']").val(),
+            service_place: sanitiseLefToRightMark($("textarea[name='testator_one_service_place']").val()),
             burial_place:  $("textarea[name='testator_one_burial_place']").val(),
             buried_scattered: $("input[name='testator_one_buried_scattered']:checked").val(),
             buried_scattered_place: $("textarea[name='testator_one_buried_scattered_place']").val(),
@@ -265,13 +265,15 @@ $(document).ready(() => {
                 notes: $("textarea[name='testator_two_notes']").val()
             };
         }
+
+        const lastWillAndTestamentId = getURLParameter("id");
         
         $.ajax({
             type: "POST",
             url: "/forms/save-last-will-and-testament-funeral-arrangements",
-            data: {testatorOne: testatorOne, testatorTwo: testatorTwo},
+            data: {testatorOne: testatorOne, testatorTwo: testatorTwo, lastWillAndTestamentId: lastWillAndTestamentId},
             success: function(data) {
-                
+                window.location.href = "/forms/payment?id=" + lastWillAndTestamentId
             },
             error: function(err) {
                 console.log(err);

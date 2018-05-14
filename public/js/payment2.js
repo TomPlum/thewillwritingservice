@@ -63,11 +63,13 @@ function payWithStripe(e) {
             $form.find('.payment-errors').text("");
             let token = response.id;
 
+            const lastWillAndTestamentId = getURLParameter("id");
+
             //Make AJAX call to server. Pass Stripe token.
             $.ajax({
                 type: "POST",
                 url: "/forms/pay",
-                data: {token: token},
+                data: {token: token, lastWillAndTestamentId: lastWillAndTestamentId},
                 success: function(response) {
                     if (response.error) {
                         $form.find('#sendPayment').html('There was a problem').removeClass('success').addClass('error');
@@ -78,6 +80,7 @@ function payWithStripe(e) {
 
                     if (response.stripeObject) {
                         $form.find('#sendPayment').html('<i class="fa fa-check"></i> Payment Successful');
+                        window.location.href = "/forms/last-will-and-testament-complete?id=" + lastWillAndTestamentId;
                     }
                 },
                 error: function(err) {

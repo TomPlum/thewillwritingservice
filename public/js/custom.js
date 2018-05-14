@@ -30,3 +30,9 @@ $(window).scroll(function() {
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
 }
+
+function sanitiseLefToRightMark(string) {
+    string = string.toString();
+    let regex = /&lrm;|\u200E/gi;
+    return string.replace(regex, "");
+}
