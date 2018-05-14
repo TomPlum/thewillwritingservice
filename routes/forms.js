@@ -52,6 +52,11 @@ module.exports = function (passport) {
         res.render('forms/lwat/lwat-complete', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
+    /* GET Last Will & Testament - Page 6 (View Will PDF) */
+    router.get('/view-pdf', (req, res) => {
+        res.render('forms/lwat/will-pdf', {title: "My Will"});
+    });
+
     /* POST Create Last Will & Testament */
     router.post('/create-last-will-and-testament', isAuthenticated, (req, res) => {
         mysql.connection.query("INSERT INTO LastWillAndTestament (date, user_id, completed, progress) VALUES (?, ?, ?, ?)", [new Date(), req.user.user_id, 0, 1], err => {
@@ -522,7 +527,7 @@ module.exports = function (passport) {
                 if (err) {
                     console.log(err);
                 } else {
-
+                   res.status(200).send(rows);
                 }
             });
     });

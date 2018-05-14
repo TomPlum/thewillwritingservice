@@ -29,7 +29,7 @@ function renderLastWillAndTestamentTable() {
                 }
                 tBody += "<td>" + (data[i].completed === 1 ? "Yes" : "No") + "</td>";
                 if (data[i].completed === 1) {
-                    tBody += "<td><a id='viewPdf' href='/'><i class='fas fa-fw fa-file-pdf'></i> View PDF </a></td>";
+                    tBody += "<td><a id='viewPdf' href='/forms/view-pdf' target='_blank'><i class='fas fa-fw fa-file-pdf'></i> View PDF </a></td>";
                 } else {
                     tBody += "<td><i title='Continue your will' class='fas fa-fw fa-check fa-lg continue-will' onclick='continueWillProgression(" + data[i].lwat_id + "," + data[i].progress + ")'></i> or <i title='Delete your will in its current state' onclick='deleteWillInProgress(" + data[i].lwat_id + ")' class='fas fa-fw fa-times fa-lg delete-will'></i></td>";
                 }
@@ -112,7 +112,7 @@ function deleteWillInProgress(id) {
 
 function continueWillProgression(id, progress) {
     console.log("Will ID: " + id + "\nProgress: " + progress);
-    let params = "?id=" + id + "?progress=" + progress;
+    let params = "?id=" + id;
     let pageUri = [
         "/forms/last-will-and-testament-executors" + params,
         "/forms/last-will-and-testament-residual-estate" + params,
