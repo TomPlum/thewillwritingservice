@@ -239,7 +239,16 @@ module.exports = function (passport) {
         });
     });
 
-    /* POST Save Residual Estate Form */
+    /* POST Database Last Will & Testament (Residual Estate)
+    * This function uses an asynchronous loop from the npm package 'async'
+    * 1: Inserts a row into ResidualEstate with the generic data from the form.
+    * 2: Selects the last ID inserted into the database (from the record above)
+    * 3: Uses the npm package 'node-async-loop' to insert a Beneficiary row for each beneficiary
+    * 4: Uses the npm package 'node-async-loop' to insert a Beneficiary row for each reserve beneficiary
+    * 5: Updates the LastWillAndTestament residual_estate_id to the one selected from function 2.
+    * 6: Updates the LastWillAndTestament progress field to 3.
+    * 7: Finally, if all is okay, the final async function will send the id back to the AJAX call.
+    * */
     router.post('/save-last-will-and-testament-residual-estate', isAuthenticated, (req, res) => {
         console.log(req.body.beneficiaries);
         console.log(req.body.reserveBeneficiaries);

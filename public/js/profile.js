@@ -50,10 +50,18 @@ function renderPersonalInformation() {
         type: "POST",
         url: "/profile/get-personal-information",
         success: function(data) {
+            console.log(data);
             $("#personalFirstName").val(data.first_name);
             $("#personalLastName").val(data.last_name);
+            $("#personalTitle").val(data.title);
             $("#personalUsername").val(data.username);
             $("#personalEmail").val(data.email);
+            $("#personalTelephone").val(data.tel_home);
+            $("#personalMobile").val(data.tel_mobile);
+            $("#personalDob").val(data.dob);
+            $("#personalNationality").val(data.nationality);
+            $("#personalEmployer").val(data.employer);
+            $("#personalPosition").val(data.job_title);
         },
         error: function(err) {
             console.log(err);
@@ -75,9 +83,16 @@ function updatePersonalInformation() {
             email: $("#personalEmail").val(),
             first_name: $("#personalFirstName").val(),
             last_name: $("#personalLastName").val(),
+            title: $("#personalTitle").val(),
+            tel_home: $("#personalTelephone").val(),
+            tel_mobile: $("#personalMobile").val(),
+            date_of_birth: $("#personalDob").val(),
+            job_title: $("#personalPosition").val(),
+            nationality: $("#personalNationality").val(),
+            employer: $("#personalEmployer").val()
         },
         success: function(data) {
-            if(data) {
+            if(data.error) {
                 console.log(data);
             } else {
                 renderPersonalInformation();
@@ -99,6 +114,7 @@ function deleteWillInProgress(id) {
             success: function(data) {
                 if (data.success) {
                     alert("Successfully Deleted Will");
+                    renderLastWillAndTestamentTable();
                 } else {
                     alert(data.error);
                 }
