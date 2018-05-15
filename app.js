@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const rootRoutes = ["/forms"];
+const rootRoutes = ["/forms", "/profile"];
 const childRoutes = ["/forms/last-will-and-testament-executors"];
 
 //Express Static Routing

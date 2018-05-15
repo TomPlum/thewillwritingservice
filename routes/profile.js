@@ -28,7 +28,7 @@ module.exports = function (passport) {
 
     router.post('/update-personal-information', isAuthenticated, (req, res) => {
         mysql.connection.query(
-            "UPDATE Users SET username = ?, email = ?, first_name = ?, last_name = ?, title = ?, tel_mobile = ?, tel_home = ?, dob = ?, job_title = ?, employer = ?, nationality = ? WHERE user_id = ?;",
+            "UPDATE Users SET username = ?, email = ?, first_name = ?, last_name = ?, title = ?, tel_mobile = ?, tel_home = ?, dob = ?, job_title = ?, employer = ?, nationality = ?, marital_status = ?, address_line_1 = ?, address_line_2 = ?, town = ?, postcode = ?, property_duration = ? WHERE user_id = ?;",
             [
                 req.body.username,
                 req.body.email,
@@ -41,6 +41,12 @@ module.exports = function (passport) {
                 req.body.job_title,
                 req.body.employer,
                 req.body.nationality,
+                req.body.marital_status,
+                req.body.address_line_one,
+                req.body.address_line_two,
+                req.body.town,
+                req.body.postcode,
+                req.body.property_duration,
                 req.user.user_id
             ],
             (err) => {

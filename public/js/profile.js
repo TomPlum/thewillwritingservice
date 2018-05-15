@@ -14,6 +14,7 @@ function renderLastWillAndTestamentTable() {
                                     "<th>Date Created</th>" +
                                     "<th>Progress</th>"+
                                     "<th>Completed?</th>" +
+                                    "<th>Paid</th>" +
                                     "<th>Action</th>"+
                                 "</tr>" +
                             "</thead>";
@@ -23,13 +24,19 @@ function renderLastWillAndTestamentTable() {
                 tBody += "<td>" + data[i].lwat_id + "</td>";
                 tBody += "<td>" + formatDate(data[i].date) + "</td>";
                 if (data[i].completed === 1) {
-                    tBody += "<td>Complete</td>";
+                    tBody += "<td><i class='fas fa-fw fa-check-circle'></i> Completed</td>";
                 } else {
                     tBody += "<td>" + formatProgress(data[i].progress) + "</td>";
                 }
                 tBody += "<td>" + (data[i].completed === 1 ? "Yes" : "No") + "</td>";
+                if (data[i].completed) {
+                    tBody += "<td>£20.00</td>";
+                } else {
+                    tBody += "<td>£0.00</td>";
+                }
+
                 if (data[i].completed === 1) {
-                    tBody += "<td><a id='viewPdf' href='/forms/view-pdf' target='_blank'><i class='fas fa-fw fa-file-pdf'></i> View PDF </a></td>";
+                    tBody += "<td><a id='viewPdf' href='/forms/view-pdf' target='_blank'><i class='fas fa-fw fa-file-pdf'></i> View PDF </a> &nbsp;&#124;&nbsp; <a id='editWill' href=''><i class='fas fa-fw fa-edit'></i> Edit</a></td>";
                 } else {
                     tBody += "<td><i title='Continue your will' class='fas fa-fw fa-check fa-lg continue-will' onclick='continueWillProgression(" + data[i].lwat_id + "," + data[i].progress + ")'></i> or <i title='Delete your will in its current state' onclick='deleteWillInProgress(" + data[i].lwat_id + ")' class='fas fa-fw fa-times fa-lg delete-will'></i></td>";
                 }
@@ -62,6 +69,12 @@ function renderPersonalInformation() {
             $("#personalNationality").val(data.nationality);
             $("#personalEmployer").val(data.employer);
             $("#personalPosition").val(data.job_title);
+            $("#personalMaritalStatus").val(data.marital_status);
+            $("#personalAddressLine1").val(data.address_line_1);
+            $("#personalAddressLine2").val(data.address_line_2);
+            $("#personalTown").val(data.town);
+            $("#personalPostcode").val(data.postcode);
+            $("#personalPropertyDuration").val(data.property_duration);
         },
         error: function(err) {
             console.log(err);
@@ -75,6 +88,8 @@ function formatProgress(stage) {
 }
 
 function updatePersonalInformation() {
+    $("#updatePersonalInformation").html("<i class='fas fa-fw fa-spin fa-circle-notch'></i> Updating...");
+
     $.ajax({
         type: "POST",
         url: "/profile/update-personal-information",
@@ -89,12 +104,22 @@ function updatePersonalInformation() {
             date_of_birth: $("#personalDob").val(),
             job_title: $("#personalPosition").val(),
             nationality: $("#personalNationality").val(),
-            employer: $("#personalEmployer").val()
+            employer: $("#personalEmployer").val(),
+            marital_status: $("#personalMaritalStatus").val(),
+            address_line_one: $("#personalAddressLine1").val(),
+            address_line_two: $("#personalAddressLine2").val(),
+            town: $("#personalTown").val(),
+            postcode: $("#personalPostcode").val(),
+            property_duration: $("#personalPropertyDuration").val()
         },
         success: function(data) {
             if(data.error) {
-                console.log(data);
+                console.log(data.error);
             } else {
+                setTimeout(() => {
+                    $("#updatePersonalInformation").html("<i class='fas fa-fw fa-cloud-upload-alt'></i> Update Information");
+                }, 2000);
+
                 renderPersonalInformation();
             }
         },
@@ -135,7 +160,7 @@ function continueWillProgression(id, progress) {
         "/forms/last-will-and-testament-funeral-arrangements" + params,
         "/forms/payment" + params
     ];
-    window.location.href = pageUri[progress];
+    window.location.href = pageUri[progress-1];
 }
 
 function formatDate(date) {

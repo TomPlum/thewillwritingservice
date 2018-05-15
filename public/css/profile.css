@@ -187,3 +187,13 @@ body,html {
 .continue-will:hover {
     color: #7fff88
 }
+
+#editWill {
+    transition: all 0.2s ease;
+    color: #000;
+}
+
+#editWill:hover {
+    color: #2e6da4;
+    text-decoration: none;
+}
