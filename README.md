@@ -1,6 +1,6 @@
 # TheWillwritingPartnership
 
-#Getting Started
+# Getting Started
 Start by cloning the repository from `https://www.github.com/TomPlum/thewillwritingpartnership-nodejs.git/` into a local directory of your choice. Alternatively, you can download a .ZIP archive of the source files and copy it to your working directory.
 
 ## Running the Application
