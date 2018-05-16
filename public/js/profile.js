@@ -3,7 +3,7 @@ function renderLastWillAndTestamentTable() {
         type: "POST",
         url: "/profile/get-wills",
         success: function(data) {
-            console.log(data);
+
             const oTable = "<table class='table table-hover table-striped table-condensed'>";
             const cTable = "</table>";
             let tBody = "<tbody>";
@@ -20,27 +20,39 @@ function renderLastWillAndTestamentTable() {
                             "</thead>";
 
             for (let i = 0; i < data.length; i++) {
+                //Open Row
                 tBody += "<tr>";
+
+                //Add Last Will & Testament ID
                 tBody += "<td>" + data[i].lwat_id + "</td>";
+
+                //Add Date
                 tBody += "<td>" + formatDate(data[i].date) + "</td>";
+                //If will is completed, add a check mark and "Complete"
                 if (data[i].completed === 1) {
                     tBody += "<td><i class='fas fa-fw fa-check-circle'></i> Completed</td>";
                 } else {
+                    //Else, add in the current progress
                     tBody += "<td>" + formatProgress(data[i].progress) + "</td>";
                 }
+                //Add in "Yes" or "No" for complete 1 and 0.
                 tBody += "<td>" + (data[i].completed === 1 ? "Yes" : "No") + "</td>";
+
+                //If will is completed set price paid amount, else set to 0.
                 if (data[i].completed) {
                     tBody += "<td>£20.00</td>";
                 } else {
                     tBody += "<td>£0.00</td>";
                 }
 
+                //If wil is completed, add a "View PDF" and "Edit" button. Else, add a "Continue" and "Delete" option using icons.
                 if (data[i].completed === 1) {
                     tBody += "<td><a id='viewPdf' href='/forms/view-pdf' target='_blank'><i class='fas fa-fw fa-file-pdf'></i> View PDF </a> &nbsp;&#124;&nbsp; <a id='editWill' href=''><i class='fas fa-fw fa-edit'></i> Edit</a></td>";
                 } else {
                     tBody += "<td><i title='Continue your will' class='fas fa-fw fa-check fa-lg continue-will' onclick='continueWillProgression(" + data[i].lwat_id + "," + data[i].progress + ")'></i> or <i title='Delete your will in its current state' onclick='deleteWillInProgress(" + data[i].lwat_id + ")' class='fas fa-fw fa-times fa-lg delete-will'></i></td>";
                 }
 
+                //Close Row
                 tBody += "</tr>";
             }
             tBody += "</tbody>";
@@ -83,8 +95,8 @@ function renderPersonalInformation() {
 }
 
 function formatProgress(stage) {
-    const stages = ["Appointment of Executors", "Residual Estate", "Funeral Arrangements", "Awaiting Payment"];
-    return "Stage " + stage + "/4 - " + stages[stage-1];
+    const stages = ["Client Data Form", "Appointment of Executors", "Residual Estate", "Funeral Arrangements", "Awaiting Payment"];
+    return "Stage " + (stage + 1) + "/5 - " + stages[stage];
 }
 
 function updatePersonalInformation() {

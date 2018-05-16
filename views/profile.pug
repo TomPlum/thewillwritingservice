@@ -24,44 +24,31 @@ block append body-content
                                 li
                                     a(href='#changePassword', data-toggle='tab')
                                         i.fa.fa-fw.fa-lock
-                                    |  Change Password
+                                        |  Change Password
                                 li
                                     a(href="/logout")
                                         i.fas.fa-fw.fa-sign-out-alt
                                         |  Logout
-                            li.collapsed(data-toggle='collapse', data-target='#service')
-                                a(href='#')
-                                    i.fa.fa-fw.fa-lg.fa-mouse-pointer
-                                    |  Online Services
-                                    span.arrow
-                            ul#service.sub-menu.collapse
-                                li
-                                    a#displayWills(href='#wills', data-toggle='tab')
-                                        i.fas.fa-fw.fa-pencil-alt
-                                        |  My Wills
-                                li
-                                    a(href='#trusts', data-toggle='tab')
-                                        i.fas.fa-fw.fa-users
-                                        |  My Trusts
-                                li
-                                    a(href='#lastingPowersOfAttorney', data-toggle='tab')
-                                        i.fas.fa-fw.fa-gavel
-                                        |  My Lasting Powers of Attorney
-                                li
-                                    a(href='#funeralPlans', data-toggle='tab')
-                                        i.fab.fa-fw.fa-pagelines
-                                        |  My Funeral Plans
                             li
-                                li
-                                    a(href='#')
-                                        i.fas.fa-fw.fa-user.fa-lg
-                                        |  Personal Services
-                                        span.arrow
-                                ul#personalServices.sub-menu
-                                    li
-                                        a#displayBlogPosts(href="#blogPosts", data-toggle="tab")
-                                            i.fas.fa-fw.fa-rss
-                                            |  My Blog Posts
+                                a#displayWills(href='#wills', data-toggle='tab')
+                                    i.fas.fa-fw.fa-pencil-alt
+                                    |  My Wills
+                            li
+                                a(href='#trusts', data-toggle='tab')
+                                    i.fas.fa-fw.fa-users
+                                    |  My Trusts
+                            li
+                                a(href='#lastingPowersOfAttorney', data-toggle='tab')
+                                    i.fas.fa-fw.fa-gavel
+                                    |  My Lasting Powers of Attorney
+                            li
+                                a(href='#funeralPlans', data-toggle='tab')
+                                    i.fab.fa-fw.fa-pagelines
+                                    |  My Funeral Plans
+                            li
+                                a#displayBlogPosts(href="#blogPosts", data-toggle="tab")
+                                    i.fas.fa-fw.fa-rss
+                                    |  My Blog Posts
             .col-xs-8#contentWrapper
                 .tab-content
                     #personalInformation.tab-pane.active
@@ -73,7 +60,7 @@ block append body-content
                                             i.fa.fa-fw.fa-user.fa-lg
                                             |  Client Data Form
                                         hr
-                                br
+                                        p The form below captures all relevant information required by the Last Will & Testament Form. Here you can make any changes you wish to your personal information should it change or be incorrect.
                                 .row
                                     .col-md-6
                                         h4
@@ -246,9 +233,29 @@ block append body-content
                                             |  Update Information
 
                     #changePassword.tab-pane
-                        h3
-                            i.fas.fa-fw.fa-lg.fa-lock
-                            |  Change Password
+                        .col-md-6
+                            h3
+                                i.fas.fa-fw.fa-lg.fa-lock
+                                |  Change Password
+                            form#lost-form
+                                #div-lost-msg
+                                    #icon-lost-msg.fas.fa-fw.fa-angle-right
+                                    span#text-lost-msg Whoops! Please change your password.
+                                br
+                                input.form-control#lostPasswordUsername(type="text" name="username" placeholder="Username" required)
+                                input.form-control#lostPasswordOld(type="password" name="old" placeholder="Current Password" required)
+                                input.form-control#lostPasswordNew(type="password" name="new" placeholder="New Password" required)
+                                input.form-control#lostPasswordConfirm(type="password" name="confirm" placeholder="Confirm Password" required)
+                                button#submit_handle(type="submit" style="display: none")
+                                p#lostPasswordError
+                                p#lostPasswordSuccess
+
+
+                                button#lostPassword.btn.btn-success.btn-lg.btn-block(type='button')
+                                    i.fas.fa-fw.fa-lock
+                                    |  Change My Password
+                                button#lostPasswordResponseMessage.btn.btn-lg.btn-block(type="button")
+
                     #wills.tab-pane
                         h3
                             i.fas.fa-fw.fa-pencil-alt

@@ -27,32 +27,37 @@ function getUsername(req) {
 }
 
 module.exports = function (passport) {
-    /* GET Last Will & Testament - Page 1 (Executors) */
+    /* GET Last Will & Testament - Page 1 (Client Data) */
+    router.get('/last-will-and-testament-client-data', isAuthenticated, (req, res) => {
+        res.render('forms/lwat/lwat-client-data', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
+    });
+
+    /* GET Last Will & Testament - Page 2 (Executors) */
     router.get('/last-will-and-testament-executors', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-executors', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
-    /* GET Last Will & Testament - Page 2 (Residual Estate) */
+    /* GET Last Will & Testament - Page 3 (Residual Estate) */
     router.get('/last-will-and-testament-residual-estate', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-residual-estate', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
-    /* GET Last Will & Testament - Page 3 (Funeral Arrangements) */
+    /* GET Last Will & Testament - Page 4 (Funeral Arrangements) */
     router.get('/last-will-and-testament-funeral-arrangements', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-funeral-arrangements', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
-    /* GET Last Will & Testament - Page 4 (Payment) */
+    /* GET Last Will & Testament - Page 5 (Payment) */
     router.get('/payment', isAuthenticated, (req, res) => {
         res.render('forms/payment2', {title: "Payment", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
-    /* GET Last Will & Testament - Page 5 (Complete) */
+    /* GET Last Will & Testament - Page 6 (Complete) */
     router.get('/last-will-and-testament-complete', isAuthenticated, (req, res) => {
         res.render('forms/lwat/lwat-complete', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 
-    /* GET Last Will & Testament - Page 6 (View Will PDF) */
+    /* GET Last Will & Testament - Page 7 (View Will PDF) */
     router.get('/view-pdf', (req, res) => {
         res.render('forms/lwat/will-pdf', {title: "My Will"});
     });
