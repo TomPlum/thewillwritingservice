@@ -47,7 +47,7 @@ function renderLastWillAndTestamentTable() {
 
                 //If wil is completed, add a "View PDF" and "Edit" button. Else, add a "Continue" and "Delete" option using icons.
                 if (data[i].completed === 1) {
-                    tBody += "<td><a id='viewPdf' href='/forms/view-pdf' target='_blank'><i class='fas fa-fw fa-file-pdf'></i> View PDF </a> &nbsp;&#124;&nbsp; <a id='editWill' href=''><i class='fas fa-fw fa-edit'></i> Edit</a></td>";
+                    tBody += "<td><a id='viewPdf' href='/forms/view-pdf?id=" + data[i].lwat_id + "' target='_blank'><i class='fas fa-fw fa-file-pdf'></i> View PDF </a> &nbsp;&#124;&nbsp; <a id='editWill' href=''><i class='fas fa-fw fa-edit'></i> Edit</a></td>";
                 } else {
                     tBody += "<td><i title='Continue your will' class='fas fa-fw fa-check fa-lg continue-will' onclick='continueWillProgression(" + data[i].lwat_id + "," + data[i].progress + ")'></i> or <i title='Delete your will in its current state' onclick='deleteWillInProgress(" + data[i].lwat_id + ")' class='fas fa-fw fa-times fa-lg delete-will'></i></td>";
                 }
@@ -194,4 +194,5 @@ $(document).ready(() => {
    $("#displayWills").on("click", renderLastWillAndTestamentTable);
    $("#displayPersonalInformation").on("click", renderPersonalInformation());
    $("#updatePersonalInformation").on("click", updatePersonalInformation);
+   $("")
 });

@@ -528,7 +528,7 @@ module.exports = function (passport) {
     });
 
     /* Generate Will PDF */
-    router.post('/view-will-pdf', (req, res) => {
+    router.post('/get-last-will-and-testament', (req, res) => {
         mysql.connection.query(
             "SELECT * FROM LastWillAndTestament " +
             "INNER JOIN AppointmentOfExecutors ON LastWillAndTestament.aoe_id = AppointmentOfExecutors.aoe_id " +
@@ -541,7 +541,7 @@ module.exports = function (passport) {
                 if (err) {
                     console.log(err);
                 } else {
-                   res.status(200).send(rows);
+                    res.status(200).send({will: rows, user: req.user});
                 }
             });
     });

@@ -1,0 +1,160 @@
+extends ../../structure
+
+block navigation
+block footer
+block append stylesheets
+    link(rel="stylesheet", href="css/will.css")
+
+block append body-content
+    .container
+        .row
+            .col-xs-12
+                h1.text-center Last Will & Testament
+                p I, &#32;
+                    span.name
+                    |  presently of &#32;
+                    span.town
+                    | , England, hereby revoke all former testamentary dispositions made by me and declare this to be my last Will.
+                h3 Preliminary Declarations
+                strong Prior Wills &amp; Codicils
+                p 1. I revoke all prior Wills and Codicils.
+
+                strong Marital Status
+                p.maritalStatus 2. I am not married.
+
+                strong Children
+                p.children 3. I do not have any living children.
+
+                h3 Executor
+                strong Executor
+                p 4. The expression 'my Executor' used throughout this Will includes either the singular or plural number, or the masculine or feminine gender as appropriate
+                    |  wherever the fact or context so requires. The term 'executor' in this Will is synonymous with and includes the term 'executrix' and 'personal representative'.
+
+                strong Appointment
+                p 5. I appoint
+                    span.executorName
+                    | of &#32;
+                    span.executorTown
+                    | , &#32;
+                    span.executorCountry
+                    | as the sole Executor of this my Will.
+
+                strong Power of my Executor
+                p 6. I give and appoint to my Executor the following duties and powers with respect to my estate:
+
+                ol.alpha-bullets
+                    li To pay my legally enforceable debts, funeral expenses and all expenses in connection with the administration of my estate and the trusts created by my Will
+                    | as soon as convenient after my death, except for any debt secured by real and/or personal property which is to be assumed by the recipient of such property.
+
+                    li To take all legal actions to have the probate of my Will completed as quickly and simply as possible, and as free as possible from any court supervision.
+
+                    li To retain, exchange or dispose of any personal property without liability for loss of depreciation.
+
+                    li To invest, let, rent, exchange, mortgage, sell, dispose of or give options without being limited as to term, any and all real property belonging to my estate
+                    |  and to insure, repair, improve, add to, remove from or demolish or otherwise deal with such real properties as my Executor deems advisable without liability
+                    |  for loss or deprecation.
+
+                    li To purchase, maintain, convert and liquidate investments or securities, and to exercise voting rights in connection with any shareholding, or exercise any
+                    |  options concerning any investments or securities.
+
+                    li To open or close bank accounts.
+
+                    li To maintain, continue, dissolve, change or sell any business which is part of my estate, or to purchase and business if deemed unnecessary or beneficial
+                    |  to my estate by my Executor.
+
+                    li To maintain, settle, abandon, make a claim against or defend, or otherwise deal with any claims or actions against my estate.
+
+                    li to employ any solicitor, account or other professional.
+
+                    li Except as otherwise provided, to act as my Trustee by holding in trust the share of any minor beneficiary, and to keep such share invested, pay the income
+                    |  or capital or as much of either or both as my Executor considers advisable for the maintenance, education, advancement or benefit of such minor
+                    |  beneficiary and to pay or transfer the capital of such share or the amount remaining to such beneficiary when he or she reaches the age of majority or,
+                    |  during the minority of such beneficiary, to pay or transfer such share to any parent or guardian of such beneficiary subject to like conditions and the
+                    |  receipt by any such parent or guardian discharges my Executor.
+
+                p The above authority and powers granted to my Executor are in addition to any powers and elective rights conferred by statute or common law or by other provision
+                    |  of this Will and may be exercised as often as required, and without application to or approval by any court.
+
+                strong Disposition of Estate
+                p 7. To receive any gift or property under this Will a beneficiary must survive me for thirty (30) days. Beneficiaries of my estate residue will receive and
+                    |  share all of my property and assets not specifically bequeathed or otherwise required for the payment of any debts owed, including but not limited to
+                    |  , expenses associated with the probate of my Will, the payment of taxes, funeral expenses or any other expense resulting from the administration of my
+                    |  Will. The entire estate residue is to be divided between my designated beneficiaries with the beneficiaries receiving a share of the entire estate residue.
+                    |  All property given under this Will is subject to any encumbrances or liens attached to the property.
+
+                p 8. I direct my Executor to distribute the residue of my estate as follows ("
+                    span.distributeResidue
+                    |  "):
+                    ol.alpha-bullets
+                        li All of the residue of my estate to
+                        span.something
+                        | of
+                        span.something
+                        | ,
+                        span.something
+                        | , for their own use absolutely.
+
+                strong Wipeout Provision
+                p 9. I HEREBY DIRECT that the residue of my estate or the amount remaining thereof be divided into one hundred (100) equal shares and to pay and transfer such shares as follows:
+                ol.alpha-bullets
+                    li 100 shares to be divided equally between my parents and siblings, or the survivors thereof, for their own use absolutely, if all or any of them is then alive.
+
+                strong Individual Omitted From Bequests
+                p 10. If I have omitted to leave property in this Will to one or more of my heirs as named above or have provided them with zero shares of a bequest, the failure to do so is intentional.
+
+                h3 General Provisions
+
+                strong No Contest Provision
+                p 11. If ant beneficiary under this Will contests in court any of the provisions of this Will, then each and all such persons shall not be entitled to any devises
+                    |  , legacies, bequests, or benefits under this Will or any codicil hereto, and such interest or share in my estate shall be disposed of as if that
+                    |  contesting beneficiary had not survived me.
+
+                strong Separability
+                p 12. If any provisions of this Will are deemed unenforceable, the remaining provisions will remain in full force and effect.
+
+                strong Signature
+                p 13. I,
+                    span.testatorName
+                    | , the within named Testator, have to this my last Will contained on this and the preceding pages, set my hand at the City of
+                    span.testatorCity
+                    | , England, this
+                    span.willDate
+                    |  I declare that this instrument is my last Will, that I am of the legal age in this jurisdiction to make a Will, that I am under no constraint or undue
+                    |  influence, and that I sign this Will freely and voluntarily.
+
+            .col-md-4
+                p Signed
+                    hr
+            br
+            .col-xs-12
+                strong.text-center Witnesses
+
+                p This instrument was signed on the above written date by
+                    span.someName
+                    |  , and in our presence the Testator declared this instrument to be their last Will. At the Testator's request and in the presence of the Testator,
+                    |  we subscribe our names as witnesses hereto. Each of us observed the signing of this Will by
+                    span.someName
+                    |  and by each other subscribing we witness and affirm that each signature is the true signature of the person whose name was signed. Each of us is now the
+                    |  age of majority, a competent witness and resides at the address set forth after our names.
+
+                p To the best of our knowledge, the Testator is of the age of majority or otherwise legally empowered to make a Will, is mentally competent and under no
+                    |  constraint or undue influence.
+
+                p We declare under the penalty of perjury under the laws of the United Kingdom of Great Britain and Northern Ireland that the foregoing is true and correct this
+                    span.willDate
+                    |  , at
+                    span.town
+                    |  , England.
+
+            .col-md-4
+                p Signed by
+                    span.someName
+                    |  in our presence and then by us in their presence.
+
+
+
+
+
+
+block append scripts
+    script(type="text/javascript", src="js/will.js")
