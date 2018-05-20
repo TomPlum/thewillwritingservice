@@ -250,29 +250,6 @@ function deleteReserveBeneficiary() {
     }
 }
 
-function getOrdinalSuffix(number) {
-    if (number > 3 && number < 21) {
-        return "th";
-    } else if (number === 1) {
-        return "st";
-    } else if (number === 2) {
-        return "nd";
-    } else if (number === 3) {
-        return "rd";
-    } else {
-        switch (number % 10) {
-            case 1:
-                return "st";
-            case 2:
-                return "nd";
-            case 3:
-                return "rd";
-            default:
-                return "th";
-        }
-    }
-}
-
 function addTestData() {
     //Beneficiary One
     $("input[name='relationship_testator_one_1']").val("Daughter");
