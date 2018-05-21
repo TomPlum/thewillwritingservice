@@ -1,10 +1,28 @@
 $(document).ready(() => {
+    //Show Loading Modal
+    $("#loadingModal").modal('show');
+    $(".loading").html("<i class='fas fa-lg fa-fw fa-2x fa-spin fa-circle-notch'></i><p class='loading-text'>Loading your data...</p>");
+
+
     $.ajax({
         type: "POST",
         url: "/forms/get-last-will-and-testament",
         data: {id: getURLParameter("id")},
         success: function(data) {
-            renderWill(data);
+            setTimeout(() => {
+                renderWill(data);
+            }, 3000);
+            setTimeout(() => {
+                $(".loading").html("<i class='fas fa-lg fa-fw fa-2x fa-spin fa-circle-notch'></i><p class='loading-text'>Finding a pen...</p>");
+            }, 1000);
+            setTimeout(() => {
+                $(".loading").html("<i class='fas fa-lg fa-fw fa-2x fa-spin fa-circle-notch'></i><p class='loading-text'>Signing your Will...</p>");
+            }, 2000);
+            setTimeout(() => {
+                $(".loading").html("<i class='fas fa-lg fa-fw fa-2x fa-check'></i><p class='loading-text'>Done</p>");
+                $(".loading i").addClass("loading-green");
+                $("#loadingWillClose").css("display", "initial");
+            }, 3500);
         },
         error: function(err) {
             console.log(err);

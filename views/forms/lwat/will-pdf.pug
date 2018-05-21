@@ -7,6 +7,16 @@ block append stylesheets
     link(href="https://fonts.googleapis.com/css?family=Herr+Von+Muellerhoff" rel="stylesheet")
 
 block append body-content
+    #loadingModal.modal.fade(tabindex='-1', role='dialog', data-backdrop='static', data-keyboard='false')
+        .modal-dialog(role="document")
+            .modal-content
+                .modal-header#loadingModalHeader
+                    button#loadingWillClose.close(type='button', data-dismiss='modal', aria-label='Close' style="display: none;")
+                        span.fas.fa-fw.fa-times(aria-hidden='true')
+                .modal-body
+                    .loading
+                .modal-footer
+
     .container
         .row
             .col-xs-12

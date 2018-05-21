@@ -73,3 +73,28 @@ p {
 .rule {
     border-bottom: 1px solid #7a43b6;
 }
+
+.loading {
+    padding: 10px;
+    line-height: 62px !important;
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.loading p {
+    line-height: 62px;
+    vertical-align: middle;
+    font-size: 2em;
+    display: inline;
+    margin: 0;
+}
+
+.loading i {
+    line-height: 62px;
+    vertical-align: middle;
+    color: #7a43b6;
+}
+
+.loading-green {
+    color: #4cae4c !important;
+}
