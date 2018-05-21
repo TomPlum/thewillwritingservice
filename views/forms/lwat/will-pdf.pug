@@ -4,6 +4,7 @@ block navigation
 block footer
 block append stylesheets
     link(rel="stylesheet", href="css/will.css")
+    link(href="https://fonts.googleapis.com/css?family=Herr+Von+Muellerhoff" rel="stylesheet")
 
 block append body-content
     .container
@@ -23,7 +24,7 @@ block append body-content
                 p 1. I revoke all prior Wills and Codicils.
 
                 strong Marital Status
-                p.maritalStatus 2. I am not married.
+                p.maritalStatus
 
                 strong Children
                 p.children 3. I do not have any living children.
@@ -34,13 +35,13 @@ block append body-content
                     |  wherever the fact or context so requires. The term 'executor' in this Will is synonymous with and includes the term 'executrix' and 'personal representative'.
 
                 strong Appointment
-                p 5. I appoint
+                p.executors 5. I appoint &#32;
                     span.executorName
-                    | of &#32;
+                    | &#32; of &#32;
                     span.executorTown
                     | , &#32;
                     span.executorCountry
-                    | as the sole Executor of this my Will.
+                    | &#32; as the sole Executor of this my Will.
 
                 strong Power of my Executor
                 p 6. I give and appoint to my Executor the following duties and powers with respect to my estate:
@@ -125,9 +126,9 @@ block append body-content
                     |  I declare that this instrument is my last Will, that I am of the legal age in this jurisdiction to make a Will, that I am under no constraint or undue
                     |  influence, and that I sign this Will freely and voluntarily.
 
-            .col-md-4
-                p Signed
-                    hr
+                p.signedText Signed
+            .col-xs-4
+                p.signature.testatorSignature
             br
             .col-xs-12
                 strong.text-center Witnesses
@@ -155,27 +156,28 @@ block append body-content
         .row
             .col-xs-5.col-xs-offset-1
                 p Signature
-                hr
+                p.signature.userSignature
                 p Name
-                span.signatureName
+                p.signatureName
                 p Address
-                span.signatureFirstLineAddress
-                span.signatureSecondLineAddress
-                span.signautreCityTown
-                span.signaturePostcode
+                p.signatureFirstLineAddress.rule
+                p.signatureSecondLineAddress
+                p City/Town
+                p.signatureCityTown
+                p Postcode
+                p.signaturePostcode
             .col-xs-5
                 p Signature
-                hr
+                p.signature.staffSignature
                 p Name
-                hr
+                p.staffName
                 p Address
-                hr
-                br
-                hr
+                p.staffFirstLineAddress
+                p.staffSecondLineAddress
                 p City/Town
-                hr
+                p.staffCityTown
                 p Postcode
-                hr
+                p.staffPostcode
         .row
             .col-xs-12.footer
                 p

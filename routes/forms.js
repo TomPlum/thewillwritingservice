@@ -585,23 +585,115 @@ module.exports = function (passport) {
         });
     });
 
-    /* Generate Will PDF */
-    router.post('/get-last-will-and-testament', (req, res) => {
-        mysql.connection.query(
-            "SELECT * FROM LastWillAndTestament " +
-            "INNER JOIN AppointmentOfExecutors ON LastWillAndTestament.aoe_id = AppointmentOfExecutors.aoe_id " +
-            "INNER JOIN Executor ON Executor.aoe_id = AppointmentOfExecutors.aoe_id " +
-            "INNER JOIN ProfessionalExecutor ON ProfessionalExecutor.aoe_id = AppointmentOfExecutors.aoe_id " +
-            "INNER JOIN ResidualEstate ON LastWillAndTestament.residual_estate_id = ResidualEstate.residual_estate_id " +
-            "INNER JOIN Beneficiary ON ResidualEstate.residual_estate_id = Beneficiary.residual_estate_id " +
-            "INNER JOIN FuneralArrangements ON LastWillAndTestament.funeral_id = FuneralArrangements.funeral_id " +
-            "WHERE user_id = ? AND LastWillAndTestament.lwat_id = ?;", [req.user.user_id, req.body.lastWillAndTestamentId], (err, rows) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.status(200).send({will: rows, user: req.user});
-                }
-            });
+    /* Get all information for the Last Will & Testament
+     * This function using an asynchronous waterfall to make several queries and builds and object.
+     * The queries are as follows;
+     * 1. Select All From 'LastWillAndTestament' Where Matches User ID.
+     * 2. Select All From 'AppointmentOfExecutors' Where Matches LWAT ID.
+     * 3. Select All From 'Executor' Where Matches AOE ID.
+     * 4. Select All From 'ProfessionalExecutor' Where Matches AOE ID.
+     * 5. Select All From 'ResidualEstate' Where Matches LWAT ID.
+     * 6. Select All From 'Beneficiary' Where Matches Residual Estate ID.
+     * 7. Select All From 'FuneralArrangements' Where Matches LWAT ID.
+     */
+    router.post('/get-last-will-and-testament', isAuthenticated, (req, res) => {
+        let willData = {};
+        async.waterfall([
+            callback => {
+                mysql.connection.query("SELECT * FROM LastWillAndTestament WHERE user_id = ? AND lwat_id = ?", [req.user.user_id, req.body.id], (err, rows) => {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        willData.lastWillAndTestament = Object.assign({}, rows[0]);
+                        callback(null, null);
+                    }
+                });
+            },
+            (willError, callback) => {
+                mysql.connection.query("SELECT * FROM AppointmentOfExecutors WHERE aoe_id = ?;", [willData.lastWillAndTestament.aoe_id], (err, rows) => {
+                   if (err) {
+                       callback(null, willError, err);
+                   } else {
+                       willData.appointmentOfExecutors = Object.assign({}, rows[0]);
+                       callback(null, willError, null);
+                   }
+                });
+            },
+            (willError, aoeError, callback) => {
+                mysql.connection.query("SELECT * FROM Executor WHERE aoe_id = ?;", [willData.appointmentOfExecutors.aoe_id], (err, rows) => {
+                    if (err) {
+                        callback(null, willError, aoeError, err);
+                    } else {
+                        //console.log(rows);
+                        willData.executors = [];
+                        for (let i = 0; i < rows.length; i++) {
+                            willData.executors.push(Object.assign({}, rows[i]));
+                        }
+                        callback(null, willError, aoeError, null);
+                    }
+                });
+            },
+            (willError, aoeError, executorError, callback) => {
+                mysql.connection.query("SELECT * FROM ProfessionalExecutor WHERE aoe_id = ?;", [willData.appointmentOfExecutors.aoe_id], (err, rows) => {
+                    if (err) {
+                        callback(null, willError, aoeError, executorError, err);
+                    } else {
+                        willData.professionalExecutors = [];
+                        for (let i = 0; i < rows.length; i++) {
+                            willData.professionalExecutors.push(Object.assign({}, rows[i]));
+                        }
+                        callback(null, willError, aoeError, executorError, null);
+                    }
+                });
+            },
+            (willError, aoeError, executorError, profExecError, callback) => {
+                mysql.connection.query("SELECT * FROM ResidualEstate WHERE residual_estate_id = ?;", [willData.lastWillAndTestament.residual_estate_id], (err, rows) => {
+                    if (err) {
+                        callback(null, willError, aoeError, executorError, profExecError, err);
+                    } else {
+                        willData.residualEstate = Object.assign({}, rows[0]);
+                        callback(null, willError, aoeError, executorError, profExecError, null);
+                    }
+                })
+            },
+            (willError, aoeError, executorError, profExecError, residualError, callback) => {
+                mysql.connection.query("SELECT * FROM Beneficiary WHERE residual_estate_id = ?;", [willData.residualEstate.residual_estate_id], (err, rows) => {
+                   if (err) {
+                       callback(null, willError, aoeError, executorError, profExecError, residualError, err);
+                   } else {
+                       willData.beneficiaries = [];
+                       for (let i = 0; i < rows.length; i++) {
+                           willData.beneficiaries.push(Object.assign({}, rows[i]));
+                       }
+                       callback(null, willError, aoeError, executorError, profExecError, residualError, null);
+                   }
+                });
+            },
+            (willError, aoeError, executorError, profExecError, residualError, beneficiaryError, callback) => {
+                mysql.connection.query("SELECT * FROM FuneralArrangements WHERE funeral_id = ?;", [willData.lastWillAndTestament.funeral_id], (err, rows) => {
+                   if (err) {
+                       callback(null, willError, aoeError, executorError, profExecError, residualError, beneficiaryError, err);
+                   } else {
+                       willData.funeralArrangements = Object.assign({}, rows[0]);
+                       callback(null, willError, aoeError, executorError, profExecError, residualError, beneficiaryError, null);
+                   }
+                });
+            }
+        ], (err, willError, aoeError, executorError, profExecError, residualError, beneficiaryError, funeralError) => {
+            if (err) {console.log("NPM Async Error:"); console.log(err);}
+            if (willError) {console.log("LastWillAndTestament Error:"); console.log(willError);}
+            if (aoeError) {console.log("Appointment of Executors Error:"); console.log(aoeError);}
+            if (executorError) {console.log("Executor Error:"); console.log(executorError);}
+            if (profExecError) {console.log("Professional Executor Error:"); console.log(profExecError);}
+            if (residualError) {console.log("Residual Estate Error:"); console.log(residualError);}
+            if (beneficiaryError) {console.log("Beneficiary Error:"); console.log(beneficiaryError);}
+            if (funeralError) {consol.log("Funeral Arrangements Error:"); console.log(funeralError);}
+            if (!err && !willError && !aoeError && !executorError && !profExecError && !residualError && !beneficiaryError && !funeralError) {
+                res.send({success: true, willData: willData, user: req.user});
+            } else {
+                res.send({success: false});
+            }
+        });
     });
 
     return router;
