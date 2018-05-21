@@ -9,6 +9,201 @@ block append body-content
             .row
                 .col-sm-12
                     h1 1. Client Data Form
+                    p This form captures all of your personal details required for the Will. If you already have any relevant information stored in your user account, we'll automatically populate it below. Please fill in any missing information and update anything is incorrect.
+                .col-md-6
+                    h4
+                        i.fas.fa-fw.fa-user
+                        |  Personal Details
+                    hr
+                    .row
+                        .col-xs-12
+                            .form-group
+                                label Username
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-user
+                                    input#personalUsername.form-control(type="text" placeholder="Username")
+
+                            .form-group
+                                label Email
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-envelope
+                                    input#personalEmail.form-control(type="text" placeholder="Email")
+                        .col-sm-5
+                            .form-group
+                                label(for='personalTitle') Title
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-id-card
+                                    select#personalTitle.form-control
+                                        option(name='title', value='mr') Mr
+                                        option(name='title', value='mrs') Mrs
+                                        option(name='title', value='miss') Miss
+                                        option(name='title', value='ms') Ms
+                                        option(name='title', value='dr') Dr
+                                        option(name='title', value='rev') Rev
+                                        option(name='title', value='sir') Sir
+                        .col-sm-7
+                            .form-group
+                                label Marital Status
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-venus-mars
+                                    select#personalMaritalStatus.form-control
+                                        option(name="marital_status") Single
+                                        option(name="marital_status") Engaged
+                                        option(name="marital_status") Married / Civil Partnership
+                                        option(name="marital_status") Co-Habiting
+                                        option(name="marital_status") Separating
+                                        option(name="marital_status") Divorced
+                                        option(name="marital_status") Widow/er
+                        .col-sm-5
+                            .form-group
+                                label Forename
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-tag
+                                    input#personalFirstName.form-control(type='text', name='first_name', placeholder='Forename', required='')
+                        .col-sm-7
+                            .form-group
+                                label Surname
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-tags
+                                    input#personalLastName.form-control(type='text', name='last_name', placeholder='Surname', required='')
+
+                        .col-sm-12
+                            .form-group
+                                label Date of Birth
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-calendar
+                                    input#personalDob.form-control(type='text' name='date_of_birth' placeholder="DD/MM/YYYY")
+
+                        .col-sm-6
+                            .form-group
+                                label Tel (Mobile)
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-mobile
+                                    input#personalMobile.form-control(type='text', name='tel_mobile', placeholder='Mobile Telephone')
+
+                        .col-sm-6
+                            .form-group
+                                label Tel (Home)
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-phone
+                                    input#personalTelephone.form-control(type='text', name='tel_home', placeholder='Home Telephone')
+
+                        .col-sm-12
+                            .form-group
+                                label Nationality
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-globe
+                                    input#personalNationality.form-control(type='text' name='nationality' placeholder="Nationality")
+
+                        .col-xs-12
+                            h4
+                                i.fas.fa-fw.fa-child
+                                |  Details of Children
+                            hr
+
+                            .form-group
+                                label Number of Children (This Relationship)
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-users
+                                    input#personalNumberOfChildren.form-control(type="number" name="children_this_relationship")
+
+                                .form-group
+                                    label Number of Children (Previous Relationship)
+                                    .input-group
+                                        span.input-group-addon
+                                            i.fas.fa-fw.fa-users
+                                        input#personalNumberOfChildrenPrevious.form-control(type="number" name="children_last_relationship")
+
+                                .form-group
+                                    label Number of Children Under 18?
+                                    .input-group
+                                        span.input-group-addon
+                                            i.fas.fa-fw.fa-arrow-alt-circle-down
+                                        input#personalNumberOfChildrenUnderEighteen.form-control(type="number")
+                .col-md-6
+                    .row
+                        .col-xs-12
+                            h4
+                                i.fas.fa-fw.fa-home
+                                |  Address Details
+                            hr
+
+                            .form-group
+                                label Address Line 1
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-map-signs
+                                    input#personalAddressLine1.form-control(type="text" name="address_line_1" placeholder="First Line of Address")
+
+                            .form-group
+                                label Address Line 2
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-map-signs
+                                    input#personalAddressLine2.form-control(type="text" name="address_line_2" placeholder="Second Line of Address")
+                        .col-xs-6
+                            .form-group
+                                label Town
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-compass
+                                    input#personalTown.form-control(type="text" name="town" placeholder="Town")
+
+                        .col-xs-6
+                            .form-group
+                                label Postcode
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-home
+                                    input#personalPostcode.form-control(type="text" name="postcode" placeholder="Postcode")
+
+                        .col-xs-12
+                            .form-group
+                                label How long have you spent at this property?
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-clock
+                                    input#personalPropertyDuration.form-control(type="text" name="property_duration" placeholder="Duration in Years")
+
+                        .col-xs-12
+                            h4
+                                i.fas.fa-fw.fa-building
+                                |  Employment Details
+                            hr
+
+                            .form-group
+                                label Job Title
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-user-md
+                                    input#personalPosition.form-control(type='text' name='job_title' placeholder="Your Position")
+
+                            .form-group
+                                label Employer
+                                .input-group
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-building
+                                    input#personalEmployer.form-control(type='text' name='employer' placeholder="Employer Name")
+                .col-xs-12
+                    hr
+                    button#addTestData.btn.btn-lg.btn-info(type='button')
+                        i.fas.fa-fw.fa-database
+                        |  Add Test Data
+                    button#next.btn.btn-lg.btn-success(type='button')
+                        | Next
+                        i.fas.fa-fw.fa-angle-right
+                    button(type="submit" style="display: none")
 
 block append scripts
     script(src="js/client-data.js")

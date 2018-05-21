@@ -79,6 +79,9 @@ function renderPersonalInformation() {
             $("#personalMobile").val(data.tel_mobile);
             $("#personalDob").val(data.dob);
             $("#personalNationality").val(data.nationality);
+            $("#personalNumberOfChildren").val(data.children_current);
+            $("#personalNumberOfChildrenPrevious").val(data.children_previous);
+            $("#personalNumberOfChildrenUnderEighteen").val(data.children_minor);
             $("#personalEmployer").val(data.employer);
             $("#personalPosition").val(data.job_title);
             $("#personalMaritalStatus").val(data.marital_status);
@@ -96,7 +99,7 @@ function renderPersonalInformation() {
 
 function formatProgress(stage) {
     const stages = ["Client Data Form", "Appointment of Executors", "Residual Estate", "Funeral Arrangements", "Awaiting Payment"];
-    return "Stage " + (stage + 1) + "/5 - " + stages[stage];
+    return "Stage " + (stage) + "/5 - " + stages[stage-1];
 }
 
 function updatePersonalInformation() {
@@ -116,6 +119,9 @@ function updatePersonalInformation() {
             date_of_birth: $("#personalDob").val(),
             job_title: $("#personalPosition").val(),
             nationality: $("#personalNationality").val(),
+            children_current: $("#personalNumberOfChildren").val(),
+            children_previous: $("#personalNumberOfChildrenPrevious").val(),
+            children_minor: $("#personalNumberOfChildrenUnderEighteen").val(),
             employer: $("#personalEmployer").val(),
             marital_status: $("#personalMaritalStatus").val(),
             address_line_one: $("#personalAddressLine1").val(),
@@ -167,6 +173,7 @@ function continueWillProgression(id, progress) {
     console.log("Will ID: " + id + "\nProgress: " + progress);
     let params = "?id=" + id;
     let pageUri = [
+        "/forms/last-will-and-testament-client-data" + params,
         "/forms/last-will-and-testament-executors" + params,
         "/forms/last-will-and-testament-residual-estate" + params,
         "/forms/last-will-and-testament-funeral-arrangements" + params,

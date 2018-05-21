@@ -140,7 +140,7 @@ block append scripts
                 type: "POST",
                 url: "/forms/create-last-will-and-testament",
                 success: function(data) {
-                    window.location.href = "/forms/last-will-and-testament-executors?id=" + data.lastWillAndTestamentId;
+                    window.location.href = "/forms/last-will-and-testament-client-data?id=" + data.lastWillAndTestamentId;
                 },
                 error: function(err) {
                     console.log(err);

@@ -25,6 +25,8 @@ $(document).ready(() => {
 function renderWill(data) {
     const u = data.user;
     const w = data.will;
+    console.log(u);
+    console.log(w);
     $(".name").html(u.first_name + " " + u.last_name);
     $(".town").html(u.town);
 }

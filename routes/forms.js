@@ -93,7 +93,65 @@ module.exports = function (passport) {
         });
     });
 
-    /* POST Database Last Will & Testament - Page 1 (Executors)
+    /* POST Database Last Will & Testament - Page 1 (Client Data) */
+    router.post('/save-last-will-and-testament-client-data', (req, res) => {
+        async.waterfall([
+            callback => {
+                mysql.connection.query(
+                    "UPDATE Users SET username = ?, email = ?, first_name = ?, last_name = ?, title = ?, tel_mobile = ?, tel_home = ?, dob = ?, job_title = ?, employer = ?, nationality = ?, children_current = ?, children_previous = ?, children_minor = ?, marital_status = ?, address_line_1 = ?, address_line_2 = ?, town = ?, postcode = ?, property_duration = ? WHERE user_id = ?;",
+                    [
+                        req.body.username,
+                        req.body.email,
+                        req.body.first_name,
+                        req.body.last_name,
+                        req.body.title,
+                        req.body.tel_mobile,
+                        req.body.tel_home,
+                        req.body.date_of_birth,
+                        req.body.job_title,
+                        req.body.employer,
+                        req.body.nationality,
+                        req.body.children_current,
+                        req.body.children_previous,
+                        req.body.children_minor,
+                        req.body.marital_status,
+                        req.body.address_line_one,
+                        req.body.address_line_two,
+                        req.body.town,
+                        req.body.postcode,
+                        req.body.property_duration,
+                        req.user.user_id
+                    ],
+                    (err) => {
+                        if (err) {
+                            callback(null, err);
+                        } else {
+                            callback(null, null);
+                        }
+                    });
+            },
+            (updateUserError, callback) => {
+                mysql.connection.query("UPDATE LastWillAndTestament SET progress = ? WHERE lwat_id = ?;", [2, req.body.lastWillAndTestamentId], err => {
+                    if (err) {
+                        callback(null, updateUserError, err, req.body.lastWillAndTestamentId);
+                    } else {
+                        callback(null, updateUserError, null, req.body.lastWillAndTestamentId);
+                    }
+                });
+            }
+        ], (err, updateUserError, updateProgressError, lastWillAndTestamentId) => {
+            if (err) {console.log("NPM Async Waterfall Error:"); console.log(err);}
+            if (updateUserError) {console.log("Update User Error:"); console.log(updateUserError);}
+            if (updateProgressError) {console.log("Update Progress Error:"); console.log(updateProgressError);}
+            if (!err && !updateUserError && !updateProgressError) {
+                res.send({success: true, lastWillAndTestamentId: lastWillAndTestamentId});
+            } else {
+                res.send({success: false});
+            }
+        });
+    });
+
+    /* POST Database Last Will & Testament - Page 2 (Executors)
     * This function uses an asynchronous waterfall from the npm library 'async' to do the following;
     * 1: Insert an AppointmentOfExecutors row into the database.
     * 2: Select the last inserted ID from the database (from the record above).
@@ -221,7 +279,7 @@ module.exports = function (passport) {
                 });
             },
             (aoeError, executorError, profExecError, updateLwatError, aoeID, lastWillAndTestamentId, callback) => {
-                mysql.connection.query("UPDATE LastWillAndTestament SET progress = ? WHERE lwat_id = ?;", [2, lastWillAndTestamentId], err => {
+                mysql.connection.query("UPDATE LastWillAndTestament SET progress = ? WHERE lwat_id = ?;", [3, lastWillAndTestamentId], err => {
                     if (err) {
                         callback(null, aoeError, executorError, profExecError, updateLwatError, err, aoeID, req.body.lastWillAndTestamentId);
                     } else {
@@ -244,7 +302,7 @@ module.exports = function (passport) {
         });
     });
 
-    /* POST Database Last Will & Testament (Residual Estate)
+    /* POST Database Last Will & Testament - Page 3 (Residual Estate)
     * This function uses an asynchronous loop from the npm package 'async'
     * 1: Inserts a row into ResidualEstate with the generic data from the form.
     * 2: Selects the last ID inserted into the database (from the record above)
@@ -388,7 +446,7 @@ module.exports = function (passport) {
                 });
             },
             (residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError, updateResidualEstateIdError, lastWillAndTestamentId, callback) => {
-                mysql.connection.query("UPDATE LastWillAndTestament SET progress = ? WHERE lwat_id = ?;", [3, lastWillAndTestamentId], err => {
+                mysql.connection.query("UPDATE LastWillAndTestament SET progress = ? WHERE lwat_id = ?;", [4, lastWillAndTestamentId], err => {
                     if (err) {
                         callback(null, residualEstateError, residualEstateId, beneficiaryError, reserveBeneficiaryError, updateResidualEstateIdError, err, req.body.lastWillAndTestamentId);
                     } else {
@@ -483,7 +541,7 @@ module.exports = function (passport) {
                 });
             },
             (funeralArrangementsError, funeralArrangementsId, updateLwatError, callback) => {
-                mysql.connection.query("UPDATE LastWillAndTestament SET progress = ? WHERE lwat_id = ?;", [4, req.body.lastWillAndTestamentId], err => {
+                mysql.connection.query("UPDATE LastWillAndTestament SET progress = ? WHERE lwat_id = ?;", [5, req.body.lastWillAndTestamentId], err => {
                     if (err) {
                         callback(null, funeralArrangementsError, funeralArrangementsId, updateLwatError, err);
                     } else {

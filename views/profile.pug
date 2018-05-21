@@ -151,6 +151,34 @@ block append body-content
                                                         span.input-group-addon
                                                             i.fas.fa-fw.fa-globe
                                                         input#personalNationality.form-control(type='text' name='nationality' placeholder="Nationality")
+
+                                            .col-xs-12
+                                                h4
+                                                    i.fas.fa-fw.fa-child
+                                                    |  Details of Children
+                                                hr
+
+                                                .form-group
+                                                    label Number of Children (This Relationship)
+                                                    .input-group
+                                                        span.input-group-addon
+                                                            i.fas.fa-fw.fa-users
+                                                        input#personalNumberOfChildren.form-control(type="number" name="children_this_relationship")
+
+                                                    .form-group
+                                                        label Number of Children (Previous Relationship)
+                                                        .input-group
+                                                            span.input-group-addon
+                                                                i.fas.fa-fw.fa-users
+                                                            input#personalNumberOfChildrenPrevious.form-control(type="number" name="children_last_relationship")
+
+                                                    .form-group
+                                                        label Number of Children Under 18?
+                                                        .input-group
+                                                            span.input-group-addon
+                                                                i.fas.fa-fw.fa-arrow-alt-circle-down
+                                                            input#personalNumberOfChildrenUnderEighteen.form-control(type="number")
+
                                     .col-md-6
                                         .row
                                             .col-xs-12
