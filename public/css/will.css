@@ -68,6 +68,7 @@ p {
     font-size: 1.3em;
     text-transform: uppercase;
     border-bottom: 1px solid #7a43b6;
+    font-weight: 500;
 }
 
 .rule {
@@ -97,4 +98,9 @@ p {
 
 .loading-green {
     color: #4cae4c !important;
+}
+
+.willLabel {
+    margin: 0;
+    color: #47474c;
 }

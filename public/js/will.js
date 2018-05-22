@@ -60,7 +60,7 @@ function renderWill(data) {
         const div = $(".executors");
         div.html("5. I appoint the following people as the Executors of my Will.");
         for (let i = 0; i < w.executors.length; i++) {
-            div.append("<p class='executor-info'>" + w.executors[i].first_name + " " + w.executors[i].last_name + " of " + w.executors[i].city + ", England.</p>");
+            div.append("<p class='executor-info'>" + w.executors[i].first_name + " " + w.executors[i].last_name + " of " + w.executors[i].city + ", England</p>");
         }
     }
 
@@ -69,12 +69,12 @@ function renderWill(data) {
     $(".staffSignature").html("Antony Brinkman");
     $(".signatureFirstLineAddress").html(u.address_line_1);
     $(".signatureSecondLineAddress").html(u.address_line_2);
-    $(".signatureCityTown").html(u.town + ", England.");
+    $(".signatureCityTown").html(u.town + ", England");
     $(".signaturePostcode").html(u.postcode);
 
     $(".staffName").html("Antony Brinkman");
     $(".staffFirstLineAddress").html("Imperial House");
     $(".staffSecondLineAddress").html("Hornby Street");
-    $(".staffCityTown").html("Bury, England.");
+    $(".staffCityTown").html("Bury, England");
     $(".staffPostcode").html("BL9 5BN");
 }
