@@ -14,11 +14,21 @@ const isAuthenticated = function (req, res, next) {
     }
 };
 
-const ifLoggedIn = function (req, res, next) {
-    if (req.isAuthenticated()) {
-        res.redirect('/dashboard');
+const verifyFormIdentification = (req, res, next) => {
+    const formId = req.query.id;
+    const userId = req.user.user_id;
+    if (formId) {
+        mysql.connection.query("SELECT COUNT(1) FROM LastWillAndTestament WHERE lwat_id = ? AND user_id = ?;", [formId, userId], (err, rows) => {
+            const exists = Object.assign({}, rows[0])["COUNT(1)"];
+            if (parseInt(exists) === 1) {
+                return next();
+            } else {
+                res.redirect('/unauthorised');
+            }
+        });
     } else {
-        return next();
+        console.log("No Form ID in the URI! Returning to Wills.");
+        res.redirect("/wills");
     }
 };
 
@@ -28,7 +38,7 @@ function getUsername(req) {
 
 module.exports = function (passport) {
     /* GET Last Will & Testament - Page 1 (Client Data) */
-    router.get('/last-will-and-testament-client-data', isAuthenticated, (req, res) => {
+    router.get('/last-will-and-testament-client-data', isAuthenticated, verifyFormIdentification, (req, res) => {
         res.render('forms/lwat/lwat-client-data', {title: "Last Will & Testament", loggedIn: req.isAuthenticated(), username: getUsername(req)});
     });
 

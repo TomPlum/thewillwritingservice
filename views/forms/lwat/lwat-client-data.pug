@@ -4,7 +4,7 @@ block append stylesheets
     link(rel="stylesheet", href="css/lwat.css")
 
 block append body-content
-    form
+    form#clientDataForm
         .container
             .row
                 .col-sm-12
@@ -22,21 +22,21 @@ block append body-content
                                 .input-group
                                     span.input-group-addon
                                         i.fas.fa-fw.fa-user
-                                    input#personalUsername.form-control(type="text" placeholder="Username")
+                                    input#personalUsername.form-control(type="text" placeholder="Username" name="username")
 
                             .form-group
                                 label Email
                                 .input-group
                                     span.input-group-addon
                                         i.fas.fa-fw.fa-envelope
-                                    input#personalEmail.form-control(type="text" placeholder="Email")
+                                    input#personalEmail.form-control(type="text" placeholder="Email" name="email")
                         .col-sm-5
                             .form-group
                                 label(for='personalTitle') Title
                                 .input-group
                                     span.input-group-addon
                                         i.fas.fa-fw.fa-id-card
-                                    select#personalTitle.form-control
+                                    select#personalTitle.form-control(name="title")
                                         option(name='title', value='mr') Mr
                                         option(name='title', value='mrs') Mrs
                                         option(name='title', value='miss') Miss
@@ -50,7 +50,7 @@ block append body-content
                                 .input-group
                                     span.input-group-addon
                                         i.fas.fa-fw.fa-venus-mars
-                                    select#personalMaritalStatus.form-control
+                                    select#personalMaritalStatus.form-control(name="marital-status")
                                         option(name="marital_status") Single
                                         option(name="marital_status") Engaged
                                         option(name="marital_status") Married / Civil Partnership
@@ -200,6 +200,12 @@ block append body-content
                     button#addTestData.btn.btn-lg.btn-info(type='button')
                         i.fas.fa-fw.fa-database
                         |  Add Test Data
+                    button#clearForm.btn.btn-lg.btn-danger(type="button")
+                        i.fas.fa-fw.fa-times
+                        |  Clear
+                    button#getUserData.btn.btn-lg.btn-primary(type="button")
+                        i.fas.fa-fw.fa-download
+                        |  Insert My Data
                     button#next.btn.btn-lg.btn-success(type='button')
                         | Next
                         i.fas.fa-fw.fa-angle-right
@@ -207,3 +213,4 @@ block append body-content
 
 block append scripts
     script(src="js/client-data.js")
+    script(src="js/willValidation.js")
