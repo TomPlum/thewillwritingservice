@@ -97,6 +97,9 @@ function populateExistingData() {
             $("#personalTown").val(data.town);
             $("#personalPostcode").val(data.postcode);
             $("#personalPropertyDuration").val(data.property_duration);
+
+            //Validate To Remove Any Left-Over Error Messages
+            $("#clientDataForm").validate();
         },
         error: function(err) {
             console.log(err);

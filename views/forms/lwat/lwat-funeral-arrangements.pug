@@ -11,7 +11,9 @@ block append body-content
                 .col-sm-12
                     h1 4. Funeral Arrangements
                     hr
-                    p What kind of funeral can I choose for my loved one? The choice between burial and cremation is a very personal one. Decisions may be influenced by many factors, such as family tradition, religion or the wishes of the person who has died. Please fill in the form(s) below for either one or two testators.
+                    p What kind of funeral can I choose for my loved one? The choice between burial and cremation is a very personal one. Decisions may be influenced by many factors, such as family tradition, religion or the wishes of the person who has died. Please fill in the form(s) below for either one or two testators. A '
+                        span.required *
+                        | ' symbol by a label means the field is required.
             .row
                 .col-sm-6
                     h3
@@ -20,18 +22,22 @@ block append body-content
                     hr
                     //Funeral Pre-Arranged With
                     label Funeral Pre-Arranged With
+                        span.required *
                     input.form-control(type="text" name="testator_one_pre_arrange" placeholder="Who has it been pre-arranged with?")
 
                     //Funeral Reference Number
                     label Funeral Reference Number
+                        span.required *
                     input.form-control(type="text" name="testator_one_funeral_ref" placeholder="Ref No.")
 
                     //How Will It Be Funded?
                     label How will it be funded?
+                        span.required *
                     input.form-control(type="text" name="testator_one_how_funded" placeholder="Funding Method")
 
                     //Donation of Body to Research?
                     label Donation of Body for Research?
+                        span.required *
                     .row
                         .col-xs-6
                             .radio
@@ -46,6 +52,7 @@ block append body-content
 
                     //Donation of Organs for Transplant?
                     label Donation of organs for transplant?
+                        span.required *
                     .row
                         .col-xs-6
                             .radio
@@ -60,10 +67,12 @@ block append body-content
 
                     //Any organs not be used?
                     label Any organs not to be used?
+                        span.required *
                     input.form-control(type="text" name="testator_one_excluded_organs" placeholder="Organs to Exclude")
 
                     //Cremation Required?
                     label Cremation Required?
+                        span.required *
                     .row
                         .col-xs-6
                             .radio
@@ -78,6 +87,7 @@ block append body-content
 
                     //Burial Required?
                     label Burial Required?
+                        span.required *
                     .row
                         .col-xs-6
                             .radio
@@ -92,14 +102,17 @@ block append body-content
 
                     //Service to take place at
                     label Service to take place at
+                        span.required *
                     textarea.form-control(name="testator_one_service_place" placeholder="Location/Address")
 
                     //Burial/Cremation to take place at
                     label Burial / Cremation to take place at
+                        span.required *
                     textarea.form-control(name="testator_one_burial_place" placeholder="Location/Address")
 
                     //Ashes buried or scattered?
                     label Ashes to be buried or scattered?
+                        span.required *
                     .row
                         .col-xs-6
                             .radio
@@ -114,14 +127,17 @@ block append body-content
 
                     //Where will the ashes be scattered or buried?
                     label Where will the ashes be buried / scattered?
+                        span.required *
                     textarea.form-control(name="testator_one_buried_scattered_place" placeholder="Location/Address")
 
                     //Service Requirements
                     label Service Requirements (Songs / Religious Traditions / Clothing / Tone of Service)
+                        span.required *
                     textarea.form-control(name="testator_one_service_requirements" placeholder="Service Requirements")
 
                     //Family Flowers Only?
                     label Family Flowers Only?
+                        span.required *
                     .row
                         .col-xs-6
                             .radio
@@ -136,6 +152,7 @@ block append body-content
 
                     //Donation of flowers in lieu
                     label Donation of flowers in lieu to
+                        span.required *
                     input.form-control(type="text" name="testator_one_donation_flowers" placeholder="Full Name")
 
                     //Service Requirements
@@ -155,6 +172,9 @@ block append body-content
                         |  Copy Testator One
             br
             hr
+            .progress#willProgress
+                .progress-bar(role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 80%;")
+                    p 80% Complete
             // Next Page Button - Submits This Pages' Data
             .row
                 .col-sm-4

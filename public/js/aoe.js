@@ -2,6 +2,9 @@ let numberOfExecutors = 1;
 let numberOfProfessionalExecutors = 1;
 
 function addExecutor() {
+    //ALWAYS Validate ALL Executors Upon Adding
+    validateExecutorForm();
+
     if (numberOfExecutors === 8) {
         alert("You can have a maximum of eight executors.");
     } else {
@@ -72,7 +75,7 @@ function addExecutor() {
             "                    <div class='row'>" +
             "                        <div class='col-sm-3'>" +
             "                            <div class='radio'>" +
-            "                                <label><input type='radio' name='sole_joint_alternative_" + numberOfExecutors + "' value='sole'/> Sole </label>" +
+            "                                <label><input type='radio' name='sole_joint_alternative_" + numberOfExecutors + "' value='sole' checked=''/> Sole </label>" +
             "                            </div>" +
             "                        </div>" +
             "                        <div class='col-sm-3'>" +
@@ -120,6 +123,7 @@ function deleteExecutor() {
         if (confirm("Are you sure you want to delete this executor?")) {
             $(".executor_details_" + numberOfExecutors).remove();
             numberOfExecutors--;
+            validateExecutorForm();
         }
     }
 }
@@ -276,65 +280,106 @@ $(document).ready(() => {
 
     //Bind Submit (Next)
     $("#next").on("click", () => {
-        //Start Animation
-        $("#next").html("<i class='fas fa-circle-notch fa-spin fa-fw'></i> Saving...");
+        const form = $("#executorForm");
+        validateExecutorForm();
+        if (form.valid) {
+            alert("Form Valid... Submitting!");
+            //Start Animation
+            $("#next").html("<i class='fas fa-circle-notch fa-spin fa-fw'></i> Saving...");
 
-        let executors = [];
-        let professionalExecutors = [];
+            let executors = [];
+            let professionalExecutors = [];
 
-        for (let i = 1; i <= numberOfExecutors; i++) {
-            executors.push({
-                testator_one_relationship: $("input[name='relationship_testator_one_" + i + "']").val(),
-                testator_two_relationship: $("input[name='relationship_testator_two_" + i + "']").val(),
-                title: $("option[name='title_" + i + "']:selected").val(),
-                first_name: $("input[name='first_name_" + i + "']").val(),
-                last_name: $("input[name='last_name_" + i + "']").val(),
-                tel_mobile: $("input[name='tel_mobile_" + i + "']").val(),
-                tel_home: $("input[name='tel_home_" + i + "']").val(),
-                type: $("input[name='sole_joint_alternative_" + i + "']:checked").val(),
-                address_line_one: $("input[name='address_line_1_" + i + "']").val(),
-                address_line_two: $("input[name='address_line_2_" + i + "']").val(),
-                town: $("input[name='town_" + i + "']").val(),
-                postcode: $("input[name='postcode_" + i + "']").val()
-            });
-        }
+            for (let i = 1; i <= numberOfExecutors; i++) {
+                executors.push({
+                    testator_one_relationship: $("input[name='relationship_testator_one_" + i + "']").val(),
+                    testator_two_relationship: $("input[name='relationship_testator_two_" + i + "']").val(),
+                    title: $("option[name='title_" + i + "']:selected").val(),
+                    first_name: $("input[name='first_name_" + i + "']").val(),
+                    last_name: $("input[name='last_name_" + i + "']").val(),
+                    tel_mobile: $("input[name='tel_mobile_" + i + "']").val(),
+                    tel_home: $("input[name='tel_home_" + i + "']").val(),
+                    type: $("input[name='sole_joint_alternative_" + i + "']:checked").val(),
+                    address_line_one: $("input[name='address_line_1_" + i + "']").val(),
+                    address_line_two: $("input[name='address_line_2_" + i + "']").val(),
+                    town: $("input[name='town_" + i + "']").val(),
+                    postcode: $("input[name='postcode_" + i + "']").val()
+                });
+            }
 
-        for (let i = 1; i <= numberOfProfessionalExecutors; i++) {
-            professionalExecutors.push({
-                firm_name: $("input[name='firm_name_" + i + "']").val(),
-                phone: $("input[name='business_number_" + i + "']").val(),
-                address_line_one: $("input[name='prof_address_line_1_" + i + "']").val(),
-                address_line_two: $("input[name='prof_address_line_2_" + i + "']").val(),
-                town: $("input[name='prof_town_" + i + "']").val(),
-                postcode: $("input[name='prof_postcode_" + i + "']").val(),
-                type: $("input[name='prof_sole_joint_alternative_" + i + "']:checked").val(),
-            });
-        }
+            for (let i = 1; i <= numberOfProfessionalExecutors; i++) {
+                professionalExecutors.push({
+                    firm_name: $("input[name='firm_name_" + i + "']").val(),
+                    phone: $("input[name='business_number_" + i + "']").val(),
+                    address_line_one: $("input[name='prof_address_line_1_" + i + "']").val(),
+                    address_line_two: $("input[name='prof_address_line_2_" + i + "']").val(),
+                    town: $("input[name='prof_town_" + i + "']").val(),
+                    postcode: $("input[name='prof_postcode_" + i + "']").val(),
+                    type: $("input[name='prof_sole_joint_alternative_" + i + "']:checked").val(),
+                });
+            }
 
-        const lastWillAndTestamentId = getURLParameter("id");
+            const lastWillAndTestamentId = getURLParameter("id");
 
-        $.ajax({
-            url: "/forms/save-last-will-and-testament-executors",
-            type: "POST",
-            data: {
-                spouse_to_the_executor: $("input[name='spouse_to_executor']:checked").val(),
-                sole_or_joint: $("input[name='sole_or_joint']:checked").val(),
-                twp_to_act: $("input[name='twp_to_act']:checked").val(),
-                mirror_executor: $("input[name='mirror_executor']:checked").val(),
-                executors: executors,
-                professionalExecutors: professionalExecutors,
-                lastWillAndTestamentId: lastWillAndTestamentId
-            },
-            success: function(res) {
-                if (res.success) {
-                    window.location.href="/forms/last-will-and-testament-residual-estate?id=" + lastWillAndTestamentId;
-                } else {
-                    alert("Error Saving Form.");
-                }
-            },
-            error: function(err) {
+            $.ajax({
+                url: "/forms/save-last-will-and-testament-executors",
+                type: "POST",
+                data: {
+                    spouse_to_the_executor: $("input[name='spouse_to_executor']:checked").val(),
+                    sole_or_joint: $("input[name='sole_or_joint']:checked").val(),
+                    twp_to_act: $("input[name='twp_to_act']:checked").val(),
+                    mirror_executor: $("input[name='mirror_executor']:checked").val(),
+                    executors: executors,
+                    professionalExecutors: professionalExecutors,
+                    lastWillAndTestamentId: lastWillAndTestamentId
+                },
+                success: function(res) {
+                    if (res.success) {
+                        window.location.href="/forms/last-will-and-testament-residual-estate?id=" + lastWillAndTestamentId;
+                    } else {
+                        alert("Error Saving Form.");
+                    }
+                },
+                error: function(err) {
                     console.log(err);
                 }
             });
+        } else {
+            alert("Form Not Valid!");
+        }
     });
 });
+
+function validateExecutorForm() {
+    const executorForm = $("#executorForm");
+    let executorRules = {};
+    const required = {required: true};
+
+    //Generic Fields (Static - Are NOT Dynamically Generated)
+    executorRules["spouse_to_executor"] = required;
+    executorRules["sole_or_joint"] = required;
+    executorRules["mirror_executor"] = required;
+    executorRules["twp_to_act"] = required;
+
+    //For the stuff that is dynamically generated...
+    for (let i = 1; i <= numberOfExecutors; i++) {
+        executorRules["relationship_testator_one_" + i] = required;
+        executorRules["relationship_testator_two_" + i] = required;
+        executorRules["title_" + i] = required;
+        executorRules["first_name_" + i] = required;
+        executorRules["last_name_" + i] = required;
+        executorRules["tel_mobile_" + i] = required;
+        executorRules["tel_home_" + i] = required;
+        executorRules["address_line_1_" + i] = required;
+        executorRules["address_line_2_" + i] = required;
+        executorRules["town_" + i] = required;
+        executorRules["postcode_" + i] = required;
+    }
+
+    //Add all rules to an object called 'rules' so the jQuery plugin works
+    executorRules = {
+        rules: executorRules
+    };
+    executorForm.validate(executorRules);
+    console.log(executorRules);
+}
