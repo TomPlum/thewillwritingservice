@@ -10,11 +10,15 @@ block append body-content
             .row
                 .col-sm-12
                     h1 3. Residual Estate
+                    p The residuary estate is the property that remains in a deceased person’s estate after all specific gifts have been made and all debts, taxes, administrative fees, probate costs and court costs have been paid. A '
+                        span.required *
+                        | ' symbol by a label means the field is required.
                     hr
             .row
                 //Any notes on special reqs?
                 .col-md-6
                     label Any notes on special requirements that call for a trust?
+                        span.required *
                         .radio
                             label
                                 input(checked='', type='radio', name='notes', value='1')
@@ -28,6 +32,7 @@ block append body-content
                     label To pass to spouse on 1
                         sup st
                         |  death?
+                        span.required *
                         .radio
                             label
                                 input(checked='', type='radio', name='pass_to_spouse', value='1')
@@ -39,6 +44,7 @@ block append body-content
                 //Residue to be distributed in equal proportions?
                 .col-md-12
                     label Residue to be distributed in equal proportions?
+                        span.required *
                         .radio
                             label
                                 input(checked='', type='radio', name='distribute_residue', value='1')
@@ -64,17 +70,20 @@ block append body-content
                                     | Relationship to 1
                                     sup st
                                     |  Testator
+                                    span.required *
                                 input.form-control(name='relationship_testator_one_1', type='text', placeholder='Relationship')
                             .col-sm-6
                                 label
                                     | Relationship to 2
                                     sup nd
                                     |  Testator
+                                    span.required *
                                 input.form-control(name='relationship_testator_two_1', type='text', placeholder='Relationship')
                         // Title, Forename, Surname
                         .row
                             .col-sm-2
                                 label(for='title') Title
+                                    span.required *
                                 select#title.form-control
                                     option(name='title_1', value='mr') Mr
                                     option(name='title_1', value='mrs') Mrs
@@ -82,28 +91,35 @@ block append body-content
                                     option(name='title_1', value='ms') Ms
                             .col-sm-4
                                 label Forename
+                                    span.required *
                                 input.form-control(type='text', name='first_name_1', placeholder='Forename', required='')
                             .col-sm-6
                                 label Surname
+                                    span.required *
                                 input.form-control(type='text', name='last_name_1', placeholder='Surname', required='')
                         // Phone Numbers (Mobile & Home)
                         .row
                             .col-sm-6
                                 label Tel (Mobile)
+                                    span.required *
                                 input.form-control(type='text', name='tel_mobile_1', placeholder='Mobile Telephone')
                             .col-sm-6
                                 label Tel (Home)
+                                    span.required *
                                 input.form-control(type='text', name='tel_home_1', placeholder='Home Telephone')
                         //Share to Beneficiary?
                         .row
                             .col-xs-6
                                 label Share to Beneficiary?
+                                    span.required *
                                 input.form-control(type="text", name="share_to_beneficiary_1", placeholder="Percentage")
                             .col-xs-6
                                 label At Age
+                                    span.required *
                                 input.form-control(type="text", name="share_age_1", placeholder="Age")
                             .col-xs-6
                                 label Or to Issue?
+                                    span.required *
                                 .row
                                     .col-xs-6
                                         .radio
@@ -117,19 +133,24 @@ block append body-content
                                                 |  No
                             .col-xs-6
                                 label At Age
+                                    span.required *
                                 input.form-control(type="text", name="to_issue_age_1", placeholder="Age")
                     // Address
                     .col-md-6
                         label Address Line 1
+                            span.required *
                         input.form-control(type='text', name='address_line_1_1', placeholder='Address Line 1', required='')
                         label Address Line 2
+                            span.required *
                         input.form-control(type='text', name='address_line_2_1', placeholder='Address Line 2', required='')
                         .row
                             .col-sm-6
                                 label Town
+                                    span.required *
                                 input.form-control(type='text', name='town_1', placeholder='Town', required='')
                             .col-sm-6
                                 label Postcode
+                                    span.required *
                                 input.form-control(type='text', name='postcode_1', placeholder='Postcode', required='')
         // Add & Remove Buttons For Executor Details
         .container
@@ -147,6 +168,7 @@ block append body-content
             .row
                 .col-xs-12
                     label If any gift shall fail - to be added proportionally to the ones that have not?
+                        span.required *
                 .col-xs-2
                     .radio
                         label
@@ -203,6 +225,9 @@ block append body-content
             .row
                 .col-sm-12
                     hr
+                    .progress#willProgress
+                        .progress-bar(role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 60%;")
+                            p 60% Complete
                     button#addTestData.btn.btn-lg.btn-info(type='button')
                         i.fas.fa-fw.fa-database
                         |  Add Test Data

@@ -6,7 +6,7 @@ function addExecutor() {
     validateExecutorForm();
 
     if (numberOfExecutors === 8) {
-        alert("You can have a maximum of eight executors.");
+        swal("Error", "You can have a maximum of eight executors.", "error");
     } else {
         numberOfExecutors++;
         console.log("Number of Executors: " + numberOfExecutors);
@@ -24,18 +24,18 @@ function addExecutor() {
             "                    <!-- Relationship to 1st & 2nd Testators -->" +
             "                    <div class='row'>" +
             "                        <div class='col-sm-6'>" +
-            "                            <label>Relationship to 1 <sup>st</sup> Testator</label>" +
+            "                            <label>Relationship to 1 <sup>st</sup> Testator<span class='required'>*</span></label>" +
             "                            <input class='form-control' name='relationship_testator_one_" + numberOfExecutors + "' type='text' placeholder='Relationship'/>" +
             "                        </div>" +
             "                        <div class='col-sm-6'>" +
-            "                            <label>Relationship to 2 <sup>nd</sup> Testator</label>" +
+            "                            <label>Relationship to 2 <sup>nd</sup> Testator<span class='required'>*</span></label>" +
             "                            <input class='form-control' name='relationship_testator_two_" + numberOfExecutors + "' type='text' placeholder='Relationship'/>" +
             "                        </div>" +
             "                    </div>" +
             "                    <!-- Title, Forename, Surname -->" +
             "                    <div class='row'>" +
             "                        <div class='col-sm-2'>" +
-            "                            <label for='title'>Title</label>" +
+            "                            <label for='title'>Title<span class='required'>*</span></label>" +
             "                            <select id='title' class='form-control'>" +
             "                                <option name='title_" + numberOfExecutors + "' value='mr'>Mr</option>" +
             "                                <option name='title_" + numberOfExecutors + "' value='mrs'>Mrs</option>" +
@@ -47,29 +47,29 @@ function addExecutor() {
             "                            </select>" +
             "                        </div>" +
             "                        <div class='col-sm-4'>" +
-            "                            <label>Forename</label>" +
+            "                            <label>Forename<span class='required'>*</span></label>" +
             "                            <input type='text' class='form-control' name='first_name_" + numberOfExecutors + "' placeholder='Forename'/>" +
             "                        </div>" +
             "                        <div class='col-sm-6'>" +
-            "                            <label>Surname</label>" +
+            "                            <label>Surname<span class='required'>*</span></label>" +
             "                            <input type='text' class='form-control' name='last_name_" + numberOfExecutors + "' placeholder='Surname'/>" +
             "                        </div>" +
             "                    </div>" +
             "                    <!-- Phone Numbers (Mobile & Home) -->" +
             "                    <div class='row'>" +
             "                        <div class='col-sm-6'>" +
-            "                            <label>Tel (Mobile)</label>" +
+            "                            <label>Tel (Mobile)<span class='required'>*</span></label>" +
             "                            <input type='text' class='form-control' name='tel_mobile_" + numberOfExecutors + "' placeholder='Mobile Telephone'/>" +
             "                        </div>" +
             "                        <div class='col-sm-6'>" +
-            "                            <label>Tel (Home)</label>" +
+            "                            <label>Tel (Home)<span class='required'>*</span></label>" +
             "                            <input type='text' class='form-control' name='tel_home_" + numberOfExecutors + "' placeholder='Home Telephone'/>" +
             "                        </div>" +
             "                    </div>" +
             "" +
             "                    <div class='row'>" +
             "                        <div class='col-md-12'>" +
-            "                            <label>Sole, Joint or Alternative?</label>" +
+            "                            <label>Sole, Joint or Alternative?<span class='required'>*</span></label>" +
             "                        </div>" +
             "                    </div>" +
             "                    <div class='row'>" +
@@ -91,19 +91,19 @@ function addExecutor() {
             "                    </div>" +
             "                </div>" +
             "                <div class='col-md-6'>" +
-            "                    <label>Address Line 1</label>" +
+            "                    <label>Address Line 1<span class='required'>*</span></label>" +
             "                    <input type='text' class='form-control' name='address_line_1_" + numberOfExecutors + "' placeholder='Address Line 1'/>" +
             "" +
-            "                    <label>Address Line 2</label>" +
+            "                    <label>Address Line 2<span class='required'>*</span></label>" +
             "                    <input type='text' class='form-control' name='address_line_2_" + numberOfExecutors + "' placeholder='Address Line 2'/>" +
             "" +
             "                    <div class='row'>" +
             "                        <div class='col-sm-6'>" +
-            "                            <label>Town</label>" +
+            "                            <label>Town<span class='required'>*</span></label>" +
             "                            <input type='text' class='form-control' name='town_" + numberOfExecutors + "' placeholder='Town'/>" +
             "                        </div>" +
             "                        <div class='col-sm-6'>" +
-            "                            <label>Postcode</label>" +
+            "                            <label>Postcode<span class='required'>*</span></label>" +
             "                            <input type='text' class='form-control' name='postcode_" + numberOfExecutors + "' placeholder='Postcode'/>" +
             "                        </div>" +
             "                    </div>" +
@@ -118,19 +118,27 @@ function addExecutor() {
 
 function deleteExecutor() {
     if (numberOfExecutors === 1) {
-        alert("You must have at least one executor.");
+        swal("Error", "You must have at least one executor to your Will.", "error");
     } else {
-        if (confirm("Are you sure you want to delete this executor?")) {
-            $(".executor_details_" + numberOfExecutors).remove();
-            numberOfExecutors--;
-            validateExecutorForm();
-        }
+        swal({
+            title: "Are you sure you want to delete the " + numberOfExecutors + getOrdinalSuffix(numberOfExecutors) + " executor?",
+            text: "Once deleted you will not be able to recover their information.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((theyChoseToDelete) => {
+           if (theyChoseToDelete) {
+               $(".executor_details_" + numberOfExecutors).remove();
+               numberOfExecutors--;
+               validateExecutorForm();
+           }
+        });
     }
 }
 
 function addProfessionalExecutor() {
     if (numberOfProfessionalExecutors === 4) {
-        alert("You can add a maximum of four professional executors.");
+        swal("Error", "You can add a maximum of four professional executors.", "error");
     } else {
         numberOfProfessionalExecutors++;
         let prof_execs = $("#professional_executors");
@@ -142,34 +150,34 @@ function addProfessionalExecutor() {
             "                        <div class='row'>" +
             "                            <div class='col-sm-6'>" +
             "                                <!-- Firm Name -->" +
-            "                                <label>Firm Name</label>" +
+            "                                <label>Firm Name<span class='required'>*</span></label>" +
             "                                <input type='text' name='firm_name_" + numberOfProfessionalExecutors + "' class='form-control' placeholder='Firm Name'/>" +
             "                            </div>" +
             "                            <div class='col-sm-6'>" +
             "                                <!-- Telephone Name -->" +
-            "                                <label>Business Number</label>" +
+            "                                <label>Business Number<span class='required'>*</span></label>" +
             "                                <input type='text' name='business_number_" + numberOfProfessionalExecutors + "' class='form-control' placeholder='Phone Number'/>" +
             "                            </div>" +
             "                        </div>" +
             "                        <!-- Address -->" +
-            "                        <label>Address Line 1</label>" +
+            "                        <label>Address Line 1<span class='required'>*</span></label>" +
             "                        <input type='text' class='form-control' name='prof_address_line_1_" + numberOfProfessionalExecutors + "' placeholder='Address Line 1'/>" +
-            "                        <label>Address Line 2</label>" +
+            "                        <label>Address Line 2<span class='required'>*</span></label>" +
             "                        <input type='text' class='form-control' name='prof_address_line_2_" + numberOfProfessionalExecutors + "' placeholder='Address Line 2'/>" +
             "                        <div class='row'>" +
             "                            <div class='col-sm-6'>" +
-            "                                <label>Town</label>" +
+            "                                <label>Town<span class='required'>*</span></label>" +
             "                                <input type='text' class='form-control' name='prof_town_" + numberOfProfessionalExecutors + "' placeholder='Town'/>" +
             "                            </div>" +
             "                            <div class='col-sm-6'>" +
-            "                                <label>Postcode</label>" +
+            "                                <label>Postcode<span class='required'>*</span></label>" +
             "                                <input type='text' class='form-control' name='prof_postcode_" + numberOfProfessionalExecutors + "' placeholder='Postcode'/>" +
             "                            </div>" +
             "                        </div>" +
             "                        <!-- Sole, Joint or Alternative? -->" +
             "                        <div class='row'>" +
             "                            <div class='col-md-12'>" +
-            "                                <label>Sole, Joint or Alternative?</label>" +
+            "                                <label>Sole, Joint or Alternative?<span class='required'>*</span></label>" +
             "                            </div>" +
             "                        </div>" +
             "                        <div class='row'>" +
@@ -198,12 +206,21 @@ function addProfessionalExecutor() {
 
 function deleteProfessionalExecutor() {
     if (numberOfProfessionalExecutors === 1) {
-        alert("You must have atleast one professional executor.\nIf you wish to remove all, please check 'No' for 'TWP to Act?'.");
+        swal("Professional Executors", "You must have at least one professional executor.\nIf you wish to remove all, please check 'No' for 'TWP to Act?'.", "info");
     } else {
-        if (confirm("Are you sure you want to delete this professional executor?")) {
-            $(".professional_executor_details_" + numberOfProfessionalExecutors).remove();
-            numberOfProfessionalExecutors--;
-        }
+        swal({
+            title: "Are you sure you want to delete the " + numberOfProfessionalExecutors + getOrdinalSuffix(numberOfProfessionalExecutors) + " professional executor?",
+            text: "Once deleted you will not be able to recover their information.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((theyChoseToDelete) => {
+            if (theyChoseToDelete) {
+                $(".professional_executor_details_" + numberOfProfessionalExecutors).remove();
+                numberOfProfessionalExecutors--;
+                validateExecutorForm();
+            }
+        });
     }
 }
 
@@ -337,7 +354,7 @@ $(document).ready(() => {
                     if (res.success) {
                         window.location.href="/forms/last-will-and-testament-residual-estate?id=" + lastWillAndTestamentId;
                     } else {
-                        alert("Error Saving Form.");
+                        swal("Error", "Error Saving Form.", "error");
                     }
                 },
                 error: function(err) {

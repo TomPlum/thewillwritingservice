@@ -81,4 +81,5 @@ input[type=number]::-webkit-outer-spin-button {
 
 #willProgress > .progress-bar {
     background-color: #7a43b6;
+    opacity: 0.8;
 }

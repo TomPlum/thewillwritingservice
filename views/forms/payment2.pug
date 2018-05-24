@@ -2,19 +2,26 @@ extends ../structure
 
 block append stylesheets
     link(rel="stylesheet", href="css/payment.css")
+    link(rel='stylesheet', href="css/lwat.css")
 
 block append body-content
     .container
         .row
+            .col-sm-12
+                h1 5. Payment
+                p The final step. Now that you've provided us with all of the necessary information, please enter your payment details below so we can finalise the Will so it's ready for you. A '
+                    span.required *
+                    | ' symbol by a label means the field is required.
+        .row
             //
               You can make it whatever width you want. I'm making it full width
               on <= small devices and 4/12 page width on >= medium devices
-            .col-xs-12.col-md-4
+            .col-xs-12.col-md-6
                 ul.nav.nav-tabs.nav-justified
                     li.active
                         a(data-toggle='tab', href='#card-form')
                             i.fas.fa-fw.fa-lg.fa-credit-card
-                            |  Debit
+                            |  Card
                     li
                         a(data-toggle='tab', href='#paypal-form')
                             i.fab.fa-fw.fa-lg.fa-paypal
@@ -33,6 +40,7 @@ block append body-content
                                     .col-xs-12
                                         .form-group
                                             label(for='cardNumber') CARD NUMBER
+                                                span.required *
                                             .input-group
                                                 input.form-control#cardNumber(type='tel', name='cardNumber', placeholder='Valid Card Number', autocomplete='cc-number', required='', autofocus='')
                                                 span.input-group-addon
@@ -44,6 +52,7 @@ block append body-content
                                                 span.hidden-xs EXPIRATION
                                                 span.visible-xs-inline EXP
                                                 |  DATE
+                                                span.required *
                                             .input-group
                                                 input.form-control#cardExpiry(type='tel', name='cardExpiry', placeholder='MM / YY', autocomplete='cc-exp', required='')
                                                 span.input-group-addon
@@ -51,6 +60,7 @@ block append body-content
                                     .col-xs-5.col-md-5.pull-right
                                         .form-group
                                             label(for='cardCVC') CV2 CODE
+                                                span.required *
                                             .input-group
                                                 input.form-control#cardCVC(type='tel', name='cardCVC', placeholder='CVC', autocomplete='cc-csc', required='')
                                                 span.input-group-addon
@@ -63,14 +73,38 @@ block append body-content
                                 .row(style='display:none;')
                                     .col-xs-12
                                         p.payment-errors
-                // CREDIT CARD FORM ENDS HERE
-                // PAYPAL FORM
-                #paypal-form.tab-pane
-                    label Email Address
-                    input.form-control(type='text', name='email', placeholder='Email Address', required='')
-        button#addTestData.btn.btn-lg.btn-info(onclick='addTestData()', type='button')
-            i.fas.fa-fw.fa-database
-            |  Add Test Data
+                    // CREDIT CARD FORM ENDS HERE
+                    // PAYPAL FORM
+                    #paypal-form.tab-pane.panel.panel-default.fade.credit-card-box.in
+                        .panel-heading.display-table
+                            .row.display-tr
+                                h3.panel-title
+                                    i.fas.fa-fw.fa-lock
+                                    |  PayPal Credentials
+                        .panel-body
+                            .form-group
+                                label EMAIL ADDRESS
+                                    span.required *
+                                .input-group
+                                    input#paypalEmail.form-control(type='text', name='email', placeholder='Email Address', required='')
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-envelope
+                            .form-group
+                                label PASSWORD
+                                    span.required *
+                                .input-group
+                                    input#paypalPassword.form-control(type='password', name='password', placeholder='Password', required='')
+                                    span.input-group-addon
+                                        i.fas.fa-fw.fa-lock
+                            button#sendPaypalPayment.btn.btn-success.btn-lg.btn-block(type='button')
+                                i.fa.fa-fw.fa-check
+                                |  Send
+                .progress#willProgress
+                    .progress-bar(role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 100%;")
+                        p 100% Complete
+                button#addTestData.btn.btn-lg.btn-info(onclick='addTestData()', type='button')
+                    i.fas.fa-fw.fa-database
+                    |  Add Test Data
 
 block append scripts
     script(type='text/javascript', src='https://js.stripe.com/v2/')
