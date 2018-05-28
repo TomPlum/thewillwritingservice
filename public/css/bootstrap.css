@@ -3643,12 +3643,12 @@ tbody.collapse.in {
     clear: both;
     font-weight: 400;
     line-height: 1.42857143;
-    color: #67bdef;
+    color: #FFF;
     white-space: nowrap;
 }
 .dropdown-menu>li>a:focus,
 .dropdown-menu>li>a:hover {
-    color: #38e2df;
+    color: #ab62ff;
     text-decoration: none;
 }
 .dropdown-menu>.active>a,
