@@ -133,15 +133,18 @@ function updatePersonalInformation() {
         success: function(data) {
             if(data.error) {
                 console.log(data.error);
+                swal("Whoops!", data.error.code + ". " + data.error.sqlMessage, "error");
             } else {
                 setTimeout(() => {
                     $("#updatePersonalInformation").html("<i class='fas fa-fw fa-cloud-upload-alt'></i> Update Information");
-                }, 2000);
+                    swal("Success!", "Your personal information has been successfully updated.", "success");
+                }, 1300);
 
                 renderPersonalInformation();
             }
         },
         error: function(err) {
+            swal("Whoops!", err, "error");
             console.log(err);
         }
     });
@@ -149,24 +152,32 @@ function updatePersonalInformation() {
 
 function deleteWillInProgress(id) {
     console.log("Will ID: " + id);
-    if (confirm("Are you sure you want to delete this will? All current form data and progress will be permanently lost.")) {
-        $.ajax({
-            type: "POST",
-            url: "/forms/delete-last-will-and-testament",
-            data: {id: id},
-            success: function(data) {
-                if (data.success) {
-                    alert("Successfully Deleted Will");
-                    renderLastWillAndTestamentTable();
-                } else {
-                    alert(data.error);
+    swal({
+        title: "Are you sure?",
+        text: "All current form data and progress will be permanently lost.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((theyChoseToDelete) => {
+        if (theyChoseToDelete) {
+            $.ajax({
+                type: "POST",
+                url: "/forms/delete-last-will-and-testament",
+                data: {id: id},
+                success: function(data) {
+                    if (data.success) {
+                        swal("Success!", "Successfully Deleted Will " + id, "success");
+                        renderLastWillAndTestamentTable();
+                    } else {
+                        alert(data.error);
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
                 }
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        });
-    }
+            });
+        }
+    });
 }
 
 function continueWillProgression(id, progress) {
