@@ -143,18 +143,18 @@ html
                             button.close(type='button', data-dismiss='modal', aria-label='Close')
                                 span.fas.fa-times.fa-fw(aria-hidden='true')
                         #div-register-form
-                            form(action='/register', method='POST')
+                            form#registrationForm(action='/register', method='POST')
                                 .modal-body
                                     #div-register-msg
                                         #icon-register-msg.fas.fa-fw.fa-angle-right
                                         span#text-register-msg Register
-                                    input.username.form-control(type='text', name='username', placeholder='Username' required)
-                                    input.email.form-control(type='text', name='email', placeholder='Email' required)
-                                    input.password.form-control(type='password', name='password', placeholder='Password' required)
-                                    input.confirm.form-control(type='password', name='confirm', placeholder='Confirm Password' required)
+                                    input#registerUsername.username.form-control(type='text', name='username', placeholder='Username' required)
+                                    input#registerEmail.email.form-control(type='text', name='email', placeholder='Email' required)
+                                    input#registerPassword.password.form-control(type='password', name='password', placeholder='Password' required)
+                                    input#registerConfirm.confirm.form-control(type='password', name='confirm', placeholder='Confirm Password' required)
                                 .modal-footer
                                     div
-                                        button.btn.btn-primary.btn-lg.btn-block.register-user(type='submit')
+                                        button#registerUser.btn.btn-primary.btn-lg.btn-block.register-user(type='submit')
                                             i.fas.fa-fw.fa-user-plus
                                             |  Register
         block footer
@@ -227,3 +227,7 @@ html
                 $("#loginButton").html("!{username}").prop("href", "/profile").removeAttr("data-toggle").removeAttr("data-target");
                 $(".login-container").append("<a id='logoutButton' href='/logout' role='button' class='btn logout-button'><span class='fas fa-fw fa-sign-out-alt'></span> Logout</a>");
             }
+
+            //For Register Callback
+            let message = "!{message}";
+            let error = "!{error}";

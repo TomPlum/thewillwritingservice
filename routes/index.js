@@ -26,7 +26,13 @@ function getUsername(req) {
 module.exports = function (passport) {
     /* GET Landing Page */
     router.get('/', (req, res) => {
-        res.render('index', {title: "TheWillwritingPartnership", loggedIn: req.isAuthenticated(), username: getUsername(req)});
+        res.render('index', {
+            title: "TheWillwritingPartnership",
+            loggedIn: req.isAuthenticated(),
+            username: getUsername(req),
+            error: req.flash('error'),
+            message: req.flash('message')
+        });
     });
 
     /* GET Last Will & Testament Page */
@@ -128,6 +134,15 @@ module.exports = function (passport) {
                 }
             }
         });
+    });
+
+    //Check If Authenticated
+    router.post('/is-authenticated', (req, res) => {
+        if (req.isAuthenticated()) {
+            res.send(true);
+        } else {
+            res.send(false);
+        }
     });
 
     return router;

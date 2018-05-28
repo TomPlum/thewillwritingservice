@@ -82,5 +82,39 @@ $(function() {
                 console.log(err);
             }
         });
-    })
+    });
+
+    //Registration From - Callback
+    $("#registerUser234234").on("click", () => {
+        //Start Register Loading Animation
+        $("#registerUser").html("<i class='fas fa-fw fa-circle-notch fa-spin'></i> Registering...");
+        $.ajax({
+            type: "POST",
+            url: "/register",
+            data: {
+                username: $("#registerUsername").val(),
+                password: $("#registerPassword").val(),
+                confirm: $("#registerConfirm").val(),
+                email: $("#registerEmail")
+            },
+            success: function(data) {
+                //Change Button To Success
+                $("#registerUser").html("<i class='fas fa-fw fa-check'></i> Done!");
+                swal("Successfully Registered", "Thank you for signing up, " + $("#registerUsername").val() + ". You can head over to the #[a(href='/profile') profile] page to add your personal details, or feel free to explore the site.", "success");
+            },
+            error: function(err) {
+                swal("Registration Error", err, "error");
+                console.log(err);
+            }
+        });
+    });
+
+    //Register Callback
+    if (message) {
+        swal("Successfully Registered", "Thank you for signing up, " + message + ". You can head over to the profile page to add your personal details, or feel free to explore the site.", "success");
+    }
+
+    if (error) {
+        swal("Registration Error", error, "error");
+    }
 });

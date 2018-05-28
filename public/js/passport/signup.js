@@ -39,7 +39,7 @@ module.exports = function(passport) {
                                 console.log(err);
                             } else {
                                 console.log("Successfully Registered User " + username);
-                                return done(null, newUser, req.flash('message', "Successfully Registered User '" + username + "'."));
+                                return done(null, newUser, req.flash('message', username));
                             }
                         });
                     }
