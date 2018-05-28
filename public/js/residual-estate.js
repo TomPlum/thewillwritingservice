@@ -4,7 +4,7 @@ let exclusions = 0;
 
 function addBeneficiary() {
     if (beneficiaries === 4) {
-        alert("You can only add a maximum of four beneficiaries");
+        swal("Error!", "You can only add a maximum of four beneficiaries", "error");
     } else {
         beneficiaries++;
 
@@ -119,18 +119,26 @@ function addBeneficiary() {
 
 function deleteBeneficiary() {
     if (beneficiaries === 1) {
-        alert("You must have at least one beneficiary")
+        swal("Error!", "You must have at least one beneficiary", "error");
     } else {
-        if (confirm("Are you sure you want to remove this beneficiary? Their details will be lost.")) {
-            $("#beneficiary_" + beneficiaries).remove();
-            beneficiaries--;
-        }
+        swal({
+            title: "Are you sure?",
+            text: "Removing this beneficiary will permanately delete their information.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((theyChoseToDelete) => {
+            if (theyChoseToDelete) {
+                $("#beneficiary_" + beneficiaries).remove();
+                beneficiaries--;
+            }
+        });
     }
 }
 
 function addReserveBeneficiary() {
     if (reserves === 4) {
-        alert("You can only add a maximum of four reserve beneficiaries.");
+        swal("Error!", "You can only add a maximum of four reserve beneficiaries.", "error");
     } else {
         reserves++;
         let reserveBeneficiary = "<div id='reserve_beneficiary_" + reserves + "'>" +
@@ -244,9 +252,19 @@ function addReserveBeneficiary() {
 }
 
 function deleteReserveBeneficiary() {
-    if (reserves > 0 && confirm("Are you sure you want to delete this reserve beneficiary? Their details will be lost.")) {
-        $("#reserve_beneficiary_" + reserves).remove();
-        reserves--;
+    if (reserves > 0) {
+        swal({
+            title: "Are you sure?",
+            text: "Removing this reserve beneficiary will permanently delete their information.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((theyChoseToDelete) => {
+            if (theyChoseToDelete) {
+                $("#reserve_beneficiary_" + reserves).remove();
+                reserves--;
+            }
+        });
     }
 }
 
@@ -269,7 +287,7 @@ function addTestData() {
 
 function addExclusion() {
     if (exclusions === 8) {
-        alert("You cannot exclude more than eight people from your will.");
+        swal("Error!", "You cannot exclude more than eight people from your will.", "error");
     } else {
         exclusions++;
         let field = "<div class='col-sm-6' id='exclusion_row_" + exclusions + "'><input class='form-control' type='text' placeholder='Full Name' name='will_exclusion_" + exclusions + "'/></div>";
@@ -278,9 +296,19 @@ function addExclusion() {
 }
 
 function deleteExclusion() {
-    if (exclusions > 0 && confirm("Are you sure you want to remove this person?")) {
-        $("#exclusion_row_" + exclusions).remove();
-        exclusions--;
+    if (exclusions > 0) {
+        swal({
+            title: "Are you sure?",
+            text: "This person will be removed from the exclusions.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((theyChoseToDelete) => {
+            if (theyChoseToDelete) {
+                $("#exclusion_row_" + exclusions).remove();
+                exclusions--;
+            }
+        });
     }
 }
 

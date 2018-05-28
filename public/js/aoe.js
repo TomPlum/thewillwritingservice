@@ -300,7 +300,6 @@ $(document).ready(() => {
         const form = $("#executorForm");
         validateExecutorForm();
         if (form.valid) {
-            alert("Form Valid... Submitting!");
             //Start Animation
             $("#next").html("<i class='fas fa-circle-notch fa-spin fa-fw'></i> Saving...");
 
@@ -361,8 +360,6 @@ $(document).ready(() => {
                     console.log(err);
                 }
             });
-        } else {
-            alert("Form Not Valid!");
         }
     });
 });

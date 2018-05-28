@@ -41,7 +41,7 @@ $(document).ready(() => {
                 },
                 success: function(data) {
                     if(!data.success) {
-                        alert("Form Failed To Save. See Server Console.");
+                        swal("Error!", "Form Failed To Save. See Server Console.", "error");
                     } else {
                         window.location.href="/forms/last-will-and-testament-executors?id=" + id;
                     }
@@ -57,16 +57,32 @@ $(document).ready(() => {
 
     //Clear Form
     $("#clearForm").on("click", () => {
-        if (confirm("All form data will be cleared. Are you sure?")) {
-            clearForm();
-        }
+        swal({
+            title: "Are you sure?",
+            text: "All current form data will be cleared.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((theyChoseToDelete) => {
+            if (theyChoseToDelete) {
+                clearForm();
+            }
+        });
     });
 
     //Add 'My' Data
     $("#getUserData").on("click", () => {
-        if (confirm("This will overwrite the entire form with any data we have stored on your profile. Are you sure?")) {
-            populateExistingData();
-        }
+        swal({
+            title: "Are you sure?",
+            text: "This will overwrite the entire form with any data we have stored on your profile.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((theyChoseToDelete) => {
+            if (theyChoseToDelete) {
+                populateExistingData();
+            }
+        });
     });
 });
 
